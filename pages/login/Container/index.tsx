@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material"
+import SignInForm from "../SignInForm";
 import Logo from "../../../assets/images/peak.svg";
 import styles from "./styles.module.scss"
 
@@ -16,7 +17,9 @@ export default function LoginContainer() {
           Continue your journey with us. Sign in to access your personalized dashboard.
         </Typography>
       </Box>
-      <div className={styles.rightSide}></div>
+      <div className={styles.rightSide}>
+        <SignInForm />
+      </div>
     </Box>
   )
 }  
