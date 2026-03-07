@@ -1,0 +1,44 @@
+<svg
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class="w-32 h-32 mb-6"
+  data-fg-b5gb0="6.5:6.1876:/src/app/components/MountainIcon.tsx:3:5:85:1052:e:svg:xtetxtetxtetetxte:1"
+>
+  <path
+    d="M50 20 C48 20, 46 21, 44 23 L20 60 C18 63, 19 65, 22 65 L78 65 C81 65, 82 63, 80 60 L56 23 C54 21, 52 20, 50 20Z"
+    fill="currentColor"
+    fill-opacity="0.9"
+    data-fg-b5gb2="6.5:6.1876:/src/app/components/MountainIcon.tsx:10:7:269:193:e:path"
+  ></path>
+  <path
+    d="M70 30 C68.5 30, 67 31, 65.5 33 L48 63 C47 64.5, 48 65, 49.5 65 L90 65 C91.5 65, 92.5 64.5, 91.5 63 L74 33 C72.5 31, 71.5 30, 70 30Z"
+    fill="currentColor"
+    fill-opacity="0.7"
+    data-fg-b5gb4="6.5:6.1876:/src/app/components/MountainIcon.tsx:17:7:516:213:e:path"
+  ></path>
+  <circle
+    cx="50"
+    cy="25"
+    r="5"
+    fill="currentColor"
+    fill-opacity="0.4"
+    data-fg-b5gb6="6.5:6.1876:/src/app/components/MountainIcon.tsx:24:7:781:70:e:circle"
+  ></circle>
+  <circle
+    cx="70"
+    cy="35"
+    r="4"
+    fill="currentColor"
+    fill-opacity="0.3"
+    data-fg-b5gb7="6.5:6.1876:/src/app/components/MountainIcon.tsx:25:7:858:70:e:circle"
+  ></circle>
+  <path
+    d="M15 65 Q50 80, 85 65"
+    stroke="currentColor"
+    stroke-width="3"
+    fill="none"
+    opacity="0.3"
+    data-fg-b5gb9="6.5:6.1876:/src/app/components/MountainIcon.tsx:28:7:983:143:e:path"
+  ></path>
+</svg>
