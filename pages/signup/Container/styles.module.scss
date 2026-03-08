@@ -5,8 +5,10 @@
   height: 100dvh;
   display: flex;
   @media (max-width: $max-width-mobile) {
+    min-height: 100dvh;
     height: auto;
     margin: 12px 0px;
+    align-items: center;
   }
 }
 
