@@ -1,9 +1,17 @@
+'use client'
 import { Box, Button, Checkbox, TextField, Typography } from "@mui/material"
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Logo from "../../../assets/images/peak.svg";
+import { useRouter } from "next/navigation";
 import styles from "./styles.module.scss"
 
 export default function SignInForm() {
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push("/signup")
+  }
+
   return (
     <Box className={styles.container}>
       <Box className={styles.iconContainer}>
@@ -26,7 +34,7 @@ export default function SignInForm() {
         <Button variant="contained" className={styles.signInButton}>Sign In <ArrowForwardIcon /></Button>
         <Box className={styles.footerContainer}>
           <Typography className={styles.footerLabel}>Don&apos;t have an account?</Typography>
-          <Typography className={styles.createAccountLabel}>Create one now</Typography>
+          <Typography onClick={handleClick} className={styles.createAccountLabel}>Create one now</Typography>
         </Box>
       </Box>
     </Box>

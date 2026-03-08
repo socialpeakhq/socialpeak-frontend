@@ -1,11 +1,14 @@
 import { Box, Typography } from "@mui/material"
+import SignUpForm from "../SignUpForm"
 import Logo from "../../../assets/images/peak.svg"
 import styles from "./styles.module.scss"
 
 export default function SignUpContainer() {
   return (
     <Box className={styles.container}>
-      <Box className={styles.leftSide}></Box>
+      <Box className={styles.leftSide}>
+        <SignUpForm />
+      </Box>
       <Box className={styles.rigtSide}>
         <Box className={styles.iconContainer}>
           <Logo width={150} height={150} className={styles.icon} />
