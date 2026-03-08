@@ -4,6 +4,10 @@
   width: 100%;
   height: 100dvh;
   display: flex;
+  @media (max-width: $max-width-mobile) {
+    height: auto;
+    margin: 12px 0px;
+  }
 }
 
 .leftSide {
