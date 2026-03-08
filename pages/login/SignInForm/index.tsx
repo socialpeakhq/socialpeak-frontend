@@ -1,10 +1,14 @@
 import { Box, Button, Checkbox, TextField, Typography } from "@mui/material"
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Logo from "../../../assets/images/peak.svg";
 import styles from "./styles.module.scss"
 
 export default function SignInForm() {
   return (
     <Box className={styles.container}>
+      <Box className={styles.iconContainer}>
+        <Logo width={64} height={64} className={styles.icon} />
+      </Box>
       <Typography className={styles.formLabel}>Sign In</Typography>
       <Typography className={styles.subLabel}>Enter your credentials to access your account</Typography>
       <Box className={styles.form}>
