@@ -1,10 +1,10 @@
+import { Box } from "@mui/material";
 import LoginContainer from "@/pages/login/Container";
-import styles from "./styles.module.scss";
 
 export default function Login() {
   return (
-    <div className={styles.container}>
+    <Box>
       <LoginContainer />
-    </div>
+    </Box>
   )
 } 
