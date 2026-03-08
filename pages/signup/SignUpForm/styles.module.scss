@@ -80,6 +80,7 @@
   input {
     padding-top: 8px;
     height: 100%;
+    border-radius: 12px !important;
   }
   @media (max-width: $max-width-tablet-portrait) {
     height: 46px;
