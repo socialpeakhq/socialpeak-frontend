@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@use "tailwindcss";
 
 :root {
   --background: #fff7f7;
@@ -7,11 +7,9 @@
   --accent-purple: #6c48c5;
   --soft-accent: rgb(198, 143, 230);
   --text-color: #0f172a;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --max-width-tablet: 1280px;
+  --max-width-tablet-portrait: 980px;
+  --max-width-mobile-landscape: 700px;
+  --max-width-mobile: 500px;
 }

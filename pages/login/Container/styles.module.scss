@@ -1,5 +1,3 @@
-@import "../../../assets/styles/variables";
-
 .loginContainer {
   width: 100%;
   height: 100dvh;
@@ -20,7 +18,7 @@
     var(--accent-purple) 30%,
     var(--soft-accent) 70%
   );
-  @media (max-width: $max-width-tablet-portrait) {
+  @media (max-width: var(--max-width-tablet-portrait)) {
     display: none;
   }
 }
@@ -52,7 +50,7 @@
   justify-content: center;
   width: 50%;
   height: 100%;
-  @media (max-width: $max-width-tablet-portrait) {
+  @media (max-width: var(--max-width-tablet-portrait)) {
     width: 100%;
   }
 }
