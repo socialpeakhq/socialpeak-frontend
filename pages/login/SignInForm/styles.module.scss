@@ -155,6 +155,9 @@
   @media (max-width: $max-width-mobile) {
     font-size: 14px;
   }
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .checkbox {
