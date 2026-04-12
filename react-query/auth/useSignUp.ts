@@ -1,21 +1,20 @@
 import APIClient from "../apiClient";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { User } from "./auth.types";
+import { RegisterUser, User } from "./auth.types";
 
 interface Response {
   access_token: string;
   data: User;
 }
 
-const apiClient = new APIClient<Response>(`/auth/login`);
+const apiClient = new APIClient<Response>(`/auth/signup`);
 
-export const useLogin = () => {
+export const useSignUp = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: { email: string; password: string }) =>
-      apiClient.post(payload),
+    mutationFn: (payload: RegisterUser) => apiClient.post(payload),
     onSuccess: (successData) => {
       const { data, access_token } = successData;
       queryClient.setQueryData(["auth"], data);

@@ -4,14 +4,22 @@ import { Box, Button, TextField, Typography } from "@mui/material"
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Logo from "../../../assets/images/peak.svg"
 import { useRouter } from "next/navigation"
+import { useSignUp } from "@/react-query/auth/useSignUp";
+import { SubmitEvent } from "react";
 import styles from "./styles.module.scss"
 
 export default function SignUpForm() {
   const router = useRouter()
+  const signupMutation = useSignUp();
 
   const handleClick = () => {
     router.push("/login")
   }
+
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
+
   return (
     <Box className={styles.signUpContainer}>
       <Box className={styles.iconContainer}>
@@ -19,7 +27,7 @@ export default function SignUpForm() {
       </Box>
       <Typography className={styles.formLabel}>Create Account</Typography>
       <Typography className={styles.subLabel}>Start your journey with us today</Typography>
-      <Box className={styles.form}>
+      <form className={styles.form}>
         <TextField
           required
           variant="filled"
@@ -55,12 +63,12 @@ export default function SignUpForm() {
           placeholder="Confirm Password"
           className={styles.input}
         />
-        <Button variant="contained" className={styles.submitButton}>
+        <Button type="submit" variant="contained" className={styles.submitButton}>
           Sign In <ArrowForwardIcon />
         </Button>
         <Typography className={styles.footerLabel}>
           <span>Already have an account?</span> <span onClick={handleClick}>Sign in instead</span></Typography>
-      </Box>
+      </form>
     </Box>
   )
 }
