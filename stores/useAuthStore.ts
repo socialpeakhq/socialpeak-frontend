@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { RegisterUser } from "@/types/auth.types";
+import { create } from "zustand";
 
 type AuthStore = {
   isAuth: boolean;
@@ -10,22 +10,27 @@ type AuthStore = {
   handleRegisterUserData: (name: string, value: string) => void;
 };
 
-const useAuthStore: StateCreator<AuthStore> = (set) => ({
+const useAuthStore = create<AuthStore>((set) => ({
   isAuth: false,
   registerUserData: undefined,
+
   setAuthentication: () => {
-    set(() => ({
-      isAuth: true,
-    }));
+    set({ isAuth: true });
   },
+
   handleRegisterUserData: (name: string, value: string) => {
     set((s) => {
       const currentData = s.registerUserData || {};
       return {
-        registerUserData: { ...currentData, [name]: value } as RegisterUser,
+        registerUserData: {
+          ...currentData,
+          [name]: value,
+        } as RegisterUser,
       };
     });
   },
-});
+}));
 
 mountStoreDevtool("Auth", useAuthStore);
+
+export default useAuthStore;
