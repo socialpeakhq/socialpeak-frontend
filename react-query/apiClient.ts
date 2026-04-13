@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import useAlertStore from "@/stores/useAlertStore";
 import axios, { AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
@@ -26,7 +27,19 @@ axiosInstance.interceptors.response.use(
   (err) => {
     const { response } = err;
     const { data } = response;
-    const { errorCode, error } = data;
+    const { error, statusCode, message } = data;
+
+    const openAlert = useAlertStore.getState().openAlert;
+    if (!response) {
+      openAlert({ message: "Network Error", severity: "error" });
+    }
+
+    console.log(data);
+
+    openAlert({
+      message: `${statusCode} - ${error} : ${message}`,
+      severity: "error",
+    });
 
     return Promise.reject(error);
   },
