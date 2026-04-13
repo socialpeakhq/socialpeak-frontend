@@ -7,10 +7,12 @@ import { useSignUp } from "@/react-query/auth/useSignUp";
 import useAuthStore from "@/stores/useAuthStore";
 import Logo from "../../../assets/images/peak.svg"
 import styles from "./styles.module.scss"
+import useAlertStore from "@/stores/useAlertStore";
 
 export default function SignUpForm() {
   const registerData = useAuthStore(s => s.registerUserData)
   const handleRegisterDataChange = useAuthStore(s => s.handleRegisterUserData)
+  const openAlert = useAlertStore(s => s.openAlert)
   const router = useRouter()
   const signupMutation = useSignUp();
 
@@ -24,8 +26,13 @@ export default function SignUpForm() {
 
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (registerData && registerData.confirm_password === registerData.password)
+    if (registerData && registerData.confirm_password === registerData.password) {
       signupMutation.mutate(registerData)
+    } else {
+      if (registerData?.confirm_password !== registerData?.password) {
+        openAlert({ message: "Passwords do not match", severity: "error" })
+      }
+    }
   }
 
   return (
@@ -38,6 +45,7 @@ export default function SignUpForm() {
       <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
         <TextField
           required
+          id="full_name"
           variant="filled"
           type="text"
           placeholder="Full Name"
@@ -48,6 +56,7 @@ export default function SignUpForm() {
         />
         <TextField
           required
+          id="email"
           variant="filled"
           type="email"
           placeholder="E-mail"
@@ -58,6 +67,7 @@ export default function SignUpForm() {
         />
         <TextField
           required
+          id="phone_number"
           variant="filled"
           type="text"
           placeholder="Phone Number"
@@ -68,6 +78,7 @@ export default function SignUpForm() {
         />
         <TextField
           required
+          id="password"
           variant="filled"
           type="password"
           placeholder="Password"
@@ -78,6 +89,7 @@ export default function SignUpForm() {
         />
         <TextField
           required
+          id="confirm_password"
           variant="filled"
           type="password"
           placeholder="Confirm Password"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Providers from "./providers";
 import { geistMono, geistSans } from "./fonts";
+import AlertPopUp from "@/components/shared/Alert";
 
 import "./globals.scss"
 
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           {children}
+          <AlertPopUp />
         </Providers>
       </body>
     </html>
