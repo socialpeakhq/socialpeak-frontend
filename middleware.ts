@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import useAuthStore from "./stores/useAuthStore";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
+  const token = useAuthStore.getState().token;
 
   const { pathname } = request.nextUrl;
 
-  // If user is not authenticated → block /app routes
   if (!token && pathname.startsWith("/app")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }

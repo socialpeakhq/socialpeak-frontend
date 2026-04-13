@@ -39,6 +39,7 @@ export default function SignInForm() {
       <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
         <TextField
           required
+          id="email"
           variant="filled"
           type="email"
           placeholder="E-mail"
@@ -48,6 +49,7 @@ export default function SignInForm() {
         />
         <TextField
           required
+          id="password"
           variant="filled"
           type="password"
           placeholder="Password"

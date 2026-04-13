@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Typography } from "@mui/material"
 import SignInForm from "../SignInForm";
 import Logo from "../../../assets/images/peak.svg";
