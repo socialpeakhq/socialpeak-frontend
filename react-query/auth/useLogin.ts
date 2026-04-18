@@ -26,9 +26,7 @@ export const useLogin = () => {
       const { data, access_token } = successData;
       setAuthentication(access_token);
       queryClient.setQueryData(["auth"], data);
-      setTimeout(() => {
-        router.push("/app/dashboard");
-      }, 0);
+      router.replace("/app/dashboard");
     },
   });
 };

@@ -1,13 +1,22 @@
+import { AUTH_TOKEN_COOKIE_NAME } from "@/lib/authCookieName";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import useAuthStore from "./stores/useAuthStore";
+
+function readAuthTokenFromRequest(request: NextRequest) {
+  const raw = request.cookies.get(AUTH_TOKEN_COOKIE_NAME)?.value;
+  if (!raw) return undefined;
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
 
 export function middleware(request: NextRequest) {
-  const token = useAuthStore.getState().token;
-
   const { pathname } = request.nextUrl;
+  const token = readAuthTokenFromRequest(request);
 
-  if (!token && pathname.startsWith("/app")) {
+  if (pathname.startsWith("/app") && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

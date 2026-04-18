@@ -1,6 +1,7 @@
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { persist } from "zustand/middleware";
 import { RegisterUser } from "@/types/auth.types";
+import { syncAuthTokenCookie } from "@/lib/syncAuthTokenCookie";
 import { create, StateCreator } from "zustand";
 
 type AuthStore = {
@@ -21,6 +22,7 @@ const authStore: StateCreator<AuthStore, [["zustand/persist", unknown]]> = (
 
   setAuthentication: (payload: string) => {
     set({ isAuth: true, token: payload });
+    syncAuthTokenCookie(payload);
   },
 
   handleRegisterUserData: (name: string, value: string) => {
@@ -39,7 +41,14 @@ const authStore: StateCreator<AuthStore, [["zustand/persist", unknown]]> = (
 const useAuthStore = create<AuthStore>()(
   persist(authStore, {
     name: "auth",
+    onRehydrateStorage: () => (state) => {
+      if (state?.token) {
+        syncAuthTokenCookie(state.token);
+      }
+    },
   }),
 );
+
+mountStoreDevtool("Auth", useAuthStore);
 
 export default useAuthStore;
