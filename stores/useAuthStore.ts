@@ -9,7 +9,7 @@ type AuthStore = {
   token: string | undefined;
   registerUserData: RegisterUser | undefined;
 
-  setAuthentication: (payload: string) => void;
+  setAuthentication: (token: string) => void;
   handleRegisterUserData: (name: string, value: string) => void;
 };
 
