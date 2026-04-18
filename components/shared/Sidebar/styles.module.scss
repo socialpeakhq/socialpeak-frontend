@@ -28,3 +28,47 @@
   color: grey;
   padding-bottom: 5px;
 }
+
+.sidebarFooter {
+  border-top: solid 1px rgb(238, 238, 238);
+  display: flex;
+  height: 72px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #f1f1f1;
+    .iconContainer {
+      background-color: #fff;
+      transform: scale(1.1);
+      color: var(--app-text-color);
+    }
+
+    .navigationLabel {
+      color: var(--app-text-color);
+    }
+  }
+}
+
+.icon {
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(128, 128, 128, 1);
+  background-color: rgba(128, 128, 128, 0.15);
+  transition: all 0.3s;
+}
+
+.settingsLabel {
+  padding-top: 5px;
+  color: var(--transparent-text-color);
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s;
+}
