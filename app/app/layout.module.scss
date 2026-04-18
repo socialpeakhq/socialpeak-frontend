@@ -1,3 +1,19 @@
-.sidebarGrid {
-  background-color: red;
+.layout {
+  height: 100dvh;
+  width: 100%;
+}
+
+.contentGrid {
+  background-color: yellow;
+  height: 100%;
+}
+
+.headerContainer {
+  height: 72px;
+  width: 100%;
+  background-color: blue;
+}
+
+.content {
+  height: calc(100% - 72px);
 }
