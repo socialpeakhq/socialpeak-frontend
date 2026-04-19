@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: 12px;
   gap: 12px;
-  height: 200px;
+  height: 300px;
 }
 
 .title {
@@ -16,14 +16,51 @@
 .messages {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   background-color: rgba(128, 128, 128, 0.05);
   padding: 12px;
   height: 100%;
   overflow-y: auto;
+  border-radius: 12px;
 }
 
 .singleMessageContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   height: 72px;
   width: 100%;
+  padding: 5px;
+  border-radius: 12px;
+  border: solid 1px transparent;
+  cursor: pointer;
+  background-color: var(--background);
+  transition: all 0.3s;
+  &:hover {
+    background-color: var(--soft-accent-background);
+    border: solid 1px var(--accent-purple);
+  }
+}
+
+.messageSender {
+  color: var(--app-text-color);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.message {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.profileIcon {
+  background-color: var(--accent-purple);
+  border-radius: 100%;
+  color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  margin-left: 5px;
 }

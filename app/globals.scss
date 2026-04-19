@@ -6,6 +6,7 @@
   --primary-blue: #1230ae;
   --accent-purple: #6c48c5;
   --soft-accent: rgb(198, 143, 230);
+  --soft-accent-background: rgb(198, 143, 230, 0.3);
   --text-color: #0f172a;
   --transparent-text-color: rgb(23, 23, 23, 0.5);
   --app-text-color: #171717;
@@ -16,4 +17,15 @@
   --max-width-tablet-portrait: 980px;
   --max-width-mobile-landscape: 700px;
   --max-width-mobile: 500px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-purple);
 }
