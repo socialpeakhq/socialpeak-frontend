@@ -5,6 +5,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Link from "next/link";
 import Navigation from "../Navigarion";
 import styles from "./styles.module.scss"
+import RecentMessages from "../RecentMessages";
 
 export default function Sidebar(): ReactElement {
   return (
@@ -19,6 +20,7 @@ export default function Sidebar(): ReactElement {
           <Typography className={styles.subtitle}>Manage & Grow</Typography>
         </Box>
       </Link>
+      <RecentMessages />
       <Navigation />
       <Link href="/app/settings">
         <Box className={styles.sidebarFooter}>

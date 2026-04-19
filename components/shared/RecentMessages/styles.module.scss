@@ -1,0 +1,29 @@
+.recentMessagesContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 12px;
+  height: 200px;
+}
+
+.title {
+  font-weight: bold;
+  color: grey;
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: rgba(128, 128, 128, 0.05);
+  padding: 12px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.singleMessageContainer {
+  height: 72px;
+  width: 100%;
+}
