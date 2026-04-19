@@ -1,19 +1,20 @@
 'use client'
 
-import { type ReactElement } from "react";
+import { type ReactElement, useSyncExternalStore } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import styles from "./styles.module.scss"
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { User } from "@/react-query/auth/auth.types";
 import SearchIcon from '@mui/icons-material/Search';
 import { AUTH_QUERY_KEY } from "@/lib/authQueryPersistence";
 
 export default function Header(): ReactElement {
-  const { data: auth } = useQuery<User | undefined>({
-    queryKey: AUTH_QUERY_KEY,
-    enabled: false,
-    queryFn: async () => undefined,
-  });
+  const queryClient = useQueryClient();
+  const auth = useSyncExternalStore(
+    (onStoreChange) => queryClient.getQueryCache().subscribe(onStoreChange),
+    () => queryClient.getQueryData<User>(AUTH_QUERY_KEY),
+    () => undefined,
+  );
 
   if (!auth) {
     return <></>;
