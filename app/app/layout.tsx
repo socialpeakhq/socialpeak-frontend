@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
-import styles from "./layout.module.scss"
 import Sidebar from "@/components/shared/Sidebar";
+import Header from "@/components/shared/Header";
+import styles from "./layout.module.scss"
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -9,7 +10,9 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
         <Sidebar />
       </Grid>
       <Grid size={{ lg: 10 }} className={styles.contentGrid}>
-        <Box className={styles.headerContainer}></Box>
+        <Box className={styles.headerContainer}>
+          <Header />
+        </Box>
         <Box className={styles.content}>{children}</Box>
       </Grid>
     </Grid>
