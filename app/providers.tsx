@@ -17,11 +17,11 @@ export default function Providers({ children }: { children: ReactNode }) {
       gcTime: Number.POSITIVE_INFINITY,
       staleTime: Number.POSITIVE_INFINITY,
     });
-    restoreAuthQuery(client);
     return client;
   });
 
   useEffect(() => {
+    restoreAuthQuery(queryClient);
     persistAuthQuery(queryClient);
 
     return queryClient.getQueryCache().subscribe(() => {
