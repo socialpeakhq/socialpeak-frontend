@@ -34,29 +34,11 @@
   }
 }
 
-.connectorLinesWrap {
-  position: relative;
-  width: 100%;
-  height: 56px;
-}
-
-.connectorLines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-
-  line {
-    stroke: var(--transparent-text-color);
-    stroke-width: 0.6;
-    stroke-dasharray: 3 3;
-  }
-}
-
 .connectorIconsRow {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-top: 16px;
 }
 
 .connectorIcon {
@@ -152,7 +134,7 @@
   font-size: 13px;
   color: var(--transparent-text-color);
   margin-top: 4px;
-  min-height: 36px;
+  height: 28px;
 }
 
 .connectButton {

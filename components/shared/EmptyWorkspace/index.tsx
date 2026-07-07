@@ -8,7 +8,13 @@ import XIcon from "@mui/icons-material/X";
 import TikTok from "@ant-design/icons/TikTokOutlined";
 import styles from "./styles.module.scss";
 
-const connectorIcons = [FacebookIcon, InstagramIcon, ChatBubbleIcon, XIcon, TikTok];
+const connectorIcons = [
+  FacebookIcon,
+  InstagramIcon,
+  ChatBubbleIcon,
+  XIcon,
+  TikTok,
+];
 
 const platforms = [
   {
@@ -58,13 +64,13 @@ export default function EmptyWorkspace() {
             ))}
           </svg>
         </Box>
-        <Box className={styles.connectorIconsRow}>
+        {/* <Box className={styles.connectorIconsRow}>
           {connectorIcons.map((Icon, index) => (
             <Box key={index} className={styles.connectorIcon}>
               <Icon />
             </Box>
           ))}
-        </Box>
+        </Box> */}
       </Box>
 
       <Box className={styles.connectedBadge}>
