@@ -26,13 +26,15 @@ axiosInstance.interceptors.response.use(
   },
   (err) => {
     const { response } = err;
-    const { data } = response;
-    const { error, message } = data;
-
     const openAlert = useAlertStore.getState().openAlert;
+
     if (!response) {
       openAlert({ message: "Network Error", severity: "error" });
+      return Promise.reject(err);
     }
+
+    const { data } = response;
+    const { error, message } = data;
 
     console.log(data);
 
