@@ -1,0 +1,178 @@
+.emptyWorkspaceContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.diagramContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+}
+
+.mainIconContainer {
+  height: 64px;
+  width: 64px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent-purple), var(--soft-accent));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  z-index: 1;
+  svg {
+    font-size: 30px;
+  }
+}
+
+.connectorLinesWrap {
+  position: relative;
+  width: 100%;
+  height: 56px;
+}
+
+.connectorLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  line {
+    stroke: var(--transparent-text-color);
+    stroke-width: 0.6;
+    stroke-dasharray: 3 3;
+  }
+}
+
+.connectorIconsRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.connectorIcon {
+  height: 48px;
+  width: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--sidebar-background-color);
+  border: 1px solid var(--soft-accent-background);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    font-size: 20px;
+  }
+}
+
+.connectedBadge {
+  display: flex;
+  align-items: center;
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+
+.connectedBadgeCount {
+  font-weight: 700;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.subtitle {
+  color: var(--transparent-text-color);
+  font-size: 15px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 210px;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: var(--background);
+}
+
+.cardIcon {
+  height: 44px;
+  width: 44px;
+  border-radius: 10px;
+  background: var(--sidebar-background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  svg {
+    font-size: 20px;
+  }
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.cardDescription {
+  font-size: 13px;
+  color: var(--transparent-text-color);
+  margin-top: 4px;
+  min-height: 36px;
+}
+
+.connectButton {
+  width: 100%;
+  margin-top: 16px;
+  text-transform: none;
+  border-radius: 8px;
+  border-color: var(--accent-purple);
+  color: var(--accent-purple);
+  font-weight: 600;
+
+  &:hover {
+    border-color: var(--accent-purple);
+    background: var(--soft-accent-background);
+  }
+}
+
+.footerLabel {
+  color: var(--transparent-text-color);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 8px;
+}
