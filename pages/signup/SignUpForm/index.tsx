@@ -1,39 +1,45 @@
-"use client"
+"use client";
 import { SubmitEvent } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material"
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useRouter } from "next/navigation"
+import { Box, Button, TextField, Typography } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useRouter } from "next/navigation";
 import { useSignUp } from "@/react-query/auth/useSignUp";
 import useAuthStore from "@/stores/useAuthStore";
-import Logo from "../../../assets/images/peak.svg"
-import styles from "./styles.module.scss"
+import Logo from "../../../assets/images/peak.svg";
+import styles from "./styles.module.scss";
 import useAlertStore from "@/stores/useAlertStore";
 
 export default function SignUpForm() {
-  const registerData = useAuthStore(s => s.registerUserData)
-  const handleRegisterDataChange = useAuthStore(s => s.handleRegisterUserData)
-  const openAlert = useAlertStore(s => s.openAlert)
-  const router = useRouter()
+  const registerData = useAuthStore((s) => s.registerUserData);
+  const handleRegisterDataChange = useAuthStore(
+    (s) => s.handleRegisterUserData,
+  );
+  const openAlert = useAlertStore((s) => s.openAlert);
+  const router = useRouter();
   const signupMutation = useSignUp();
 
   const handleClick = () => {
-    router.push("/login")
-  }
+    router.push("/login");
+  };
 
   const handleChange = (name: string, value: string) => {
-    handleRegisterDataChange(name, value)
-  }
+    handleRegisterDataChange(name, value);
+  };
 
   const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (registerData && registerData.confirm_password === registerData.password) {
-      signupMutation.mutate(registerData)
+    e.preventDefault();
+    if (
+      registerData &&
+      registerData.confirm_password === registerData.password
+    ) {
+      const { confirm_password, ...newData } = registerData;
+      signupMutation.mutate(newData);
     } else {
       if (registerData?.confirm_password !== registerData?.password) {
-        openAlert({ message: "Passwords do not match", severity: "error" })
+        openAlert({ message: "Passwords do not match", severity: "error" });
       }
     }
-  }
+  };
 
   return (
     <Box className={styles.signUpContainer}>
@@ -41,7 +47,9 @@ export default function SignUpForm() {
         <Logo width={64} height={64} className={styles.icon} />
       </Box>
       <Typography className={styles.formLabel}>Create Account</Typography>
-      <Typography className={styles.subLabel}>Start your journey with us today</Typography>
+      <Typography className={styles.subLabel}>
+        Start your journey with us today
+      </Typography>
       <form onSubmit={(e) => handleSubmit(e)} className={styles.form}>
         <TextField
           required
@@ -98,12 +106,18 @@ export default function SignUpForm() {
           value={registerData?.confirm_password ?? ""}
           className={styles.input}
         />
-        <Button type="submit" variant="contained" className={styles.submitButton}>
+        <Button
+          type="submit"
+          variant="contained"
+          className={styles.submitButton}
+        >
           Sign In <ArrowForwardIcon />
         </Button>
         <Typography className={styles.footerLabel}>
-          <span>Already have an account?</span> <span onClick={handleClick}>Sign in instead</span></Typography>
+          <span>Already have an account?</span>{" "}
+          <span onClick={handleClick}>Sign in instead</span>
+        </Typography>
       </form>
     </Box>
-  )
+  );
 }
