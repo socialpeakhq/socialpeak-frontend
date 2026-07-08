@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useAlertStore from "@/stores/useAlertStore";
-import axios, { AxiosRequestConfig } from "axios";
+import useAuthStore from "@/stores/useAuthStore";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_API,
 });
 
-// axiosInstance.interceptors.request.use(
-//   (request: InternalAxiosRequestConfig) => {
-//     const token = useAuthStore.getState().token;
+axiosInstance.interceptors.request.use(
+  (request: InternalAxiosRequestConfig) => {
+    const token = useAuthStore.getState().token;
 
-//     request.headers.set("Authorization", `Bearer ${token}`);
-//     request.headers.set("Accept", "application/json");
+    request.headers.set("Authorization", `Bearer ${token}`);
+    request.headers.set("Accept", "application/json");
 
-//     return request;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 axiosInstance.interceptors.response.use(
   (response) => {
