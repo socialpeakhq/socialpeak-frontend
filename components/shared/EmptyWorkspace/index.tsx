@@ -1,20 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
-import ShowChartIcon from "@mui/icons-material/ShowChart";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import XIcon from "@mui/icons-material/X";
 import TikTok from "@ant-design/icons/TikTokOutlined";
 import styles from "./styles.module.scss";
-
-const connectorIcons = [
-  FacebookIcon,
-  InstagramIcon,
-  ChatBubbleIcon,
-  XIcon,
-  TikTok,
-];
 
 const platforms = [
   {
