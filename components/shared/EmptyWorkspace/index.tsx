@@ -70,7 +70,7 @@ export default function EmptyWorkspace() {
           {connectedCount}
         </Typography>
         <Typography component="span">
-          &nbsp;/{platforms.length} accounts connected
+          &nbsp;/ {platforms.length} accounts connected
         </Typography>
       </Box>
 
