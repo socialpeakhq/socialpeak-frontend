@@ -22,20 +22,18 @@
 .singleNavigation {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  padding: 5px;
   border-radius: 12px;
   transition: all 0.3s;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: var(--hover-background-color);
+
     .iconContainer {
-      background-color: #fff;
-      transform: scale(1.1);
-      color: var(--app-text-color);
+      color: var(--soft-accent);
     }
 
     .navigationLabel {
-      color: var(--app-text-color);
+      color: var(--soft-accent);
     }
   }
 }
@@ -47,7 +45,6 @@
   justify-content: center;
   border-radius: 8px;
   color: rgba(128, 128, 128, 1);
-  background-color: rgba(128, 128, 128, 0.15);
   transition: all 0.3s;
 }
 

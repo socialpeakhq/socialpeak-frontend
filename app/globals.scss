@@ -12,6 +12,7 @@
   --app-text-color: #171717;
 
   --sidebar-background-color: #f7f6fc;
+  --hover-background-color: #f1f1f1;
 
   --max-width-tablet: 1280px;
   --max-width-tablet-portrait: 980px;
@@ -27,5 +28,5 @@
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-purple);
+  background: var(--soft-accent-background);
 }

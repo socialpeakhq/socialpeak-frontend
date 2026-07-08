@@ -49,22 +49,6 @@ const connectedCount = 0;
 export default function EmptyWorkspace() {
   return (
     <Box className={styles.emptyWorkspaceContainer}>
-      <Box className={styles.diagramContainer}>
-        <Box className={styles.mainIconContainer}>
-          <ShowChartIcon />
-        </Box>
-        <Box className={styles.connectorLinesWrap}>
-          <svg
-            className={styles.connectorLines}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {[10, 30, 50, 70, 90].map((x) => (
-              <line key={x} x1="50" y1="0" x2={x} y2="100" />
-            ))}
-          </svg>
-        </Box>
-      </Box>
       <Box className={styles.connectedBadge}>
         <Typography component="span" className={styles.connectedBadgeCount}>
           {connectedCount}
