@@ -64,15 +64,7 @@ export default function EmptyWorkspace() {
             ))}
           </svg>
         </Box>
-        {/* <Box className={styles.connectorIconsRow}>
-          {connectorIcons.map((Icon, index) => (
-            <Box key={index} className={styles.connectorIcon}>
-              <Icon />
-            </Box>
-          ))}
-        </Box> */}
       </Box>
-
       <Box className={styles.connectedBadge}>
         <Typography component="span" className={styles.connectedBadgeCount}>
           {connectedCount}
