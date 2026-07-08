@@ -17,7 +17,9 @@ export const useGetUserWorkspaces = (id: number) => {
   useEffect(() => {
     if (response.isSuccess) {
       const data = response.data;
-      setCurrentWorkspace(data[0].workspace_id);
+      if (data && data[0]) {
+        setCurrentWorkspace(data[0].workspace_id);
+      }
     }
   }, [response.isSuccess, response.data, setCurrentWorkspace]);
 };
