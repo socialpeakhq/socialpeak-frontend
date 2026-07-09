@@ -5,11 +5,13 @@ import { Box, Button, Typography } from "@mui/material";
 import XIcon from "@mui/icons-material/X";
 import TikTok from "@ant-design/icons/TikTokOutlined";
 import styles from "./styles.module.scss";
+import useDialogStore from "@/stores/useDialogStore";
 
 type Platform = {
   name: string;
   icon: ReactNode | ElementType;
   description: string;
+  value?: string;
 };
 
 const platforms: Platform[] = [
@@ -21,6 +23,7 @@ const platforms: Platform[] = [
       </svg>
     ),
     description: "Your most frequented pages, all in one",
+    value: "meta",
   },
   // {
   //   name: "Instagram",
@@ -53,6 +56,7 @@ function renderPlatformIcon(icon: Platform["icon"]): ReactElement {
 }
 
 export default function EmptyWorkspace() {
+  const openDialog = useDialogStore((s) => s.openDialog);
   return (
     <Box className={styles.emptyWorkspaceContainer}>
       <Box className={styles.connectedBadge}>
@@ -73,7 +77,7 @@ export default function EmptyWorkspace() {
       </Typography>
 
       <Box className={styles.cardsContainer}>
-        {platforms.map(({ name, icon, description }) => (
+        {platforms.map(({ name, icon, description, value }) => (
           <Box key={name} className={styles.card}>
             <Box className={styles.cardContent}>
               <Box className={styles.cardIcon}>{renderPlatformIcon(icon)}</Box>
@@ -82,7 +86,13 @@ export default function EmptyWorkspace() {
                 {description}
               </Typography>
             </Box>
-            <Button variant="outlined" className={styles.connectButton}>
+            <Button
+              onClick={() =>
+                value ? openDialog({ dialogCaller: value }) : null
+              }
+              variant="outlined"
+              className={styles.connectButton}
+            >
               Connect
             </Button>
           </Box>
