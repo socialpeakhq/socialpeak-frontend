@@ -7,3 +7,15 @@
   align-items: flex-start;
   justify-content: space-between;
 }
+
+.closeContainer {
+  cursor: pointer;
+  background-color: var(--sidebar-background-color);
+  padding: 6px;
+  display: flex;
+  border-radius: 8px;
+  svg {
+    font-size: 20px;
+    opacity: 0.8;
+  }
+}
