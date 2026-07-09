@@ -1,5 +1,9 @@
 import APIClient from "../apiClient";
 import { useMutation } from "@tanstack/react-query";
+import { useMetaPages } from "./useMetaPages";
+import useAlertStore from "@/stores/useAlertStore";
+import useWorkspaceStore from "@/stores/useWorkspaceStore";
+import useDialogStore from "@/stores/useDialogStore";
 
 type ConnectResponse = {
   url: string;
@@ -72,10 +76,29 @@ const openMetaConnectPopup = (url: string): Promise<MetaOAuthMessage> => {
 };
 
 export const useMetaConnections = () => {
+  const selectedWorkspace = useWorkspaceStore((s) => s.selectedWorkspace);
+  const openAlert = useAlertStore((s) => s.openAlert);
+  const metaPagesMutation = useMetaPages();
+  const closeDialog = useDialogStore((s) => s.closeDialog);
+
   return useMutation({
     mutationFn: async (id: number) => {
       const { url } = await returnApi(id).getAll();
       return openMetaConnectPopup(url);
+    },
+    onSuccess: () => {
+      openAlert({ message: "Meta account connected", severity: "success" });
+      if (selectedWorkspace) metaPagesMutation.mutate(selectedWorkspace);
+      closeDialog();
+    },
+    onError: (error) => {
+      openAlert({
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to connect Meta account",
+        severity: "error",
+      });
     },
   });
 };

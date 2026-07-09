@@ -3,7 +3,6 @@ import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
 import { useMetaConnections } from "@/react-query/connections/useMetaConnect";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
-import useAlertStore from "@/stores/useAlertStore";
 
 const PERMISSIONS = [
   "You have a Facebook Page (not just a personal profile). This is required to connect.",
@@ -39,27 +38,12 @@ export function MetaConnectionInformationHeader() {
 export function MetaConnectionInformationContent() {
   const selectedWorkspace = useWorkspaceStore((s) => s.selectedWorkspace);
   const closeDialog = useDialogStore((s) => s.closeDialog);
-  const openAlert = useAlertStore((s) => s.openAlert);
   const useMetaConnectionMutation = useMetaConnections();
 
   const handleConnect = () => {
     if (!selectedWorkspace) return;
 
-    useMetaConnectionMutation.mutate(selectedWorkspace, {
-      onSuccess: () => {
-        openAlert({ message: "Meta account connected", severity: "success" });
-        closeDialog();
-      },
-      onError: (error) => {
-        openAlert({
-          message:
-            error instanceof Error
-              ? error.message
-              : "Failed to connect Meta account",
-          severity: "error",
-        });
-      },
-    });
+    useMetaConnectionMutation.mutate(selectedWorkspace);
   };
 
   return (
