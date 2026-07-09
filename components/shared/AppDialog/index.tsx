@@ -18,6 +18,7 @@ export default function AppDialog() {
       open={open}
       maxWidth={dialogCaller === "meta" ? "sm" : "lg"}
       fullWidth
+      onClose={closeDialog}
       slotProps={{
         backdrop: {
           className: styles.backdrop,
