@@ -1,8 +1,11 @@
 "use client";
 
-import { Box, Dialog, DialogTitle } from "@mui/material";
+import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { MetaConnectionInformationHeader } from "../MetaConnectionInformation";
+import {
+  MetaConnectionInformationContent,
+  MetaConnectionInformationHeader,
+} from "../MetaConnectionInformation";
 import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
 
@@ -13,7 +16,7 @@ export default function AppDialog() {
   return (
     <Dialog
       open={open}
-      maxWidth={dialogCaller === "meta" ? "xs" : "lg"}
+      maxWidth={dialogCaller === "meta" ? "sm" : "lg"}
       fullWidth
       slotProps={{
         backdrop: {
@@ -34,6 +37,9 @@ export default function AppDialog() {
           </Box>
         </Box>
       </DialogTitle>
+      <DialogContent>
+        {dialogCaller === "meta" ? <MetaConnectionInformationContent /> : null}
+      </DialogContent>
     </Dialog>
   );
 }

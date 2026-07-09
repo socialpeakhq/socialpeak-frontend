@@ -1,5 +1,19 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
+
+const PERMISSIONS = [
+  "You have a Facebook Page (not just a personal profile) — this is required to connect.",
+  "You're an admin of that Facebook Page.",
+  "Your Instagram account is a Business or Creator account, and it's already linked to your Facebook Page in Meta's settings.",
+  "You're logged into the Facebook account that manages the Page you want to connect.",
+];
+
+const NEXT_STEPS = [
+  "You'll be redirected to Facebook to log in and approve access.",
+  "Facebook will ask you to grant a few permissions — these let us read your Page info, posts, and Instagram insights.",
+  "Once approved, we'll bring you back here and link your Page (and Instagram account, if connected) to this workspace.",
+];
 
 export function MetaConnectionInformationHeader() {
   return (
@@ -20,9 +34,49 @@ export function MetaConnectionInformationHeader() {
 }
 
 export function MetaConnectionInformationContent() {
+  const closeDialog = useDialogStore((s) => s.closeDialog);
+
   return (
     <Box className={styles.informationContainer}>
-      <Box></Box>
+      <Typography className={styles.sectionLabel}>
+        Before you connect your Meta account, make sure:
+      </Typography>
+      <Box className={styles.permissionsList}>
+        {PERMISSIONS.map((permission, index) => (
+          <Box key={permission} className={styles.permissionRow}>
+            <Box className={styles.checkIconContainer}>{index + 1}</Box>
+            <Typography className={styles.permissionLabel}>
+              {permission}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <br />
+      <Typography className={styles.sectionLabel}>
+        What happens next:
+      </Typography>
+      <Box className={styles.permissionsList}>
+        {NEXT_STEPS.map((permission, index) => (
+          <Box key={permission} className={styles.permissionRow}>
+            <Box className={styles.checkIconContainer}>{index + 1}</Box>
+            <Typography className={styles.permissionLabel}>
+              {permission}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <Box className={styles.actionsContainer}>
+        <Button
+          variant="outlined"
+          className={styles.cancelButton}
+          onClick={() => closeDialog()}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" className={styles.continueButton}>
+          Continue to Meta
+        </Button>
+      </Box>
     </Box>
   );
 }

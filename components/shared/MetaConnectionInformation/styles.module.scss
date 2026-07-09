@@ -9,7 +9,7 @@
 .iconContainer {
   height: 56px;
   width: 56px;
-  padding: 6px;
+  padding: 6px 12px;
   background: linear-gradient(
     to bottom right,
     var(--accent-purple),
@@ -38,4 +38,116 @@
 .titleLabel {
   font-size: 18px;
   font-weight: bold;
+}
+
+.informationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 8px 0 4px;
+}
+
+.sectionLabel {
+  font-size: 14px;
+  color: var(--transparent-text-color);
+  margin-bottom: 16px;
+}
+
+.permissionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.permissionRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.checkIconContainer {
+  flex-shrink: 0;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: var(--soft-accent-background);
+  color: var(--accent-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.permissionLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.noticeContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--sidebar-background-color);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 24px;
+}
+
+.noticeIcon {
+  flex-shrink: 0;
+  color: var(--accent-purple);
+  font-size: 20px;
+  margin-top: 1px;
+}
+
+.noticeLabel {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--transparent-text-color);
+}
+
+.actionsContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cancelButton {
+  flex: 1;
+  height: 48px;
+  border-radius: 10px;
+  text-transform: none;
+  font-weight: 600;
+  border-color: rgba(15, 23, 42, 0.15);
+  color: var(--text-color);
+
+  &:hover {
+    border-color: rgba(15, 23, 42, 0.3);
+    background: var(--hover-background-color);
+  }
+}
+
+.continueButton {
+  flex: 2;
+  height: 48px;
+  border-radius: 10px;
+  text-transform: none;
+  font-weight: 600;
+  background: linear-gradient(
+    to bottom right,
+    var(--accent-purple),
+    var(--soft-accent)
+  );
+  box-shadow: none;
+
+  &:hover {
+    background: linear-gradient(
+      to bottom right,
+      var(--accent-purple),
+      var(--soft-accent)
+    );
+    box-shadow: none;
+  }
 }
