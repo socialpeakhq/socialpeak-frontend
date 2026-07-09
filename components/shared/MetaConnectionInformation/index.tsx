@@ -3,7 +3,7 @@ import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
 
 const PERMISSIONS = [
-  "You have a Facebook Page (not just a personal profile) — this is required to connect.",
+  "You have a Facebook Page (not just a personal profile). This is required to connect.",
   "You're an admin of that Facebook Page.",
   "Your Instagram account is a Business or Creator account, and it's already linked to your Facebook Page in Meta's settings.",
   "You're logged into the Facebook account that manages the Page you want to connect.",
@@ -11,7 +11,7 @@ const PERMISSIONS = [
 
 const NEXT_STEPS = [
   "You'll be redirected to Facebook to log in and approve access.",
-  "Facebook will ask you to grant a few permissions — these let us read your Page info, posts, and Instagram insights.",
+  "Facebook will ask you to grant a few permissions. These let us read your Page info, posts, and Instagram insights.",
   "Once approved, we'll bring you back here and link your Page (and Instagram account, if connected) to this workspace.",
 ];
 
