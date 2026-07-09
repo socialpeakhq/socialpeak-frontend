@@ -28,7 +28,6 @@ export const useLogin = () => {
     mutationFn: (payload: { email: string; password: string }) =>
       apiClient.post(payload),
     onSuccess: (successData) => {
-      console.log(successData);
       const { data } = successData;
       setAuthentication(data.access_token);
       queryClient.setQueryData(["auth"], data.data);
