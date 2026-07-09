@@ -5,12 +5,11 @@ import { Workspace } from "./workspace.type";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 
 const apiClient = new APIClient<Workspace[]>(`/workspace`);
-export const useGetUserWorkspaces = (id: number) => {
+export const useGetUserWorkspaces = () => {
   const setCurrentWorkspace = useWorkspaceStore((s) => s.setSelectedWorkspace);
   const response = useQuery({
     queryKey: ["workspaces"],
-    queryFn: () => apiClient.getByIdParams(id),
-    enabled: id !== 0,
+    queryFn: () => apiClient.getAll(),
     staleTime: Infinity,
   });
 
