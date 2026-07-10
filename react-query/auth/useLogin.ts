@@ -29,7 +29,7 @@ export const useLogin = () => {
       apiClient.post(payload),
     onSuccess: (successData) => {
       const { data } = successData;
-      setAuthentication(data.access_token);
+      setAuthentication(data.access_token, data.refresh_token);
       queryClient.setQueryData(["auth"], data.data);
       router.replace("/app/dashboard");
     },

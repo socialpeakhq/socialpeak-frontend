@@ -7,9 +7,11 @@ import { create, StateCreator } from "zustand";
 type AuthStore = {
   isAuth: boolean;
   token: string | undefined;
+  refreshToken: string | undefined;
   registerUserData: RegisterUser | undefined;
 
-  setAuthentication: (token: string) => void;
+  setAuthentication: (token: string, refreshToken: string) => void;
+  clearAuthentication: () => void;
   handleRegisterUserData: (name: string, value: string) => void;
 };
 
@@ -19,10 +21,16 @@ const authStore: StateCreator<AuthStore, [["zustand/persist", unknown]]> = (
   isAuth: false,
   registerUserData: undefined,
   token: undefined,
+  refreshToken: undefined,
 
-  setAuthentication: (payload: string) => {
-    set({ isAuth: true, token: payload });
-    syncAuthTokenCookie(payload);
+  setAuthentication: (token: string, refreshToken: string) => {
+    set({ isAuth: true, token, refreshToken });
+    syncAuthTokenCookie(token);
+  },
+
+  clearAuthentication: () => {
+    set({ isAuth: false, token: undefined, refreshToken: undefined });
+    syncAuthTokenCookie(undefined);
   },
 
   handleRegisterUserData: (name: string, value: string) => {

@@ -7,6 +7,12 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_API,
 });
 
+interface RetryableRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+const AUTH_ENDPOINTS = ["/auth/login", "/auth/signup", "/auth/refresh"];
+
 axiosInstance.interceptors.request.use(
   (request: InternalAxiosRequestConfig) => {
     const token = useAuthStore.getState().token;
@@ -21,17 +27,67 @@ axiosInstance.interceptors.request.use(
   },
 );
 
+let refreshPromise: Promise<string> | null = null;
+
+async function refreshAccessToken(): Promise<string> {
+  const refreshToken = useAuthStore.getState().refreshToken;
+  if (!refreshToken) {
+    throw new Error("No refresh token available");
+  }
+
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/refresh`,
+    { refresh_token: refreshToken },
+  );
+
+  const { access_token, refresh_token } = res.data.data;
+  useAuthStore.getState().setAuthentication(access_token, refresh_token);
+  return access_token;
+}
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (err) => {
-    const { response } = err;
+  async (err) => {
+    const { response, config } = err;
     const openAlert = useAlertStore.getState().openAlert;
 
     if (!response) {
       openAlert({ message: "Network Error", severity: "error" });
       return Promise.reject(err);
+    }
+
+    const requestConfig = config as RetryableRequestConfig | undefined;
+    const isAuthEndpoint = AUTH_ENDPOINTS.some((endpoint) =>
+      requestConfig?.url?.includes(endpoint),
+    );
+
+    if (
+      response.status === 401 &&
+      requestConfig &&
+      !isAuthEndpoint &&
+      !requestConfig._retry
+    ) {
+      requestConfig._retry = true;
+      try {
+        refreshPromise ??= refreshAccessToken().finally(() => {
+          refreshPromise = null;
+        });
+        const newAccessToken = await refreshPromise;
+        requestConfig.headers.set("Authorization", `Bearer ${newAccessToken}`);
+        return axiosInstance(requestConfig);
+      } catch {
+        useAuthStore.getState().clearAuthentication();
+        openAlert({
+          message: "Your session has expired. Please log in again.",
+          severity: "error",
+        });
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+        return Promise.reject(err);
+      }
     }
 
     const { data } = response;

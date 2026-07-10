@@ -6,8 +6,12 @@ import useAuthStore from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 
 interface Response {
-  access_token: string;
-  data: User;
+  data: {
+    data: User;
+    message: string;
+    access_token: string;
+    refresh_token: string;
+  };
 }
 
 const apiClient = new APIClient<Response>(`/auth/signup`);
@@ -20,9 +24,9 @@ export const useSignUp = () => {
   return useMutation({
     mutationFn: (payload: RegisterUser) => apiClient.post(payload),
     onSuccess: (successData) => {
-      const { data, access_token } = successData;
-      queryClient.setQueryData(["auth"], data);
-      setAuthentication(access_token);
+      const { data } = successData;
+      queryClient.setQueryData(["auth"], data.data);
+      setAuthentication(data.access_token, data.refresh_token);
       router.push("/app/dashboard");
     },
   });
