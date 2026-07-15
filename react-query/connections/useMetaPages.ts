@@ -4,6 +4,7 @@ import {
   InstagramAccountOfPage,
   MetaAccountsReponse,
 } from "./connections.type";
+import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 
 const returnApi = (id: number) => {
   return new APIClient<MetaAccountsReponse[]>(`meta/workspace/${id}/accounts`);
@@ -45,7 +46,7 @@ export const useMetaPages = () => {
         };
       });
 
-      queryClient.setQueryData(["meta-accounts"], newObject);
+      queryClient.setQueryData(META_ACCOUNTS_QUERY_KEY, newObject);
     },
   });
 };

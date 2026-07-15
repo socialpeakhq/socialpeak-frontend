@@ -9,11 +9,20 @@ import {
   persistAuthQuery,
   restoreAuthQuery,
 } from "@/lib/authQueryPersistence";
+import {
+  META_ACCOUNTS_QUERY_KEY,
+  persistMetaAccountsQuery,
+  restoreMetaAccountsQuery,
+} from "@/lib/metaAccountsQueryPersistence";
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => {
     const client = new QueryClient();
     client.setQueryDefaults(AUTH_QUERY_KEY, {
+      gcTime: Number.POSITIVE_INFINITY,
+      staleTime: Number.POSITIVE_INFINITY,
+    });
+    client.setQueryDefaults(META_ACCOUNTS_QUERY_KEY, {
       gcTime: Number.POSITIVE_INFINITY,
       staleTime: Number.POSITIVE_INFINITY,
     });
@@ -23,9 +32,12 @@ export default function Providers({ children }: { children: ReactNode }) {
   useEffect(() => {
     restoreAuthQuery(queryClient);
     persistAuthQuery(queryClient);
+    restoreMetaAccountsQuery(queryClient);
+    persistMetaAccountsQuery(queryClient);
 
     return queryClient.getQueryCache().subscribe(() => {
       persistAuthQuery(queryClient);
+      persistMetaAccountsQuery(queryClient);
     });
   }, [queryClient]);
 
