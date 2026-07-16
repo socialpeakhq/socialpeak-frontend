@@ -1,17 +1,18 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
+import { Workspace } from "@/react-query/workspaces/workspace.type";
 
 type WorkspaceStore = {
-  selectedWorkspace: number | undefined;
+  selectedWorkspace: Workspace | undefined;
 
-  setSelectedWorkspace: (id: number) => void;
+  setSelectedWorkspace: (id: Workspace) => void;
   clearSelectedWorkspace: () => void;
 };
 
 const useWorkspaceStore = create<WorkspaceStore>((set) => ({
   selectedWorkspace: undefined,
 
-  setSelectedWorkspace: (id: number) => {
+  setSelectedWorkspace: (id: Workspace) => {
     set(() => ({
       selectedWorkspace: id,
     }));

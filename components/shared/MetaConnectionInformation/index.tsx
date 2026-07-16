@@ -43,7 +43,7 @@ export function MetaConnectionInformationContent() {
   const handleConnect = () => {
     if (!selectedWorkspace) return;
 
-    useMetaConnectionMutation.mutate(selectedWorkspace);
+    useMetaConnectionMutation.mutate(selectedWorkspace.workspace_id);
   };
 
   return (

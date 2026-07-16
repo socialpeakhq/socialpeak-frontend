@@ -4,6 +4,7 @@ import { useMetaPages } from "./useMetaPages";
 import useAlertStore from "@/stores/useAlertStore";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import useDialogStore from "@/stores/useDialogStore";
+import { useRefreshUserWorkspaces } from "../workspaces/useGetUserWorkspaces";
 
 type ConnectResponse = {
   url: string;
@@ -77,6 +78,7 @@ const openMetaConnectPopup = (url: string): Promise<MetaOAuthMessage> => {
 
 export const useMetaConnections = () => {
   const selectedWorkspace = useWorkspaceStore((s) => s.selectedWorkspace);
+  const refreshWorkspaces = useRefreshUserWorkspaces();
   const openAlert = useAlertStore((s) => s.openAlert);
   const metaPagesMutation = useMetaPages();
   const closeDialog = useDialogStore((s) => s.closeDialog);
@@ -88,7 +90,9 @@ export const useMetaConnections = () => {
     },
     onSuccess: () => {
       openAlert({ message: "Meta account connected", severity: "success" });
-      if (selectedWorkspace) metaPagesMutation.mutate(selectedWorkspace);
+      if (selectedWorkspace?.workspace_id)
+        metaPagesMutation.mutate(selectedWorkspace.workspace_id);
+      refreshWorkspaces();
       closeDialog();
     },
     onError: (error) => {
