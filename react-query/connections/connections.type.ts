@@ -10,3 +10,13 @@ export type InstagramAccountOfPage = {
   name: string;
   username: string;
 };
+
+export type MetaPlatformInsight = {
+  id: number;
+  facebook_page_id: number;
+  platform: string;
+  metric: string;
+  value: number;
+  captured_at: Date;
+  created_at: Date;
+};

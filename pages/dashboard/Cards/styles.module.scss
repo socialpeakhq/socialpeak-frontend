@@ -1,0 +1,37 @@
+.cardsContainer {
+  background-color: var(--sidebar-background-color);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.platformContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.platformButton {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: none !important;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  text-transform: capitalize;
+  svg {
+    width: 22px;
+  }
+
+  &:hover {
+    background-color: var(--soft-accent-background);
+    color: var(--accent-purple);
+  }
+}
+
+.selectedPlatform {
+  background-color: var(--soft-accent-background);
+  color: var(--accent-purple);
+}
