@@ -1,0 +1,94 @@
+.connectedAccountsView {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleLabel {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.linkLabel {
+  color: var(--accent-purple);
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.platform {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconContainer {
+  background-color: var(--sidebar-background-color);
+  padding: 6px;
+  border-radius: 10px;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.labelsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.platformLabel {
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.accountLabel {
+  color: var(--text-color);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.addAccount {
+  margin-top: 12px;
+  border: solid 1px var(--hover-background-color);
+  padding: 6px;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-background-color);
+    .addAccountLabel {
+      opacity: 1;
+    }
+  }
+}
+
+.addAccountLabel {
+  display: flex;
+  align-items: center;
+  color: var(--accent-purple);
+  opacity: 0.7;
+  font-size: 1rem;
+  span {
+    font-size: 1.4rem;
+  }
+}

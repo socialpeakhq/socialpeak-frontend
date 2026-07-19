@@ -20,3 +20,15 @@ export type MetaPlatformInsight = {
   captured_at: Date;
   created_at: Date;
 };
+
+export type MetaAccountsData = Record<
+  string,
+  Record<number, MetaAccountsDataType>
+>;
+
+export type MetaAccountsDataType = {
+  id: number;
+  name: string;
+  label: string;
+  updated_at?: Date;
+};

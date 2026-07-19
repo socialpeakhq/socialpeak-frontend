@@ -6,6 +6,7 @@ import EmptyWorkspace from "@/components/shared/EmptyWorkspace";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { useMetaInsightsByPlatform } from "@/react-query/connections/useMetaInsightsByPlatform";
 import Cards from "../Cards";
+import ConnectedAccountsView from "../ConnectedAccountsView";
 
 export default function Container() {
   const connected_accounts = useWorkspaceStore(
@@ -20,15 +21,20 @@ export default function Container() {
 
   useMetaInsightsByPlatform(selectedWorkspaceId, selectedPlatform);
 
+  if (connected_accounts?.length === 0) {
+    return (
+      <Box className={styles.dashboardContainer}>
+        <EmptyWorkspace />
+      </Box>
+    );
+  }
+
   return (
     <Box className={styles.dashboardContainer}>
-      {connected_accounts?.length === 0 ? (
-        <EmptyWorkspace />
-      ) : (
-        <Box>
-          <Cards />
-        </Box>
-      )}
+      <Cards />
+      <Box className={styles.rowContent}>
+        <ConnectedAccountsView />
+      </Box>
     </Box>
   );
 }

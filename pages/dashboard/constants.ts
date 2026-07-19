@@ -1,6 +1,6 @@
 import React from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@/assets/accounts/instagram.svg";
+import FacebookIcon from "@/assets/accounts/facebook.svg";
 
 type Platform = {
   id: number;

@@ -19,11 +19,12 @@
 .iconContainer {
   padding: 6px;
   width: max-content;
-  border-radius: 12px;
+  border-radius: 10px;
+  aspect-ratio: 1/1;
   background-color: var(--sidebar-background-color);
   color: var(--accent-purple);
   svg {
-    font-size: 28px;
+    font-size: 22px;
   }
 }
 
