@@ -3,5 +3,5 @@ export type Workspace = {
   owner_id: number;
   workspace_name: string;
   created_at: string;
-  connected_accounts: [];
+  connected_accounts: string[];
 };
