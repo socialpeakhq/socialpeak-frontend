@@ -16,7 +16,9 @@ export default function Container() {
     (s) => s.selectedWorkspace?.workspace_id,
   );
 
-  useMetaInsightsByPlatform(selectedWorkspaceId, "instagram");
+  const selectedPlatform = useWorkspaceStore((s) => s.selectedPlatform);
+
+  useMetaInsightsByPlatform(selectedWorkspaceId, selectedPlatform);
 
   return (
     <Box className={styles.dashboardContainer}>
