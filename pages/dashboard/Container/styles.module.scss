@@ -4,3 +4,20 @@
   padding: 24px;
   background-color: var(--sidebar-background-color);
 }
+.rowContent {
+  display: flex;
+  padding: 0px 12px;
+  align-items: center;
+  gap: 12px;
+}
+
+.left {
+  width: 60%;
+  background-color: #fff;
+  height: 215px;
+  border-radius: 16px;
+}
+
+.right {
+  width: 40%;
+}

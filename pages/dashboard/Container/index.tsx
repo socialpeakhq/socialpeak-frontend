@@ -33,7 +33,10 @@ export default function Container() {
     <Box className={styles.dashboardContainer}>
       <Cards />
       <Box className={styles.rowContent}>
-        <ConnectedAccountsView />
+        <Box className={styles.left}>SCHEDULED POSTS</Box>
+        <Box className={styles.right}>
+          <ConnectedAccountsView />
+        </Box>
       </Box>
     </Box>
   );
