@@ -5,6 +5,7 @@ import { MAIN_PLATFORMS } from "../constants";
 import { useQueryClient } from "@tanstack/react-query";
 import { MetaPlatformInsight } from "@/react-query/connections/connections.type";
 import { format } from "date-fns";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import Card from "@/components/dashboard/Card";
 
 export default function Cards() {
@@ -31,29 +32,35 @@ export default function Cards() {
         {new Date().getDay()}
       </Typography>
       <Box className={styles.platformContainer}>
-        {connected_accounts &&
-          MAIN_PLATFORMS.filter((platform) =>
-            connected_accounts?.includes(platform.parentPlatform),
-          ).map((platform) => (
-            <Button
-              variant="contained"
-              onClick={() => {
-                setSelectedPlatform(platform.platform);
-                queryClient.invalidateQueries({
-                  queryKey: [
-                    "insights",
-                    selectedWorkspaceId,
-                    platform.platform,
-                  ],
-                });
-              }}
-              key={platform.id}
-              className={`${styles.platformButton} ${selectedPlatform === platform.platform && styles.selectedPlatform}`}
-            >
-              {platform.icon}
-              {platform.label}
-            </Button>
-          ))}
+        <Box className={styles.accounts}>
+          {connected_accounts &&
+            MAIN_PLATFORMS.filter((platform) =>
+              connected_accounts?.includes(platform.parentPlatform),
+            ).map((platform) => (
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setSelectedPlatform(platform.platform);
+                  queryClient.invalidateQueries({
+                    queryKey: [
+                      "insights",
+                      selectedWorkspaceId,
+                      platform.platform,
+                    ],
+                  });
+                }}
+                key={platform.id}
+                className={`${styles.platformButton} ${selectedPlatform === platform.platform && styles.selectedPlatform}`}
+              >
+                {platform.icon}
+                {platform.label}
+              </Button>
+            ))}
+        </Box>
+        <Button variant="contained" className={styles.manualButton}>
+          <span>Refresh</span>
+          <RefreshIcon />
+        </Button>
       </Box>
 
       <Box className={styles.cards}>

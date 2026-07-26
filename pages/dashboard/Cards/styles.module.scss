@@ -16,6 +16,7 @@
   align-items: center;
   gap: 6px;
   width: 100%;
+  justify-content: space-between;
 }
 
 .platformButton {
@@ -60,4 +61,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.accounts {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.manualButton {
+  background-color: var(--accent-purple);
+  border-radius: 12px;
+  padding: 6px;
+  min-width: unset !important;
+  width: 42px;
+  padding: 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  overflow-x: hidden;
+  transition: width 0.3s;
+
+  & > span {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition:
+      opacity 0.3s,
+      max-width 0.3s;
+  }
+
+  & > svg {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    width: 120px;
+
+    & > span {
+      opacity: 1;
+      max-width: 70px;
+    }
+  }
 }
