@@ -107,3 +107,18 @@
     }
   }
 }
+
+.loading {
+  background-color: #fff;
+  width: 100%;
+  min-height: 120px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > span {
+    color: var(--accent-purple);
+    height: 50px !important;
+    width: 50px !important;
+  }
+}

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { MAIN_PLATFORMS } from "../constants";
@@ -7,9 +7,11 @@ import { MetaPlatformInsight } from "@/react-query/connections/connections.type"
 import { format } from "date-fns";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Card from "@/components/dashboard/Card";
+import { useMetaManualRefresh } from "@/react-query/connections/useManualRefresh";
 
 export default function Cards() {
   const queryClient = useQueryClient();
+  const manualRefresh = useMetaManualRefresh();
   const connected_accounts: string[] | undefined = useWorkspaceStore(
     (s) => s.selectedWorkspace?.connected_accounts,
   );
@@ -57,14 +59,29 @@ export default function Cards() {
               </Button>
             ))}
         </Box>
-        <Button variant="contained" className={styles.manualButton}>
+        <Button
+          onClick={() =>
+            selectedWorkspaceId &&
+            data &&
+            manualRefresh.mutate({
+              pageId: data[0].facebook_page_id,
+              workspaceId: selectedWorkspaceId,
+            })
+          }
+          variant="contained"
+          className={styles.manualButton}
+        >
           <span>Refresh</span>
           <RefreshIcon />
         </Button>
       </Box>
 
       <Box className={styles.cards}>
-        {!data || data.length === 0 ? (
+        {manualRefresh.isPending ? (
+          <Box className={styles.loading}>
+            <CircularProgress />
+          </Box>
+        ) : !data || data.length === 0 ? (
           <Box className={styles.noDataContainer}>
             <Typography className={styles.noDataLabel}>
               There are no available data for this platform
