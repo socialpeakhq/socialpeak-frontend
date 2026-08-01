@@ -8,6 +8,7 @@ import { useMetaInsightsByPlatform } from "@/react-query/connections/useMetaInsi
 import Cards from "../Cards";
 import ConnectedAccountsView from "../ConnectedAccountsView";
 import AudienceContainer from "../AudienceContainer";
+import RecentMessages from "@/components/shared/RecentMessages";
 
 export default function Container() {
   const connected_accounts = useWorkspaceStore(
@@ -38,6 +39,12 @@ export default function Container() {
         <Box className={styles.left}>SCHEDULED POSTS</Box>
         <Box className={styles.right}>
           <ConnectedAccountsView />
+        </Box>
+      </Box>
+      <Box className={styles.rowContent}>
+        <Box className={styles.left}></Box>
+        <Box className={styles.right}>
+          <RecentMessages />
         </Box>
       </Box>
     </Box>
