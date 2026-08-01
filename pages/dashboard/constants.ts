@@ -8,6 +8,7 @@ type Platform = {
   platform: string;
   parentPlatform: string;
   icon: React.ReactNode;
+  mainColor?: string;
 };
 
 export const MAIN_PLATFORMS: Platform[] = [
@@ -17,6 +18,7 @@ export const MAIN_PLATFORMS: Platform[] = [
     platform: "facebook",
     parentPlatform: "meta",
     icon: React.createElement(FacebookIcon),
+    mainColor: "#1877F2",
   },
   {
     id: 2,
@@ -24,5 +26,6 @@ export const MAIN_PLATFORMS: Platform[] = [
     platform: "instagram",
     parentPlatform: "meta",
     icon: React.createElement(InstagramIcon),
+    mainColor: "#E1306C",
   },
 ];

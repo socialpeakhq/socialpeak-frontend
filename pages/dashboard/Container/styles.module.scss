@@ -3,7 +3,9 @@
   height: 100%;
   padding: 24px;
   background-color: var(--sidebar-background-color);
+  overflow-y: auto;
 }
+
 .rowContent {
   display: flex;
   padding: 0px 12px;

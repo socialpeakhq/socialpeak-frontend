@@ -7,7 +7,7 @@ import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { useMetaInsightsByPlatform } from "@/react-query/connections/useMetaInsightsByPlatform";
 import Cards from "../Cards";
 import ConnectedAccountsView from "../ConnectedAccountsView";
-import AudienceGrowth from "@/components/analytics/AudienceGrowth";
+import AudienceContainer from "../AudienceContainer";
 
 export default function Container() {
   const connected_accounts = useWorkspaceStore(
@@ -33,7 +33,7 @@ export default function Container() {
   return (
     <Box className={styles.dashboardContainer}>
       <Cards />
-      <AudienceGrowth caller="dashboard" />
+      <AudienceContainer />
       <Box className={styles.rowContent}>
         <Box className={styles.left}>SCHEDULED POSTS</Box>
         <Box className={styles.right}>
