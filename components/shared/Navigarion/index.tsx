@@ -8,7 +8,6 @@ import Link from "next/link";
 export default function Navigation(): ReactElement {
   return (
     <Box className={styles.navigationContainer}>
-      <Typography className={styles.containerLabel}>NAVIGATION</Typography>
       <Box className={styles.navigations}>
         {NAVIGATION_LINKS.map((navigation) => (
           <Link key={navigation.id} href={navigation.path}>

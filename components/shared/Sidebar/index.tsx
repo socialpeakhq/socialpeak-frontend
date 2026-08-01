@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { type ReactElement } from "react";
 import { Box, Typography } from "@mui/material";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import Link from "next/link";
 import Navigation from "../Navigarion";
-import styles from "./styles.module.scss"
-import RecentMessages from "../RecentMessages";
+import styles from "./styles.module.scss";
 
 export default function Sidebar(): ReactElement {
   return (
     <Box className={styles.sidebarContainer}>
-      <Link href='/app/dashboard'>
+      <Link href="/app/dashboard">
         <Box className={styles.logoContainer}>
           <img
             src="/logo.svg"
@@ -20,7 +19,6 @@ export default function Sidebar(): ReactElement {
           <Typography className={styles.subtitle}>Manage & Grow</Typography>
         </Box>
       </Link>
-      <RecentMessages />
       <Navigation />
       <Link href="/app/settings">
         <Box className={styles.sidebarFooter}>
@@ -31,5 +29,5 @@ export default function Sidebar(): ReactElement {
         </Box>
       </Link>
     </Box>
-  )
+  );
 }
