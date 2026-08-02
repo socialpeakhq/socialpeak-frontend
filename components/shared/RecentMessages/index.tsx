@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 export default function RecentMessages(): ReactElement {
   return (
     <Box className={styles.recentMessagesContainer}>
-      <Typography className={styles.title}>RECENT MESSAGES</Typography>
+      <Typography className={styles.title}>Recent Messages</Typography>
       <Box className={styles.messages}>
         {TEMP_RECENT_MESSAGES.map((message) => (
           <Box key={message.id} className={styles.singleMessageContainer}>
