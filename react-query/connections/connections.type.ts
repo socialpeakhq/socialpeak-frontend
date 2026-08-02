@@ -1,4 +1,5 @@
 export type MetaAccountsReponse = {
+  facebook_page_id: number;
   page_id: number;
   page_name: string;
   updated_at: string;
@@ -28,6 +29,7 @@ export type MetaAccountsData = Record<
 
 export type MetaAccountsDataType = {
   id: number;
+  facebook_page_id: number;
   name: string;
   label: string;
   updated_at?: Date;

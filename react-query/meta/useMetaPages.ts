@@ -19,7 +19,11 @@ export const useMetaPages = () => {
       let newObject: MetaAccountsData = {};
 
       data.forEach((page) => {
-        const { instagram_account, ...restOfPage } = page;
+        const pageWithFacebookId = page as MetaAccountsReponse & {
+          facebook_page_id?: number;
+          instagram_account: InstagramAccountOfPage;
+        };
+        const { instagram_account, ...restOfPage } = pageWithFacebookId;
 
         newObject = {
           ...newObject,
@@ -30,6 +34,7 @@ export const useMetaPages = () => {
             >),
             [restOfPage.page_id]: {
               id: restOfPage.page_id,
+              facebook_page_id: restOfPage.facebook_page_id,
               label: restOfPage.page_name,
               name: restOfPage.page_name,
               updated_at: restOfPage.updated_at,
@@ -42,6 +47,7 @@ export const useMetaPages = () => {
             >),
             [instagram_account.instagram_account_id]: {
               id: instagram_account.instagram_account_id,
+              facebook_page_id: restOfPage.facebook_page_id,
               label: "@" + instagram_account.username,
               name: instagram_account.name,
             },

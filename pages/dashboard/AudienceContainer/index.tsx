@@ -3,15 +3,39 @@ import styles from "./styles.module.scss";
 import AudienceGrowth from "@/components/analytics/AudienceGrowth";
 import { MAIN_PLATFORMS } from "../constants";
 import TimelineSelector from "@/components/shared/TimelineSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useMetaAudience } from "@/react-query/meta/useMetaAudience";
+import { useQueryClient } from "@tanstack/react-query";
+import useWorkspaceStore from "@/stores/useWorkspaceStore";
 
 export default function AudienceContainer() {
+  const fetchAudience = useMetaAudience().mutate;
+  const metaAccounts = useQueryClient().getQueryData<Record<string, unknown>>([
+    "meta-accounts",
+  ]);
+  const selectedWorkspace = useWorkspaceStore(
+    (s) => s.selectedWorkspace?.workspace_id,
+  );
   const [timeline, setTimeline] = useState<string>("7d");
   const [selectedPlatform, setSelectedPlatform] = useState<string>("instagram");
 
   const handleTimelineChange = (value: string) => {
     setTimeline(value);
   };
+
+  useEffect(() => {
+    const pageId = Object.values(metaAccounts?.[selectedPlatform] || {})[0]
+      ?.facebook_page_id;
+
+    if (pageId && selectedWorkspace) {
+      fetchAudience({
+        date: timeline,
+        pageId: pageId,
+        platform: selectedPlatform,
+        workspaceId: selectedWorkspace,
+      });
+    }
+  }, [timeline, selectedPlatform, metaAccounts, selectedWorkspace]);
 
   return (
     <Box className={styles.audienceContainer}>
