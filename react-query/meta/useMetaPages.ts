@@ -4,7 +4,7 @@ import {
   InstagramAccountOfPage,
   MetaAccountsData,
   MetaAccountsReponse,
-} from "./connections.type";
+} from "../connections/connections.type";
 import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 
 const returnApi = (id: number) => {

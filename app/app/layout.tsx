@@ -6,7 +6,7 @@ import Header from "@/components/shared/Header";
 import { useGetUserWorkspaces } from "@/react-query/workspaces/useGetUserWorkspaces";
 import styles from "./layout.module.scss";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
-import { useMetaPages } from "@/react-query/connections/useMetaPages";
+import { useMetaPages } from "@/react-query/meta/useMetaPages";
 import { useEffect } from "react";
 import useAuthStore from "@/stores/useAuthStore";
 

@@ -1,6 +1,6 @@
 import APIClient from "../apiClient";
 import { useMutation } from "@tanstack/react-query";
-import { useMetaPages } from "./useMetaPages";
+import { useMetaPages } from "../meta/useMetaPages";
 import useAlertStore from "@/stores/useAlertStore";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import useDialogStore from "@/stores/useDialogStore";

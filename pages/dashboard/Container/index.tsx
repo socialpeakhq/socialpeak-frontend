@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
 import EmptyWorkspace from "@/components/shared/EmptyWorkspace";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
-import { useMetaInsightsByPlatform } from "@/react-query/connections/useMetaInsightsByPlatform";
+import { useMetaInsightsByPlatform } from "@/react-query/meta/useMetaInsightsByPlatform";
 import Cards from "../Cards";
 import ConnectedAccountsView from "../ConnectedAccountsView";
 import AudienceContainer from "../AudienceContainer";

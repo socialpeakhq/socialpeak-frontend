@@ -7,7 +7,7 @@ import { MetaPlatformInsight } from "@/react-query/connections/connections.type"
 import { format } from "date-fns";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Card from "@/components/dashboard/Card";
-import { useMetaManualRefresh } from "@/react-query/connections/useManualRefresh";
+import { useMetaManualRefresh } from "@/react-query/meta/useManualRefresh";
 
 export default function Cards() {
   const queryClient = useQueryClient();

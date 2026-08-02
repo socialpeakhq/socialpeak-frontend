@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import APIClient from "../apiClient";
-import { MetaPlatformInsight } from "./connections.type";
+import { MetaPlatformInsight } from "../connections/connections.type";
 
 const returnApi = (workspaceId: number, platform: string) => {
   return new APIClient<MetaPlatformInsight[]>(
