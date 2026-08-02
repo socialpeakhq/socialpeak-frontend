@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "../apiClient";
+import { MetaPlatformInsight } from "../connections/connections.type";
 
 const returnApi = (
   workspaceId: number,
@@ -13,6 +14,7 @@ const returnApi = (
 };
 
 export const useMetaAudience = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
       workspaceId,
@@ -25,8 +27,15 @@ export const useMetaAudience = () => {
       platform: string;
       date: string;
     }) => returnApi(workspaceId, pageId, platform, date).getAll(),
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (data: MetaPlatformInsight[]) => {
+      const newData = data.map((item) => {
+        return {
+          id: item.id,
+          value: item.value,
+          date: item.captured_at,
+        };
+      });
+      queryClient.setQueryData(["audience-growth"], newData);
     },
   });
 };

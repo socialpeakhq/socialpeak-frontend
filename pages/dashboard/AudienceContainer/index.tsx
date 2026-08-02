@@ -16,6 +16,9 @@ export default function AudienceContainer() {
   const selectedWorkspace = useWorkspaceStore(
     (s) => s.selectedWorkspace?.workspace_id,
   );
+  const audienceData = useQueryClient().getQueryData<
+    { id: number; value: number; date: string }[]
+  >(["audience-growth"]);
   const [timeline, setTimeline] = useState<string>("7d");
   const [selectedPlatform, setSelectedPlatform] = useState<string>("instagram");
 
@@ -66,7 +69,18 @@ export default function AudienceContainer() {
         </Box>
       </Box>
       <Box className={styles.graphContainer}>
-        <AudienceGrowth caller="dashboard" />
+        {audienceData && audienceData.length > 0 ? (
+          <AudienceGrowth
+            data={audienceData}
+            caller="dashboard"
+            lineFill={
+              MAIN_PLATFORMS.find((item) => item.platform === selectedPlatform)
+                ?.mainColor
+            }
+          />
+        ) : (
+          <Box className={styles.emptyState}></Box>
+        )}
       </Box>
     </Box>
   );

@@ -4,16 +4,16 @@ import { AreaChart, CartesianGrid, XAxis, YAxis, Area } from "recharts";
 
 type IProps = {
   caller: string;
-  data?: { name: string; value: number; date: string }[];
+  data?: { id: number; value: number; date: string }[];
   areaFill?: string;
   lineFill?: string;
 };
 
-const TEST_DATA: { name: string; value: number; date: string }[] = [
-  { name: "Instagram", value: 500, date: "01/02/2026" },
-  { name: "Instagram", value: 1500, date: "01/04/2026" },
-  { name: "Instagram", value: 690, date: "01/06/2026" },
-  { name: "Instagram", value: 3500, date: "01/08/2026" },
+const TEST_DATA: { id: number; value: number; date: string }[] = [
+  { id: 1, value: 500, date: "01/02/2026" },
+  { id: 2, value: 900, date: "01/02/2026" },
+  { id: 3, value: 900, date: "01/02/2026" },
+  { id: 4, value: 900, date: "01/02/2026" },
 ];
 
 export default function AudienceGrowth({
@@ -26,7 +26,7 @@ export default function AudienceGrowth({
     <Box className={styles.audienceGrowthContainer}>
       <AreaChart data={data} title={caller} responsive className={styles.chart}>
         <CartesianGrid strokeDasharray="1 1" stroke="grey" />
-        <XAxis dataKey="name" className={styles.xAxis} />
+        <XAxis dataKey="date" className={styles.xAxis} />
         <YAxis dataKey="value" width="auto" />
         <Area
           type="natural"
