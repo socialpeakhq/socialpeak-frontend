@@ -27,9 +27,9 @@ export default function AudienceGrowth({
       <AreaChart data={data} title={caller} responsive className={styles.chart}>
         <CartesianGrid strokeDasharray="1 1" stroke="grey" />
         <XAxis dataKey="date" className={styles.xAxis} />
-        <YAxis dataKey="value" width="auto" />
+        <YAxis dataKey="value" width="auto" domain={[0, "auto"]} />
         <Area
-          type="natural"
+          type="monotone"
           dataKey="value"
           stroke={lineFill}
           fillOpacity={1}

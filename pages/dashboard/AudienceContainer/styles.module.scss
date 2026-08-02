@@ -70,3 +70,17 @@
   width: 13%;
   height: 100%;
 }
+
+.emptyState {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyLabel {
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 18px;
+}

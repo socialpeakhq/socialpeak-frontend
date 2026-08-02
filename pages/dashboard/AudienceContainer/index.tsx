@@ -79,7 +79,11 @@ export default function AudienceContainer() {
             }
           />
         ) : (
-          <Box className={styles.emptyState}></Box>
+          <Box className={styles.emptyState}>
+            <Typography className={styles.emptyLabel}>
+              There are no audience data for this platform
+            </Typography>
+          </Box>
         )}
       </Box>
     </Box>
