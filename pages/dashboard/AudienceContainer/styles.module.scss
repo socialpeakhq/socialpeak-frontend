@@ -31,7 +31,7 @@
 
 .singlePlatform {
   padding: 0px 12px;
-  border: solid 1px var(--text-color);
+  border: solid 1px #d5d5d5;
   height: 26px;
   border-radius: 16px;
   display: flex;
@@ -39,6 +39,15 @@
   justify-content: center;
   gap: 6px;
   cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    border: solid 1px #979797;
+    background-color: #f7f7f7;
+  }
+}
+
+.selectedPlatform {
+  border: solid 1px var(--accent-purple);
 }
 
 .icon {

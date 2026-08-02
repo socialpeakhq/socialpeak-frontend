@@ -1,6 +1,5 @@
 import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
-import { useState } from "react";
 
 const DEFAULT_TIMELINES = [
   { id: 1, label: "7D", value: "7d" },
@@ -8,16 +7,23 @@ const DEFAULT_TIMELINES = [
   { id: 3, label: "90D", value: "90d" },
 ];
 
-export default function TimelineSelector() {
-  const [selectedTimeline, setSelectedTimeline] = useState<string>("7d");
+type IProps = {
+  timeline: string;
+  handleTimelineChange: (value: string) => void;
+};
+
+export default function TimelineSelector({
+  handleTimelineChange,
+  timeline,
+}: IProps) {
   return (
     <Box className={styles.timelineContainer}>
       {DEFAULT_TIMELINES.map((item) => (
         <Button
-          onClick={() => setSelectedTimeline(item.value)}
+          onClick={() => handleTimelineChange(item.value)}
           key={item.id}
           variant="contained"
-          className={`${styles.singleItem} ${selectedTimeline === item.value && styles.selectedItem}`}
+          className={`${styles.singleItem} ${timeline === item.value && styles.selectedItem}`}
         >
           {item.label}
         </Button>
