@@ -1,0 +1,46 @@
+.createPostPageContainer {
+  height: 100%;
+  width: 100%;
+  padding: 24px;
+  background-color: var(--sidebar-background-color);
+}
+
+.titleContainer {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.titleLabel {
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.titleHelper {
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.content {
+  display: flex;
+  height: calc(100% - 80px);
+  width: 100%;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.formContainer {
+  height: 100%;
+  width: 60%;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.previewContainer {
+  height: 100%;
+  width: 40%;
+  background-color: #fff;
+  border-radius: 12px;
+}
