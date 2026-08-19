@@ -1,0 +1,30 @@
+.captionLinkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.textarea {
+  border: solid 1px rgba(128, 128, 128, 0.295);
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.linkField {
+  border-radius: 12px;
+  & > div {
+    border-radius: 12px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  fieldset {
+    border: solid 1px rgba(128, 128, 128, 0.295) !important;
+  }
+}

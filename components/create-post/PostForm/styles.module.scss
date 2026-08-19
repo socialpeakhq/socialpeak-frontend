@@ -8,36 +8,11 @@
 .container {
   display: flex;
   flex-direction: column;
-}
-
-.platforms {
-  display: flex;
-  align-items: center;
   gap: 6px;
-  min-height: 52px;
 }
 
-.singlePlatform {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  border: solid 1px rgba(128, 128, 128, 0.295);
-  align-items: center;
-  padding: 6px;
-  border-radius: 12px;
-  gap: 12px;
-  padding-left: 18px;
-}
-
-.iconContainer {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  border-radius: 12px;
-  background-color: var(--sidebar-background-color);
-  svg {
-    height: 22px;
-    width: 100%;
-  }
+.label {
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 14px;
 }

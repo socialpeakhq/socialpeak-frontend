@@ -56,5 +56,4 @@ const usePostStore = create<PostStore>((set) => ({
   },
 }));
 
-mountStoreDevtool("Dialog", usePostStore);
 export default usePostStore;
