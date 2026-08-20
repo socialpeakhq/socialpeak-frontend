@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import { mountStoreDevtool } from "simple-zustand-devtools";
-import { de } from "date-fns/locale";
 
 export type PostData = {
   platforms: string[];
@@ -17,6 +15,7 @@ type PostStore = {
   handleCreatePostDataChange: (value: string, name: keyof PostData) => void;
   handleCreatePostPlatforms: (value: string) => void;
   handleCreatePostMedia: (value: string, type: string) => void;
+  removeCreatePostMedia: (value: number) => void;
 };
 
 const usePostStore = create<PostStore>((set) => ({
@@ -40,6 +39,18 @@ const usePostStore = create<PostStore>((set) => ({
 
       return {
         createPostData: { ...s.createPostData, media: media },
+      };
+    });
+  },
+  removeCreatePostMedia: (value: number) => {
+    set((s) => {
+      const newMedia = Array.isArray(s.createPostData?.media)
+        ? s.createPostData.media.filter(
+            (_item, index: number) => index !== value,
+          )
+        : "";
+      return {
+        createPostData: { ...s.createPostData, media: newMedia },
       };
     });
   },

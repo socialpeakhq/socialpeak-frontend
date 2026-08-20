@@ -5,6 +5,7 @@ import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import PlatformSelection from "../PlatformSelection";
 import CaptionLink from "../CaptionLink";
+import PostMedia from "../PostMedia";
 
 export default function PostForm() {
   return (
@@ -16,6 +17,10 @@ export default function PostForm() {
       <Box className={styles.container}>
         <Typography className={styles.label}>Caption</Typography>
         <CaptionLink />
+      </Box>
+      <Box className={styles.container}>
+        <Typography className={styles.label}>Media</Typography>
+        <PostMedia />
       </Box>
     </Box>
   );

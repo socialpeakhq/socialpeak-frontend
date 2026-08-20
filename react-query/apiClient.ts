@@ -93,8 +93,6 @@ axiosInstance.interceptors.response.use(
     const { data } = response;
     const { error, message } = data;
 
-    console.log(data);
-
     openAlert({
       message: `${error} : ${message}`,
       severity: "error",

@@ -15,7 +15,7 @@ export default function CaptionLink() {
     <Box className={styles.captionLinkContainer}>
       <TextareaAutosize
         placeholder="Write a caption..."
-        minRows={10}
+        minRows={5}
         value={caption}
         onChange={(e) => handleCreatePostChange(e.target.value, "caption")}
         className={styles.textarea}
