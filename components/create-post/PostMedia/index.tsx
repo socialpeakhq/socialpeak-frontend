@@ -21,14 +21,14 @@ export default function PostMedia() {
       selectedFiles.map(async (file) => await fileToBase64(file)),
     )) as string[];
 
-    const uploadedFile = uploadedFiles[0];
+    if (!uploadedFiles) return;
 
-    if (!uploadedFile) return;
-
-    handleCreatePostMedia(uploadedFile, "image");
+    if (Array.isArray(uploadedFiles)) {
+      uploadedFiles.forEach((file) => handleCreatePostMedia(file, "image"));
+    } else {
+      handleCreatePostMedia(uploadedFiles, "image");
+    }
   };
-
-  console.log(media);
 
   return (
     <Box className={styles.mediaContainer}>

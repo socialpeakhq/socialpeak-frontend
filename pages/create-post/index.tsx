@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import PostForm from "@/components/create-post/PostForm";
+import SubmitContainer from "@/components/create-post/SubmitContainer";
 
 export default function CreatePostPage() {
   return (
@@ -14,6 +15,7 @@ export default function CreatePostPage() {
       <Box className={styles.content}>
         <Box className={styles.formContainer}>
           <PostForm />
+          <SubmitContainer />
         </Box>
         <Box className={styles.previewContainer}></Box>
       </Box>
