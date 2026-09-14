@@ -6,10 +6,11 @@ import SubmitContainer from "@/components/create-post/SubmitContainer";
 import usePostStore from "@/stores/usePostStore";
 import FacebookPreview from "@/components/create-post/FacebookPreview";
 import { ReactElement } from "react";
+import InstagramPreview from "@/components/create-post/InstagramPreview";
 
 const Platoform_Previews: Record<string, () => ReactElement> = {
   facebook: () => <FacebookPreview />,
-  instagram: () => <></>,
+  instagram: () => <InstagramPreview />,
 };
 
 export default function CreatePostPage() {

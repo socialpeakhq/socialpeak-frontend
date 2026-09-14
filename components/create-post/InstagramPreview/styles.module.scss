@@ -22,9 +22,13 @@
   aspect-ratio: 1/1;
   background-color: rgba(128, 128, 128, 0.3);
   border-radius: 100%;
+  overflow: hidden;
   svg {
     height: 100%;
     width: 100%;
+    transform: scale(1.1);
+    overflow: hidden;
+    border-radius: 100%;
   }
 }
 
@@ -49,25 +53,32 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 6px;
-  border-top: solid 1px rgba(128, 128, 128, 0.3);
+}
+
+.primaryActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .actionItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  flex: 1;
-  padding: 6px 0;
   color: rgba(128, 128, 128, 0.8);
 
   svg {
-    font-size: 20px;
+    font-size: 24px;
   }
 }
 
-.actionLabel {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(128, 128, 128, 0.8);
+.caption {
+  font-size: 16px;
+  color: var(--text-color);
+  color: rgb(88, 88, 88);
+  span {
+    font-weight: bold;
+    font-size: 15px;
+    color: var(--text-color);
+  }
 }

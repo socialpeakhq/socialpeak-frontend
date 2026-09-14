@@ -41,6 +41,8 @@
 .previewContainer {
   height: 100%;
   width: 40%;
-  background-color: #fff;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

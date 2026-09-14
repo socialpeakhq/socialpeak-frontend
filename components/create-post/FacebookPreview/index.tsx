@@ -5,10 +5,10 @@ import { skipToken, useQuery } from "@tanstack/react-query";
 import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 import usePostStore from "@/stores/usePostStore";
 import { MAIN_PLATFORMS } from "@/pages/dashboard/constants";
-import ImageCarousel from "@/components/create-post/ImageCarousel";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import ImageCarousel from "@/components/shared/ImageCarousel";
 
 const POST_ACTIONS = [
   { label: "Like", icon: <ThumbUpOffAltIcon /> },
