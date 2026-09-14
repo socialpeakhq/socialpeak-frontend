@@ -16,7 +16,7 @@ export default function AlertPopUp(): ReactElement {
   return (
     <Snackbar
       open={open}
-      anchorOrigin={{ horizontal: "center", vertical: "top" }}
+      anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
       autoHideDuration={5000}
       onClose={hideAlert}
       className={styles.snackbar}

@@ -36,8 +36,9 @@ async function refreshAccessToken(): Promise<string> {
   }
 
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/refresh`,
+    "/auth/refresh",
     { refresh_token: refreshToken },
+    { baseURL: process.env.NEXT_PUBLIC_BACKEND_API },
   );
 
   const { access_token, refresh_token } = res.data.data;

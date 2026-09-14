@@ -63,6 +63,7 @@ export default function Cards() {
           onClick={() =>
             selectedWorkspaceId &&
             data &&
+            data[0] &&
             manualRefresh.mutate({
               pageId: data[0].facebook_page_id,
               workspaceId: selectedWorkspaceId,
