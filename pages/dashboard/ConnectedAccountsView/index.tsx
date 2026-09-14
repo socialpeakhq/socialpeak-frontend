@@ -1,18 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, skipToken } from "@tanstack/react-query";
 import Link from "next/link";
 import {
   MetaAccountsData,
   MetaAccountsDataType,
 } from "@/react-query/connections/connections.type";
+import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 import { MAIN_PLATFORMS } from "../constants";
 
 export default function ConnectedAccountsView() {
-  const queryClient = useQueryClient();
-  const metaAccounts: MetaAccountsData | undefined = queryClient.getQueryData([
-    "meta-accounts",
-  ]);
+  const { data: metaAccounts } = useQuery<MetaAccountsData>({
+    queryKey: META_ACCOUNTS_QUERY_KEY,
+    queryFn: skipToken,
+  });
 
   return (
     <Box className={styles.connectedAccountsView}>

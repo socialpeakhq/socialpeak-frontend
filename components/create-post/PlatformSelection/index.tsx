@@ -3,13 +3,16 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { MAIN_PLATFORMS } from "@/pages/dashboard/constants";
 import { MetaAccountsData } from "@/react-query/connections/connections.type";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, skipToken } from "@tanstack/react-query";
+import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 import usePostStore from "@/stores/usePostStore";
 import styles from "./styles.module.scss";
 
 export default function PlatformSelection() {
-  const metaAccounts: MetaAccountsData | undefined =
-    useQueryClient().getQueryData(["meta-accounts"]);
+  const { data: metaAccounts } = useQuery<MetaAccountsData>({
+    queryKey: META_ACCOUNTS_QUERY_KEY,
+    queryFn: skipToken,
+  });
 
   const platforms = usePostStore((s) => s.createPostData?.platforms);
   const handleCreatePostPlatforms = usePostStore(

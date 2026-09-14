@@ -5,20 +5,22 @@ import { MAIN_PLATFORMS } from "../constants";
 import TimelineSelector from "@/components/shared/TimelineSelector";
 import { useEffect, useState } from "react";
 import { useMetaAudience } from "@/react-query/meta/useMetaAudience";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, skipToken } from "@tanstack/react-query";
+import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 
 export default function AudienceContainer() {
   const fetchAudience = useMetaAudience().mutate;
-  const metaAccounts = useQueryClient().getQueryData<Record<string, unknown>>([
-    "meta-accounts",
-  ]);
+  const { data: metaAccounts } = useQuery<Record<string, unknown>>({
+    queryKey: META_ACCOUNTS_QUERY_KEY,
+    queryFn: skipToken,
+  });
   const selectedWorkspace = useWorkspaceStore(
     (s) => s.selectedWorkspace?.workspace_id,
   );
-  const audienceData = useQueryClient().getQueryData<
+  const { data: audienceData } = useQuery<
     { id: number; value: number; date: string }[]
-  >(["audience-growth"]);
+  >({ queryKey: ["audience-growth"], queryFn: skipToken });
   const [timeline, setTimeline] = useState<string>("7d");
   const [selectedPlatform, setSelectedPlatform] = useState<string>("instagram");
 

@@ -1,3 +1,4 @@
+import { mountStoreDevtool } from "simple-zustand-devtools";
 import { create } from "zustand";
 
 export type PostData = {
@@ -66,5 +67,7 @@ const usePostStore = create<PostStore>((set) => ({
     });
   },
 }));
+
+mountStoreDevtool("Posts", usePostStore);
 
 export default usePostStore;

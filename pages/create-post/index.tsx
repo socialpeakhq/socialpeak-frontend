@@ -1,9 +1,20 @@
+"use client";
 import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import PostForm from "@/components/create-post/PostForm";
 import SubmitContainer from "@/components/create-post/SubmitContainer";
+import usePostStore from "@/stores/usePostStore";
+import FacebookPreview from "@/components/create-post/FacebookPreview";
+import { ReactElement } from "react";
+
+const Platoform_Previews: Record<string, () => ReactElement> = {
+  facebook: () => <FacebookPreview />,
+  instagram: () => <></>,
+};
 
 export default function CreatePostPage() {
+  const postData = usePostStore((s) => s.createPostData);
+
   return (
     <Box className={styles.createPostPageContainer}>
       <Box className={styles.titleContainer}>
@@ -17,7 +28,12 @@ export default function CreatePostPage() {
           <PostForm />
           <SubmitContainer />
         </Box>
-        <Box className={styles.previewContainer}></Box>
+        <Box className={styles.previewContainer}>
+          {postData &&
+            postData.platforms?.map((platform: string) =>
+              Platoform_Previews[platform](),
+            )}
+        </Box>
       </Box>
     </Box>
   );
