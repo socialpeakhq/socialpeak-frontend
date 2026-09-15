@@ -1,14 +1,20 @@
 import { Box, Typography } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ChangeEvent } from "react";
-import { fileToBase64 } from "@/utils/helper.functions";
+import { fileToBase64, getImageDimensions } from "@/utils/helper.functions";
 import usePostStore from "@/stores/usePostStore";
+import useAlertStore from "@/stores/useAlertStore";
 import styles from "./styles.module.scss";
 import ImageViewer from "@/components/shared/ImageViewer";
+
+// Instagram's supported range for feed images: 4:5 (portrait) to 1.91:1 (landscape)
+const MIN_ASPECT_RATIO = 0.8;
+const MAX_ASPECT_RATIO = 1.91;
 
 export default function PostMedia() {
   const media = usePostStore((s) => s.createPostData?.media);
   const handleCreatePostMedia = usePostStore((s) => s.handleCreatePostMedia);
+  const openAlert = useAlertStore((s) => s.openAlert);
 
   const handleFiles = async (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
@@ -23,10 +29,18 @@ export default function PostMedia() {
 
     if (!uploadedFiles) return;
 
-    if (Array.isArray(uploadedFiles)) {
-      uploadedFiles.forEach((file) => handleCreatePostMedia(file, "image"));
-    } else {
-      handleCreatePostMedia(uploadedFiles, "image");
+    for (const file of uploadedFiles) {
+      const { width, height } = await getImageDimensions(file);
+      const aspectRatio = width / height;
+
+      if (aspectRatio < MIN_ASPECT_RATIO || aspectRatio > MAX_ASPECT_RATIO) {
+        openAlert({
+          message: `This image's aspect ratio isn't supported by Instagram — it'll be padded with white bars to fit.`,
+          severity: "info",
+        });
+      }
+
+      handleCreatePostMedia(file, "image");
     }
   };
 
