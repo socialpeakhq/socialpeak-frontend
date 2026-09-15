@@ -5,9 +5,24 @@ import styles from "./styles.module.scss";
 import { useState } from "react";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useUploadMediaToUrl } from "@/react-query/posts/useUploadMediaToUrl";
+import usePostStore from "@/stores/usePostStore";
 
 export default function SubmitContainer() {
+  const { mutate: publishMediaToUrl } = useUploadMediaToUrl();
+  const media = usePostStore((s) => s.createPostData?.media);
   const [scheduleType, setScheduleType] = useState<string>("now");
+
+  const handlePublishClick = () => {
+    if (media) {
+      if (typeof media === "string") {
+        publishMediaToUrl([media]);
+      } else {
+        publishMediaToUrl(media);
+      }
+    }
+  };
+
   return (
     <Box className={styles.submitContainer}>
       <Typography className={styles.sectionLabel}>When</Typography>
@@ -38,7 +53,11 @@ export default function SubmitContainer() {
           />
         </LocalizationProvider>
       )}
-      <Button variant="contained" className={styles.submitButton}>
+      <Button
+        onClick={handlePublishClick}
+        variant="contained"
+        className={styles.submitButton}
+      >
         Publish Now
       </Button>
     </Box>
