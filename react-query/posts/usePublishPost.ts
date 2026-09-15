@@ -2,10 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import APIClient from "../apiClient";
 import usePostStore from "@/stores/usePostStore";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
+import { useRouter } from "next/navigation";
 
 const apiClient = new APIClient("/posts");
 
 export const usePublishPost = () => {
+  const router = useRouter();
+
   const createPostData = usePostStore((s) => s.createPostData);
   const selectedWorkspace = useWorkspaceStore(
     (s) => s.selectedWorkspace,
@@ -21,8 +24,8 @@ export const usePublishPost = () => {
       };
       return apiClient.post(payload);
     },
-    onSuccess: (successData) => {
-      console.log(successData);
+    onSuccess: () => {
+      router.push("/app/posts");
     },
   });
 };
