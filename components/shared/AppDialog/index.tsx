@@ -1,13 +1,28 @@
 "use client";
 
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import type { Breakpoint } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   MetaConnectionInformationContent,
   MetaConnectionInformationHeader,
 } from "../MetaConnectionInformation";
+import {
+  MediaDialogContent,
+  MediaDialogHeader,
+} from "@/components/posts/MediaDialog";
+import {
+  TargetsDialogContent,
+  TargetsDialogHeader,
+} from "@/components/posts/TargetsDialog";
 import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
+
+const DIALOG_MAX_WIDTH: Record<string, Breakpoint> = {
+  meta: "sm",
+  "post-media": "sm",
+  "post-targets": "sm",
+};
 
 export default function AppDialog() {
   const open = useDialogStore((s) => s.open);
@@ -16,7 +31,7 @@ export default function AppDialog() {
   return (
     <Dialog
       open={open}
-      maxWidth={dialogCaller === "meta" ? "sm" : "lg"}
+      maxWidth={DIALOG_MAX_WIDTH[dialogCaller] ?? "lg"}
       fullWidth
       onClose={closeDialog}
       slotProps={{
@@ -31,6 +46,8 @@ export default function AppDialog() {
       <DialogTitle className={styles.dialogTitleContainer}>
         <Box className={styles.leftSide}>
           {dialogCaller === "meta" ? <MetaConnectionInformationHeader /> : null}
+          {dialogCaller === "post-media" ? <MediaDialogHeader /> : null}
+          {dialogCaller === "post-targets" ? <TargetsDialogHeader /> : null}
         </Box>
         <Box className={styles.rightSide}>
           <Box onClick={() => closeDialog()} className={styles.closeContainer}>
@@ -40,6 +57,8 @@ export default function AppDialog() {
       </DialogTitle>
       <DialogContent>
         {dialogCaller === "meta" ? <MetaConnectionInformationContent /> : null}
+        {dialogCaller === "post-media" ? <MediaDialogContent /> : null}
+        {dialogCaller === "post-targets" ? <TargetsDialogContent /> : null}
       </DialogContent>
     </Dialog>
   );

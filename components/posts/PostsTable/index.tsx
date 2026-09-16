@@ -6,28 +6,18 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { Post } from "@/react-query/posts/posts.type";
 import { useMemo } from "react";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
+import useDialogStore from "@/stores/useDialogStore";
 import { usePostLists } from "@/react-query/posts/usePostLists";
-import FacebookIcon from "@/assets/accounts/facebook.svg";
-import InstagramIcon from "@/assets/accounts/instagram.svg";
-const PLATFORM_ICON: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  facebook: FacebookIcon,
-  instagram: InstagramIcon,
-};
-
-function formatDateTime(iso: string): string {
-  if (!iso) return "—";
-  return new Date(iso).toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
+import { formatDateTime } from "@/utils/helper.functions";
+import { PLATFORM_ICON } from "@/components/posts/platformIcons";
+import { MediaDialogPayload } from "@/components/posts/MediaDialog";
+import { TargetsDialogPayload } from "@/components/posts/TargetsDialog";
 
 export default function PostsTable() {
   const selectedWorkspaceId = useWorkspaceStore(
     (s) => s.selectedWorkspace?.workspace_id,
   );
+  const openDialog = useDialogStore((s) => s.openDialog);
 
   const { data } = usePostLists(selectedWorkspaceId);
 
@@ -72,7 +62,16 @@ export default function PostsTable() {
         return (
           <div className={styles.cellWithStack}>
             <img src={media[0]} alt="" className={styles.mediaThumb} />
-            <Button variant="outlined" className={styles.viewButton}>
+            <Button
+              variant="outlined"
+              className={styles.viewButton}
+              onClick={() =>
+                openDialog<MediaDialogPayload>({
+                  dialogCaller: "post-media",
+                  dialogContent: { postId: params.row.id, media },
+                })
+              }
+            >
               View ({media.length})
             </Button>
           </div>
@@ -98,7 +97,16 @@ export default function PostsTable() {
                 ) : null;
               })}
             </div>
-            <Button variant="outlined" className={styles.viewButton}>
+            <Button
+              variant="outlined"
+              className={styles.viewButton}
+              onClick={() =>
+                openDialog<TargetsDialogPayload>({
+                  dialogCaller: "post-targets",
+                  dialogContent: { postId: params.row.id, targets },
+                })
+              }
+            >
               View
             </Button>
           </div>

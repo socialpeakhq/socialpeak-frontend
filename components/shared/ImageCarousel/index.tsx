@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { Box } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import NextImage from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import styles from "./styles.module.scss";
 
@@ -21,9 +21,9 @@ export default function ImageCarousel({ images }: IProps) {
     [images],
   );
   const [rawIndex, setRawIndex] = useState(0);
-  const [orientations, setOrientations] = useState<
-    Record<number, Orientation>
-  >({});
+  const [orientations, setOrientations] = useState<Record<number, Orientation>>(
+    {},
+  );
 
   useEffect(() => {
     imageList.forEach((src, index) => {
@@ -32,9 +32,7 @@ export default function ImageCarousel({ images }: IProps) {
         setOrientations((prev) => ({
           ...prev,
           [index]:
-            image.naturalWidth > image.naturalHeight
-              ? "landscape"
-              : "portrait",
+            image.naturalWidth > image.naturalHeight ? "landscape" : "portrait",
         }));
       };
       image.src = src;
@@ -63,12 +61,10 @@ export default function ImageCarousel({ images }: IProps) {
       >
         {imageList.map((image, index) => (
           <Box className={styles.slide} key={index}>
-            <NextImage
+            <img
               src={image}
               alt={`Post image ${index + 1}`}
-              fill
               sizes="(max-width: 600px) 100vw, 500px"
-              priority={index === 0}
               className={styles.image}
             />
           </Box>
