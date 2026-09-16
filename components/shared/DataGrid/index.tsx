@@ -56,6 +56,9 @@ export default function DataGrid({
       "& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within": {
         outline: "none",
       },
+      "& .MuiButtonBase-root, & .MuiTypography-root": {
+        fontFamily: "inherit",
+      },
       "& .MuiDataGrid-virtualScrollerRenderZone .MuiDataGrid-row:last-of-type .MuiDataGrid-cell":
         {
           borderBottom: "none",

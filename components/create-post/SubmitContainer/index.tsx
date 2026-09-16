@@ -7,9 +7,11 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useUploadMediaToUrl } from "@/react-query/posts/useUploadMediaToUrl";
 import usePostStore from "@/stores/usePostStore";
+import { usePublishPost } from "@/react-query/posts/usePublishPost";
 
 export default function SubmitContainer() {
   const { mutate: publishMediaToUrl } = useUploadMediaToUrl();
+  const { mutate: publishPost } = usePublishPost();
   const media = usePostStore((s) => s.createPostData?.media);
   const [scheduleType, setScheduleType] = useState<string>("now");
 
@@ -20,6 +22,8 @@ export default function SubmitContainer() {
       } else {
         publishMediaToUrl(media);
       }
+    } else {
+      publishPost(undefined);
     }
   };
 

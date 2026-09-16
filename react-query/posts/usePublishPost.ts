@@ -15,7 +15,7 @@ export const usePublishPost = () => {
   )?.workspace_id;
 
   return useMutation({
-    mutationFn: (media_urls: string[]) => {
+    mutationFn: (media_urls?: string[]) => {
       const payload = {
         workspace_id: selectedWorkspace,
         caption: createPostData?.caption,
