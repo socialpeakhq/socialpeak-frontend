@@ -3,6 +3,7 @@ import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 
 export const NAVIGATION_LINKS = [
   {
@@ -31,8 +32,14 @@ export const NAVIGATION_LINKS = [
   },
   {
     id: 5,
-    label: "Create a Post",
-    path: "/app/post",
+    label: "Posts",
+    path: "/app/posts",
     icon: DynamicFeedIcon,
+  },
+  {
+    id: 6,
+    label: "Create a Post",
+    path: "/app/posts/create",
+    icon: AddBoxOutlinedIcon,
   },
 ];

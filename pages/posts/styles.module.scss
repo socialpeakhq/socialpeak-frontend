@@ -1,0 +1,23 @@
+.postsContainer {
+  height: 100%;
+  width: 100%;
+  background-color: var(--sidebar-background-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filterContainer {
+  height: 84px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.listContainer {
+  width: 100%;
+  height: calc(100% - 84px);
+  background-color: #fff;
+  border-radius: 12px;
+}
