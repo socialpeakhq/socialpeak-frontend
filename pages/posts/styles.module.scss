@@ -21,3 +21,35 @@
   background-color: #fff;
   border-radius: 12px;
 }
+
+.cellId {
+  font-weight: 700;
+  color: var(--accent-purple);
+  letter-spacing: 0.01em;
+}
+
+.cellCaption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+}
+
+.viewButton {
+  border: 1.5px solid rgb(238, 238, 238) !important;
+  border-radius: 9px;
+  color: var(--transparent-text-color) !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: none;
+  padding: 4px 12px;
+  background-color: #fff !important;
+  box-shadow: none !important;
+
+  &:hover {
+    border-color: var(--accent-purple) !important;
+    color: var(--accent-purple) !important;
+    background-color: #fff !important;
+  }
+}
