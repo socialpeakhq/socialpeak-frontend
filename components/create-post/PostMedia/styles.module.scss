@@ -1,13 +1,17 @@
-@use "../tokens" as *;
-
 .fieldLabel {
-  @include field-label;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 18px;
 }
 
 .dropzone {
-  border: 1.5px dashed $border;
-  border-radius: $radius-md;
+  border: 1.5px dashed rgb(238, 238, 238);
+  border-radius: 13px;
   padding: 26px;
   text-align: center;
   cursor: pointer;
@@ -18,25 +22,25 @@
 
   svg {
     display: block;
-    color: $ink-faint;
+    color: var(--transparent-text-color);
     margin: 0 auto 8px;
   }
 }
 
 .drag {
-  border-color: $brand-500;
-  background: $brand-100;
+  border-color: var(--accent-purple);
+  background: var(--soft-accent-background);
 }
 
 .dropzoneText {
   font-size: 13px;
   font-weight: 600;
-  color: $ink-soft;
+  color: var(--transparent-text-color);
 }
 
 .dropzoneSub {
   font-size: 11.5px;
-  color: $ink-faint;
+  color: var(--transparent-text-color);
   margin-top: 2px;
 }
 
@@ -56,7 +60,7 @@
   aspect-ratio: 1;
   border-radius: 11px;
   background: #15121f;
-  border: 1px solid $border;
+  border: 1px solid rgb(238, 238, 238);
 
   img {
     width: 100%;
@@ -99,11 +103,11 @@
 }
 
 .padBadge {
-  @include tooltip-wrap;
   position: absolute;
   top: 5px;
   left: 5px;
-  background: $blue-text;
+  display: inline-block;
+  background: #1d4ed8;
   color: #fff;
   font-size: 9px;
   font-weight: 800;
@@ -112,10 +116,33 @@
   z-index: 2;
   letter-spacing: 0.02em;
 
+  &:hover .tooltipBubble {
+    opacity: 1;
+    visibility: visible;
+  }
+
   // the badge sits at the thumbnail's left edge — open the bubble rightwards
   .tooltipBubble {
+    position: absolute;
+    bottom: calc(100% + 8px);
     left: 0;
-    transform: none;
+    background: var(--text-color);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 500;
+    line-height: 1.4;
+    padding: 8px 11px;
+    border-radius: 9px;
+    white-space: normal;
+    width: max-content;
+    max-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.12s ease;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
+    z-index: 20;
+    letter-spacing: normal;
+    text-align: left;
   }
 }
 

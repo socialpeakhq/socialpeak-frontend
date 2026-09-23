@@ -31,6 +31,18 @@ export default function PostsTable() {
       },
     },
     {
+      field: "type",
+      headerName: "Type",
+      flex: 1,
+      renderCell(params: GridRenderCellParams<Post>) {
+        return (
+          <span className={styles.cellType} title={params.row.caption}>
+            {params.row.type}
+          </span>
+        );
+      },
+    },
+    {
       field: "caption",
       headerName: "Caption",
       flex: 2,
@@ -120,6 +132,7 @@ export default function PostsTable() {
       data
         ? data.map((item: Post) => ({
             id: item.id,
+            type: item.type,
             caption: item.caption,
             created_at: item.created_at,
             media_urls: item.media_urls,
@@ -131,7 +144,7 @@ export default function PostsTable() {
 
   return (
     <Box className={styles.contentContainer}>
-      <DataGrid columns={columns} rows={rows} pagination paginationSize={5} />
+      <DataGrid columns={columns} rows={rows} pagination paginationSize={50} />
     </Box>
   );
 }

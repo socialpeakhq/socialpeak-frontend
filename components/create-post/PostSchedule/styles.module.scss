@@ -1,17 +1,21 @@
-@use "../tokens" as *;
-
 .scheduleContainer {
   margin-bottom: 18px;
 }
 
 .fieldLabel {
-  @include field-label;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .scheduleTabs {
   display: flex;
   gap: 8px;
-  background: $surface;
+  background: var(--sidebar-background-color);
   padding: 5px;
   border-radius: 13px;
 }
@@ -23,16 +27,16 @@
   cursor: pointer;
   border: none;
   background: transparent;
-  color: $ink-faint;
+  color: var(--transparent-text-color);
   font-family: inherit;
   font-size: 12.5px;
   font-weight: 700;
 }
 
 .on {
-  background: $canvas;
-  color: $brand-700;
-  box-shadow: $shadow-card;
+  background: #fff;
+  color: var(--accent-purple);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
 }
 
 // match the caption/title text inputs
@@ -41,38 +45,38 @@
   margin-top: 14px !important;
 
   :global(.MuiPickersOutlinedInput-root) {
-    border-radius: $radius-md;
+    border-radius: 13px;
     font-family: inherit;
     font-size: 13px;
-    color: $ink;
+    color: var(--text-color);
   }
 
   :global(.MuiPickersSectionList-root) {
     padding: 11px 0;
-    font-family: $font-body;
+    font-family: var(--font-inter), sans-serif;
   }
 
   :global(.MuiPickersOutlinedInput-notchedOutline) {
-    border: 1.5px solid $border !important;
+    border: 1.5px solid rgb(238, 238, 238) !important;
   }
 
   :global(.Mui-focused .MuiPickersOutlinedInput-notchedOutline) {
-    border-color: $brand-500 !important;
+    border-color: var(--accent-purple) !important;
   }
 
   :global(.MuiIconButton-root) {
-    color: $ink-faint;
+    color: var(--transparent-text-color);
   }
 }
 
 .pickerPopper {
-  font-family: $font-body;
+  font-family: var(--font-inter), sans-serif;
 
   :global(.MuiPaper-root) {
-    border: 1px solid $border;
-    border-radius: $radius-lg;
-    box-shadow: $shadow-md;
-    color: $ink;
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(108, 72, 197, 0.1);
+    color: var(--text-color);
   }
 
   :global(.MuiTypography-root),
@@ -80,21 +84,21 @@
   :global(.MuiPickersCalendarHeader-label),
   :global(.MuiMenuItem-root),
   :global(.MuiButton-root) {
-    font-family: $font-body;
+    font-family: var(--font-inter), sans-serif;
   }
 
   // days, months, years and clock items
   :global(.Mui-selected) {
-    background-color: $brand-600 !important;
+    background-color: var(--accent-purple) !important;
     color: #fff;
   }
 
   :global(.MuiPickersDay-today:not(.Mui-selected)) {
-    border-color: $brand-500;
+    border-color: var(--accent-purple);
   }
 
   :global(.MuiButton-root) {
-    color: $brand-600;
+    color: var(--accent-purple);
     font-weight: 700;
     text-transform: none;
   }
@@ -102,6 +106,6 @@
 
 .scheduleNote {
   font-size: 11px;
-  color: $ink-faint;
+  color: var(--transparent-text-color);
   margin-top: 14px;
 }

@@ -62,9 +62,9 @@ export default function SubmitContainer() {
   );
   const { mutate: publishPost, isPending } = usePublishPost();
 
-  const [submittedPlatforms, setSubmittedPlatforms] = useState<
-    PostPlatform[]
-  >([]);
+  const [submittedPlatforms, setSubmittedPlatforms] = useState<PostPlatform[]>(
+    [],
+  );
   const [publishedPost, setPublishedPost] = useState<Post>();
   const [publishError, setPublishError] = useState<string>();
 
@@ -82,7 +82,6 @@ export default function SubmitContainer() {
   const igNeedsMedia =
     type === "post" && media.length === 0 && platforms.includes("instagram");
   const needsAnyMedia = type !== "post" && media.length === 0;
-  // Stories can't be scheduled on either platform
   const canSchedule = type !== "story";
   const isScheduled = canSchedule && scheduled;
   const hasContent = config.hasCaption

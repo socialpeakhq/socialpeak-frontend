@@ -1,9 +1,17 @@
-@use "../tokens" as *;
-
 .formContainer {
-  @include panel;
+  background: #fff;
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
 }
 
 .label {
-  @include field-label;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

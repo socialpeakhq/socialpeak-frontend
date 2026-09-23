@@ -17,6 +17,15 @@
   width: 100%;
 }
 
+.cellType {
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+}
+
 .cellSub {
   font-size: 11.5px;
   color: var(--transparent-text-color);

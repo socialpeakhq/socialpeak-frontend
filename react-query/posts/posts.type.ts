@@ -12,6 +12,7 @@ export type Post = {
   media_urls: string[];
   workspace_id: number;
   targets: PostTarget[];
+  type: string;
 };
 
 export type PostTarget = {

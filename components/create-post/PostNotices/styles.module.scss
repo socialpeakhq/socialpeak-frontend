@@ -1,5 +1,3 @@
-@use "../tokens" as *;
-
 .noticeList {
   margin-top: 14px;
   display: flex;
@@ -26,7 +24,7 @@
 }
 
 .info {
-  color: $blue-text;
-  background: $blue-bg;
+  color: #1d4ed8;
+  background: #e7f0fe;
   border-color: #cfe0fd;
 }
