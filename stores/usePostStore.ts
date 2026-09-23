@@ -5,6 +5,14 @@ export type PostType = "post" | "video" | "story";
 export type PostPlatform = "facebook" | "instagram";
 export type MediaKind = "image" | "video";
 
+export type PostsTableFilter = {
+  searchField: string;
+  types: string[];
+  platforms: string[];
+  statuses: string[];
+  dateFilter: "7d" | "30d" | "90d";
+};
+
 export type PostMediaItem = {
   id: string;
   file: File;
@@ -31,6 +39,7 @@ type PostTextField = "caption" | "title" | "link";
 
 type PostStore = {
   createPostData: PostData;
+  filters: PostsTableFilter;
 
   handleCreatePostDataChange: (value: string, name: PostTextField) => void;
   handleCreatePostType: (value: PostType) => void;
@@ -40,6 +49,7 @@ type PostStore = {
   removeCreatePostMedia: (id: string) => void;
   handleCreatePostSchedule: (scheduled: boolean) => void;
   handleCreatePostScheduleTime: (value: number | null) => void;
+  handleModifyFilters: (name: string, value: string, type: string) => void;
 };
 
 const usePostStore = create<PostStore>((set) => ({
@@ -52,6 +62,13 @@ const usePostStore = create<PostStore>((set) => ({
     media: [],
     scheduled: false,
     scheduleTime: null,
+  },
+  filters: {
+    dateFilter: "7d",
+    platforms: [],
+    searchField: "",
+    statuses: [],
+    types: [],
   },
 
   handleCreatePostDataChange: (value: string, name: PostTextField) => {
@@ -106,6 +123,30 @@ const usePostStore = create<PostStore>((set) => ({
     set((s) => ({
       createPostData: { ...s.createPostData, scheduleTime: value },
     }));
+  },
+  handleModifyFilters: (name: string, value: string, type: string) => {
+    set((s) => {
+      const currentFilter = { ...s.filters };
+
+      if (type !== "array") {
+        if (name === "searchField") {
+          currentFilter.searchField = value;
+        } else if (name === "dateFilter") {
+          currentFilter.dateFilter = value as PostsTableFilter["dateFilter"];
+        }
+      } else {
+        const arrayFilterName = name as "types" | "platforms" | "statuses";
+        const filterValues = currentFilter[arrayFilterName];
+
+        currentFilter[arrayFilterName] = filterValues.includes(value)
+          ? filterValues.filter((item) => item !== value)
+          : [...filterValues, value];
+      }
+
+      return {
+        filters: currentFilter,
+      };
+    });
   },
 }));
 
