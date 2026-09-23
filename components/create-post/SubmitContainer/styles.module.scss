@@ -1,82 +1,113 @@
+@use "../tokens" as *;
+
 .submitContainer {
-  width: 100%;
-  margin-top: 12px;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.sectionLabel {
-  font-size: 14px;
-  color: var(--text-color);
-  font-weight: bold;
-}
-
-.scheduleTypes {
-  display: flex;
-  align-items: center;
-  margin-top: 12px;
-  height: 42px;
-  gap: 12px;
-}
-
-.type {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: solid 1px rgba(128, 128, 128, 0.3);
-  border-radius: 16px;
-  transition: all 0.3s;
-
-  &:hover {
-    border: solid 1px var(--accent-purple);
-    background-color: var(--soft-accent-background);
-    .typeLabel {
-      color: var(--accent-purple);
-    }
-  }
-}
-
-.typeLabel {
-  font-size: 14px;
-  transition: all 0.3s;
-}
-
-.selectedType {
-  border: solid 1px var(--accent-purple);
-  background-color: var(--soft-accent-background);
-  transition: all 0.3s;
-
-  .typeLabel {
-    color: var(--accent-purple);
-  }
+  @include panel;
+  margin-top: 18px;
 }
 
 .submitButton {
-  margin-top: 12px;
   width: 100%;
-  box-shadow: none;
-  border-radius: 16px;
-  height: 42px;
-  background: linear-gradient(
-    to right,
-    var(--accent-purple),
-    var(--soft-accent)
-  );
+  background: linear-gradient(135deg, $brand-600, $rose-500);
   color: #fff;
-  font-weight: bold;
+  border: none;
+  font-family: inherit;
   font-size: 14px;
+  font-weight: 700;
+  padding: 13px 0;
+  border-radius: $radius-md;
+  cursor: pointer;
+  box-shadow: $shadow-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
-.dateTimePicker {
-  width: 100%;
-  height: 42px;
-  margin-top: 12px;
-  & > div {
-    border-radius: 16px;
-    height: 100%;
+.statusPanel {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  background: $surface;
+}
+
+.statusName {
+  font-size: 12.5px;
+  font-weight: 700;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.tooltipWrap {
+  @include tooltip-wrap;
+}
+
+// status badges — same vocabulary as the post history grid
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.pending {
+  background: $amber-bg;
+  color: $amber-text;
+
+  .dot {
+    background: $amber-text;
+  }
+}
+
+.failed {
+  background: $red-bg;
+  color: $red-text;
+
+  .dot {
+    background: $red-text;
+  }
+}
+
+.processing {
+  background: $blue-bg;
+  color: $blue-text;
+
+  .dot {
+    background: $blue-text;
+  }
+}
+
+.published {
+  background: $green-bg;
+  color: $green-text;
+
+  .dot {
+    background: $green-text;
   }
 }

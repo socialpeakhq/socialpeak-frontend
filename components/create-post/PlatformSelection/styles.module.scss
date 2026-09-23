@@ -1,52 +1,95 @@
-.platforms {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 46px;
-}
+@use "../tokens" as *;
 
-.singlePlatform {
-  width: 50%;
-  height: 100%;
+.platformRow {
   display: flex;
-  border: solid 1px rgba(128, 128, 128, 0.295);
-  align-items: center;
-  padding: 6px;
-  border-radius: 12px;
-  gap: 12px;
-  padding-left: 18px;
-}
+  gap: 10px;
+  margin-bottom: 6px;
 
-.leftSide {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.iconContainer {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  border-radius: 12px;
-  background-color: var(--sidebar-background-color);
-  svg {
-    height: 22px;
-    width: 100%;
+  @media (max-width: 720px) {
+    flex-direction: column;
   }
 }
 
-.platformLabel {
-  font-weight: bold;
-  color: var(--text-color);
-  font-size: 14px;
+.platformToggle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid $border;
+  border-radius: $radius-md;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
 }
 
-.usernameLabel {
+.platformIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: $surface;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $ink;
+  flex-shrink: 0;
+}
+
+.platformName {
   font-size: 13px;
-  opacity: 0.7;
+  font-weight: 700;
 }
 
-.checkbox {
+.platformHandle {
+  font-size: 11px;
+  color: $ink-faint;
+}
+
+.platformConnect {
+  font-size: 11px;
+  font-weight: 700;
+  color: $brand-600;
+}
+
+.platformCheck {
   margin-left: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid $border;
+  flex-shrink: 0;
+}
+
+.on {
+  border-color: $brand-500;
+  background: $brand-100;
+
+  .platformIcon {
+    background: #fff;
+  }
+
+  .platformCheck {
+    background: $brand-600;
+    border-color: $brand-600;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 7px;
+      height: 4px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }

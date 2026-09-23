@@ -1,32 +1,57 @@
-import { Box, TextareaAutosize, TextField } from "@mui/material";
-
-import styles from "./styles.module.scss";
+import { Box } from "@mui/material";
 import usePostStore from "@/stores/usePostStore";
+import { TYPE_CONFIG } from "../constants";
+import styles from "./styles.module.scss";
 
 export default function CaptionLink() {
-  const caption = usePostStore((s) => s.createPostData?.caption);
-  const link = usePostStore((s) => s.createPostData?.link);
-
+  const { type, caption, title, link, media, platforms } = usePostStore(
+    (s) => s.createPostData,
+  );
   const handleCreatePostChange = usePostStore(
     (s) => s.handleCreatePostDataChange,
   );
 
+  const config = TYPE_CONFIG[type];
+  const hasFacebook = platforms.includes("facebook");
+  const showTitle = config.hasTitle && hasFacebook;
+  const showLink = config.hasLink && media.length === 0 && hasFacebook;
+
   return (
-    <Box className={styles.captionLinkContainer}>
-      <TextareaAutosize
-        placeholder="Write a caption..."
-        minRows={5}
-        value={caption}
-        onChange={(e) => handleCreatePostChange(e.target.value, "caption")}
-        className={styles.textarea}
-      />
-      <TextField
-        placeholder="Add a link (Facebook only)"
-        value={link}
-        onChange={(e) => handleCreatePostChange(e.target.value, "link")}
-        size="small"
-        className={styles.linkField}
-      />
-    </Box>
+    <>
+      {config.hasCaption && (
+        <Box className={styles.captionBlock}>
+          <Box className={styles.fieldLabel}>
+            Caption
+            <span className={styles.fieldHint}>
+              {caption.length} characters
+            </span>
+          </Box>
+          <textarea
+            placeholder="Write a caption..."
+            value={caption}
+            onChange={(e) => handleCreatePostChange(e.target.value, "caption")}
+            className={styles.caption}
+          />
+          {showTitle && (
+            <input
+              type="text"
+              placeholder="Title (used on Facebook video)"
+              value={title}
+              onChange={(e) => handleCreatePostChange(e.target.value, "title")}
+              className={styles.textInput}
+            />
+          )}
+        </Box>
+      )}
+      {showLink && (
+        <input
+          type="text"
+          placeholder="Add a link (Facebook only, no media)"
+          value={link}
+          onChange={(e) => handleCreatePostChange(e.target.value, "link")}
+          className={styles.textInput}
+        />
+      )}
+    </>
   );
 }

@@ -1,31 +1,80 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "../apiClient";
-import usePostStore from "@/stores/usePostStore";
+import usePostStore, { PostPlatform } from "@/stores/usePostStore";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
-import { useRouter } from "next/navigation";
+import { fileToBase64 } from "@/utils/helper.functions";
+import { Post, PostResponse, PublicMediaUrlsResponse } from "./posts.type";
 
-const apiClient = new APIClient("/posts");
+const uploadClient = new APIClient<PublicMediaUrlsResponse>(
+  "/posts/media/upload-media",
+);
+const postClient = new APIClient<PostResponse>("/posts");
+const videoClient = new APIClient<PostResponse>("/posts/video");
+const storyClient = new APIClient<PostResponse>("/posts/story");
 
 export const usePublishPost = () => {
-  const router = useRouter();
-
-  const createPostData = usePostStore((s) => s.createPostData);
+  const queryClient = useQueryClient();
   const selectedWorkspace = useWorkspaceStore(
     (s) => s.selectedWorkspace,
   )?.workspace_id;
 
   return useMutation({
-    mutationFn: (media_urls?: string[]) => {
-      const payload = {
+    mutationFn: async (platforms: PostPlatform[]): Promise<Post> => {
+      const { type, caption, title, link, media, scheduled, scheduleTime } =
+        usePostStore.getState().createPostData;
+
+      // Facebook schedules only unpublished posts; stories can't be scheduled
+      const schedule =
+        scheduled && scheduleTime
+          ? { published: false, isScheduled: true, timestamp: scheduleTime }
+          : {};
+
+      // Images are already data URLs; videos are read only when publishing
+      const encodedMedia = await Promise.all(
+        media.map(async (item) =>
+          item.kind === "image"
+            ? item.url
+            : ((await fileToBase64(item.file)) as string),
+        ),
+      );
+      const mediaUrls = encodedMedia.length
+        ? (await uploadClient.post(encodedMedia)).data
+        : undefined;
+
+      if (type === "video") {
+        const response = await videoClient.post({
+          workspace_id: selectedWorkspace,
+          file_url: mediaUrls?.[0],
+          description: caption,
+          title,
+          platforms,
+          ...schedule,
+        });
+        return response.data;
+      }
+
+      if (type === "story") {
+        const response = await storyClient.post({
+          workspace_id: selectedWorkspace,
+          caption: "",
+          media_urls: mediaUrls,
+          platforms,
+        });
+        return response.data;
+      }
+
+      const response = await postClient.post({
         workspace_id: selectedWorkspace,
-        caption: createPostData?.caption,
-        media_urls: media_urls,
-        platforms: createPostData?.platforms,
-      };
-      return apiClient.post(payload);
+        caption,
+        media_urls: mediaUrls,
+        link: link && !mediaUrls ? link : undefined,
+        platforms,
+        ...schedule,
+      });
+      return response.data;
     },
     onSuccess: () => {
-      router.push("/app/posts");
+      queryClient.invalidateQueries({ queryKey: ["posts-list"] });
     },
   });
 };

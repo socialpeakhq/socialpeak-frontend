@@ -1,20 +1,9 @@
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 12px;
-}
+@use "../tokens" as *;
 
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.formContainer {
+  @include panel;
 }
 
 .label {
-  color: var(--text-color);
-  font-weight: bold;
-  font-size: 14px;
+  @include field-label;
 }

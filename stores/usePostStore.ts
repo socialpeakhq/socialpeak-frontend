@@ -1,63 +1,73 @@
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { create } from "zustand";
 
-export type PostData = {
-  platforms: string[];
-  caption: string;
-  link: string;
-  media: string[] | string;
-  scheduled: boolean;
-  schedule_time?: string;
+export type PostType = "post" | "video" | "story";
+export type PostPlatform = "facebook" | "instagram";
+export type MediaKind = "image" | "video";
+
+export type PostMediaItem = {
+  id: string;
+  file: File;
+  kind: MediaKind;
+  url: string;
+  width: number;
+  height: number;
+  thumbUrl?: string | null;
 };
 
-type PostStore = {
-  createPostData?: Partial<PostData>;
+export type PostData = {
+  type: PostType;
+  platforms: PostPlatform[];
+  caption: string;
+  title: string;
+  link: string;
+  media: PostMediaItem[];
+  scheduled: boolean;
+  // unix timestamp in seconds, as the backend expects
+  scheduleTime: number | null;
+};
 
-  handleCreatePostDataChange: (value: string, name: keyof PostData) => void;
-  handleCreatePostPlatforms: (value: string) => void;
-  handleCreatePostMedia: (value: string, type: string) => void;
-  removeCreatePostMedia: (value: number) => void;
+type PostTextField = "caption" | "title" | "link";
+
+type PostStore = {
+  createPostData: PostData;
+
+  handleCreatePostDataChange: (value: string, name: PostTextField) => void;
+  handleCreatePostType: (value: PostType) => void;
+  handleCreatePostPlatforms: (value: PostPlatform) => void;
+  removeCreatePostPlatform: (value: PostPlatform) => void;
+  setCreatePostMedia: (value: PostMediaItem[]) => void;
+  removeCreatePostMedia: (id: string) => void;
+  handleCreatePostSchedule: (scheduled: boolean) => void;
+  handleCreatePostScheduleTime: (value: number | null) => void;
 };
 
 const usePostStore = create<PostStore>((set) => ({
-  createPostData: undefined,
+  createPostData: {
+    type: "post",
+    platforms: ["facebook", "instagram"],
+    caption: "",
+    title: "",
+    link: "",
+    media: [],
+    scheduled: false,
+    scheduleTime: null,
+  },
 
-  handleCreatePostDataChange: (value: string, name: keyof PostData) => {
-    set((s) => {
-      const currentPostData = s.createPostData;
-      return {
-        createPostData: { ...currentPostData, [name]: value },
-      };
-    });
+  handleCreatePostDataChange: (value: string, name: PostTextField) => {
+    set((s) => ({
+      createPostData: { ...s.createPostData, [name]: value },
+    }));
   },
-  handleCreatePostMedia: (value: string, type: string) => {
-    set((s) => {
-      const currentMedia = s.createPostData?.media;
-      const media =
-        type === "video"
-          ? value
-          : [...(Array.isArray(currentMedia) ? currentMedia : []), value];
-
-      return {
-        createPostData: { ...s.createPostData, media: media },
-      };
-    });
+  handleCreatePostType: (value: PostType) => {
+    // different types need different media — start clean
+    set((s) => ({
+      createPostData: { ...s.createPostData, type: value, media: [] },
+    }));
   },
-  removeCreatePostMedia: (value: number) => {
+  handleCreatePostPlatforms: (value: PostPlatform) => {
     set((s) => {
-      const newMedia = Array.isArray(s.createPostData?.media)
-        ? s.createPostData.media.filter(
-            (_item, index: number) => index !== value,
-          )
-        : "";
-      return {
-        createPostData: { ...s.createPostData, media: newMedia },
-      };
-    });
-  },
-  handleCreatePostPlatforms: (value: string) => {
-    set((s) => {
-      const currentPlatforms = s.createPostData?.platforms ?? [];
+      const currentPlatforms = s.createPostData.platforms;
       const selectedPlatforms = currentPlatforms.includes(value)
         ? currentPlatforms.filter((item) => item !== value)
         : [...currentPlatforms, value];
@@ -65,6 +75,37 @@ const usePostStore = create<PostStore>((set) => ({
         createPostData: { ...s.createPostData, platforms: selectedPlatforms },
       };
     });
+  },
+  removeCreatePostPlatform: (value: PostPlatform) => {
+    set((s) => ({
+      createPostData: {
+        ...s.createPostData,
+        platforms: s.createPostData.platforms.filter((item) => item !== value),
+      },
+    }));
+  },
+  setCreatePostMedia: (value: PostMediaItem[]) => {
+    set((s) => ({
+      createPostData: { ...s.createPostData, media: value },
+    }));
+  },
+  removeCreatePostMedia: (id: string) => {
+    set((s) => ({
+      createPostData: {
+        ...s.createPostData,
+        media: s.createPostData.media.filter((item) => item.id !== id),
+      },
+    }));
+  },
+  handleCreatePostSchedule: (scheduled: boolean) => {
+    set((s) => ({
+      createPostData: { ...s.createPostData, scheduled },
+    }));
+  },
+  handleCreatePostScheduleTime: (value: number | null) => {
+    set((s) => ({
+      createPostData: { ...s.createPostData, scheduleTime: value },
+    }));
   },
 }));
 

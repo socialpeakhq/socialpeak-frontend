@@ -1,0 +1,107 @@
+@use "../tokens" as *;
+
+.scheduleContainer {
+  margin-bottom: 18px;
+}
+
+.fieldLabel {
+  @include field-label;
+}
+
+.scheduleTabs {
+  display: flex;
+  gap: 8px;
+  background: $surface;
+  padding: 5px;
+  border-radius: 13px;
+}
+
+.scheduleTab {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: $ink-faint;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.on {
+  background: $canvas;
+  color: $brand-700;
+  box-shadow: $shadow-card;
+}
+
+// match the caption/title text inputs
+.dateTimePicker {
+  width: 100%;
+  margin-top: 14px !important;
+
+  :global(.MuiPickersOutlinedInput-root) {
+    border-radius: $radius-md;
+    font-family: inherit;
+    font-size: 13px;
+    color: $ink;
+  }
+
+  :global(.MuiPickersSectionList-root) {
+    padding: 11px 0;
+    font-family: $font-body;
+  }
+
+  :global(.MuiPickersOutlinedInput-notchedOutline) {
+    border: 1.5px solid $border !important;
+  }
+
+  :global(.Mui-focused .MuiPickersOutlinedInput-notchedOutline) {
+    border-color: $brand-500 !important;
+  }
+
+  :global(.MuiIconButton-root) {
+    color: $ink-faint;
+  }
+}
+
+.pickerPopper {
+  font-family: $font-body;
+
+  :global(.MuiPaper-root) {
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+    color: $ink;
+  }
+
+  :global(.MuiTypography-root),
+  :global(.MuiPickersDay-root),
+  :global(.MuiPickersCalendarHeader-label),
+  :global(.MuiMenuItem-root),
+  :global(.MuiButton-root) {
+    font-family: $font-body;
+  }
+
+  // days, months, years and clock items
+  :global(.Mui-selected) {
+    background-color: $brand-600 !important;
+    color: #fff;
+  }
+
+  :global(.MuiPickersDay-today:not(.Mui-selected)) {
+    border-color: $brand-500;
+  }
+
+  :global(.MuiButton-root) {
+    color: $brand-600;
+    font-weight: 700;
+    text-transform: none;
+  }
+}
+
+.scheduleNote {
+  font-size: 11px;
+  color: $ink-faint;
+  margin-top: 14px;
+}

@@ -1,0 +1,32 @@
+@use "../tokens" as *;
+
+.noticeList {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #92400e;
+  background: #fff7e8;
+  border: 1px solid #fce8c4;
+  border-radius: 10px;
+  padding: 9px 11px;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+}
+
+.info {
+  color: $blue-text;
+  background: $blue-bg;
+  border-color: #cfe0fd;
+}

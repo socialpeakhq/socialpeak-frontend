@@ -1,39 +1,31 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
+import { inter, plusJakartaSans } from "@/app/fonts";
 import PostForm from "@/components/create-post/PostForm";
 import SubmitContainer from "@/components/create-post/SubmitContainer";
-import usePostStore from "@/stores/usePostStore";
-import FacebookPreview from "@/components/create-post/FacebookPreview";
-import { ReactElement } from "react";
-import InstagramPreview from "@/components/create-post/InstagramPreview";
-
-const Platoform_Previews: Record<string, () => ReactElement> = {
-  facebook: () => <FacebookPreview />,
-  instagram: () => <InstagramPreview />,
-};
+import PostPreview from "@/components/create-post/PostPreview";
 
 export default function CreatePostPage() {
-  const postData = usePostStore((s) => s.createPostData);
-
   return (
-    <Box className={styles.createPostPageContainer}>
-      <Box className={styles.titleContainer}>
-        <Typography className={styles.titleLabel}>Create Post</Typography>
-        <Typography className={styles.titleHelper}>
-          Publish now or Schedule it for later
-        </Typography>
-      </Box>
-      <Box className={styles.content}>
-        <Box className={styles.formContainer}>
-          <PostForm />
-          <SubmitContainer />
+    <Box
+      className={`${styles.createPostPageContainer} ${inter.variable} ${plusJakartaSans.variable}`}
+    >
+      <Box className={styles.header}>
+        <h1 className={styles.titleLabel}>Create a post</h1>
+        <Box className={styles.titleHelper}>
+          Post, Video/Reel, or Story — to Facebook, Instagram, or both
         </Box>
-        <Box className={styles.previewContainer}>
-          {postData &&
-            postData.platforms?.map((platform: string) =>
-              Platoform_Previews[platform](),
-            )}
+      </Box>
+      <Box className={styles.stage}>
+        <Box className={styles.layout}>
+          <Box>
+            <PostForm />
+            <SubmitContainer />
+          </Box>
+          <Box className={styles.previewSticky}>
+            <PostPreview />
+          </Box>
         </Box>
       </Box>
     </Box>

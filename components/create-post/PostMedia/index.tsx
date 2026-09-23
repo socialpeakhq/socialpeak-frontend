@@ -1,79 +1,142 @@
-import { Box, Typography } from "@mui/material";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { ChangeEvent } from "react";
-import { fileToBase64, getImageDimensions } from "@/utils/helper.functions";
-import usePostStore from "@/stores/usePostStore";
-import useAlertStore from "@/stores/useAlertStore";
+/* eslint-disable @next/next/no-img-element */
+import { Box } from "@mui/material";
+import { DragEvent, useRef, useState } from "react";
+import {
+  fileToBase64,
+  getImageDimensions,
+  getVideoMetadata,
+} from "@/utils/helper.functions";
+import usePostStore, { PostMediaItem } from "@/stores/usePostStore";
+import { needsLetterbox, TYPE_CONFIG } from "../constants";
+import { CloseGlyph, UploadGlyph } from "../icons";
 import styles from "./styles.module.scss";
-import ImageViewer from "@/components/shared/ImageViewer";
 
-// Instagram's supported range for feed images: 4:5 (portrait) to 1.91:1 (landscape)
-const MIN_ASPECT_RATIO = 0.8;
-const MAX_ASPECT_RATIO = 1.91;
+const measureFile = async (
+  file: File,
+): Promise<Omit<PostMediaItem, "id" | "file">> => {
+  if (file.type.startsWith("video")) {
+    const url = URL.createObjectURL(file);
+    return { kind: "video", url, ...(await getVideoMetadata(url)) };
+  }
+
+  const url = (await fileToBase64(file)) as string;
+  const dimensions = await getImageDimensions(url).catch(() => ({
+    width: 1080,
+    height: 1080,
+  }));
+  return { kind: "image", url, ...dimensions };
+};
 
 export default function PostMedia() {
-  const media = usePostStore((s) => s.createPostData?.media);
-  const handleCreatePostMedia = usePostStore((s) => s.handleCreatePostMedia);
-  const openAlert = useAlertStore((s) => s.openAlert);
+  const { type, media } = usePostStore((s) => s.createPostData);
+  const setCreatePostMedia = usePostStore((s) => s.setCreatePostMedia);
+  const removeCreatePostMedia = usePostStore((s) => s.removeCreatePostMedia);
 
-  const handleFiles = async (
-    event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
-  ) => {
-    const selectedFiles = Array.from(event.target.files ?? []);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [dragging, setDragging] = useState<boolean>(false);
 
-    if (!selectedFiles.length) return;
+  const config = TYPE_CONFIG[type];
 
-    const uploadedFiles = (await Promise.all(
-      selectedFiles.map(async (file) => await fileToBase64(file)),
-    )) as string[];
+  const addFiles = async (fileList: FileList | null) => {
+    for (const file of Array.from(fileList ?? [])) {
+      const kind = file.type.startsWith("video") ? "video" : "image";
+      if (!config.kinds.includes(kind)) continue;
 
-    if (!uploadedFiles) return;
+      const item: PostMediaItem = {
+        id: Math.random().toString(36).slice(2),
+        file,
+        ...(await measureFile(file)),
+      };
 
-    for (const file of uploadedFiles) {
-      const { width, height } = await getImageDimensions(file);
-      const aspectRatio = width / height;
-
-      if (aspectRatio < MIN_ASPECT_RATIO || aspectRatio > MAX_ASPECT_RATIO) {
-        openAlert({
-          message: `This image's aspect ratio isn't supported by Instagram — it'll be padded with white bars to fit.`,
-          severity: "info",
-        });
+      // Read fresh state — earlier iterations of this loop may have added items
+      const currentMedia = usePostStore.getState().createPostData.media;
+      if (!config.multiple || item.kind !== "image") {
+        setCreatePostMedia([item]);
+      } else if (currentMedia.length < config.maxItems) {
+        setCreatePostMedia([...currentMedia, item]);
       }
-
-      handleCreatePostMedia(file, "image");
     }
   };
 
+  const handleDrag = (event: DragEvent<HTMLDivElement>, active: boolean) => {
+    event.preventDefault();
+    setDragging(active);
+  };
+
   return (
-    <Box className={styles.mediaContainer}>
-      <Box className={styles.mediaInputContainer}>
-        <Box className={styles.mediaContent}>
-          <Box className={styles.icon}>
-            <FileUploadIcon />
-          </Box>
-          <Typography className={styles.label}>Upload Files</Typography>
-          <Typography className={styles.helperLabel}>
-            Up to 10 photos for a carousel, or 1 video
-          </Typography>
+    <>
+      <Box className={styles.fieldLabel}>
+        {type === "post" ? "Media (optional)" : "Media"}
+      </Box>
+      {media.length < config.maxItems && (
+        <Box
+          className={`${styles.dropzone} ${dragging ? styles.drag : ""}`}
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => handleDrag(e, true)}
+          onDragEnter={(e) => handleDrag(e, true)}
+          onDragLeave={(e) => handleDrag(e, false)}
+          onDrop={(e) => {
+            handleDrag(e, false);
+            addFiles(e.dataTransfer.files);
+          }}
+        >
+          <UploadGlyph />
+          <Box className={styles.dropzoneText}>{config.dropText}</Box>
+          <Box className={styles.dropzoneSub}>{config.dropSub}</Box>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={config.accept}
+            multiple={config.multiple}
+            onChange={(e) => {
+              addFiles(e.target.files);
+              e.target.value = "";
+            }}
+            className={styles.fileInput}
+          />
         </Box>
-        <input
-          accept="image/*"
-          type="file"
-          multiple
-          onChange={handleFiles}
-          className={styles.mediaInput}
-        />
-      </Box>
-      <Box className={styles.selectedImages}>
-        {media &&
-          (Array.isArray(media) ? (
-            media.map((image: string, index: number) => {
-              return <ImageViewer index={index} image={image} key={index} />;
-            })
-          ) : (
-            <ImageViewer index={0} image={media} />
-          ))}
-      </Box>
-    </Box>
+      )}
+      {media.length > 0 && (
+        <Box className={styles.mediaGrid}>
+          {media.map((item) => {
+            const showPad =
+              item.kind === "image" && needsLetterbox(item.width, item.height);
+            const thumbSrc = item.kind === "video" ? item.thumbUrl : item.url;
+
+            return (
+              <Box
+                key={item.id}
+                className={`${styles.mediaThumb} ${showPad ? styles.letterboxed : ""}`}
+              >
+                {showPad && (
+                  <span className={styles.padBadge}>
+                    Padded
+                    <span className={styles.tooltipBubble}>
+                      This will be padded to fit the 4:5–1.91:1 range — the
+                      original isn&apos;t cropped.
+                    </span>
+                  </span>
+                )}
+                {thumbSrc ? (
+                  <img src={thumbSrc} alt="" />
+                ) : (
+                  <Box className={styles.videoPlaceholder}>▶</Box>
+                )}
+                {item.kind === "video" && (
+                  <span className={styles.videoBadge}>Video</span>
+                )}
+                <button
+                  type="button"
+                  className={styles.mediaRemove}
+                  onClick={() => removeCreatePostMedia(item.id)}
+                >
+                  <CloseGlyph />
+                </button>
+              </Box>
+            );
+          })}
+        </Box>
+      )}
+    </>
   );
 }

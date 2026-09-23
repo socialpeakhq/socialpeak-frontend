@@ -23,3 +23,9 @@ export type PostTarget = {
   published_at: string;
   status: string;
 };
+
+export type PostResponse = {
+  statusCode: number;
+  message: string;
+  data: Post;
+};
