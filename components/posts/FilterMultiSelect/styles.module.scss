@@ -1,0 +1,22 @@
+.filterSelect {
+  height: 100%;
+  width: 12%;
+  background-color: #fff;
+  border-radius: 10px;
+  & > div {
+    height: 100%;
+  }
+
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.option {
+  color: var(--text-color);
+  font-size: 14px;
+
+  &:global(.Mui-selected),
+  &:global(.Mui-selected:hover) {
+    background-color: var(--soft-accent-background) !important;
+  }
+}

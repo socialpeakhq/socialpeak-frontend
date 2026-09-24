@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 type IProps = {
   options: { label: string; value: string }[];
   handleOptionChange: (value: string) => void;
-  selectedOption: string[];
+  selectedOption: string;
 };
 
 export default function FilterMultiSelect({
@@ -12,12 +12,11 @@ export default function FilterMultiSelect({
   options,
   selectedOption,
 }: IProps) {
-  const fullLabel = `${selectedOption.forEach((item) => item + ",")}`;
   return (
     <Select
-      value={selectedOption.length === 1 ? selectedOption[0] : fullLabel}
+      value={selectedOption}
       onChange={(e) => handleOptionChange(e.target.value)}
-      multiple
+      className={styles.filterSelect}
     >
       {options.map((option, index) => (
         <MenuItem

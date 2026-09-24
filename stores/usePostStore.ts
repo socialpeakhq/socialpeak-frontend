@@ -7,10 +7,10 @@ export type MediaKind = "image" | "video";
 
 export type PostsTableFilter = {
   searchField: string;
-  types: string[];
-  platforms: string[];
-  statuses: string[];
-  dateFilter: "7d" | "30d" | "90d";
+  types: string;
+  platforms: string;
+  statuses: string;
+  date: "7d" | "30d" | "90d" | "all";
 };
 
 export type PostMediaItem = {
@@ -49,7 +49,10 @@ type PostStore = {
   removeCreatePostMedia: (id: string) => void;
   handleCreatePostSchedule: (scheduled: boolean) => void;
   handleCreatePostScheduleTime: (value: number | null) => void;
-  handleModifyFilters: (name: string, value: string, type: string) => void;
+  handleModifyFilters: <K extends keyof PostsTableFilter>(
+    name: K,
+    value: PostsTableFilter[K],
+  ) => void;
 };
 
 const usePostStore = create<PostStore>((set) => ({
@@ -64,11 +67,11 @@ const usePostStore = create<PostStore>((set) => ({
     scheduleTime: null,
   },
   filters: {
-    dateFilter: "7d",
-    platforms: [],
+    date: "all",
+    platforms: "all",
     searchField: "",
-    statuses: [],
-    types: [],
+    statuses: "all",
+    types: "all",
   },
 
   handleCreatePostDataChange: (value: string, name: PostTextField) => {
@@ -124,25 +127,13 @@ const usePostStore = create<PostStore>((set) => ({
       createPostData: { ...s.createPostData, scheduleTime: value },
     }));
   },
-  handleModifyFilters: (name: string, value: string, type: string) => {
+  handleModifyFilters: <K extends keyof PostsTableFilter>(
+    name: K,
+    value: PostsTableFilter[K],
+  ) => {
     set((s) => {
       const currentFilter = { ...s.filters };
-
-      if (type !== "array") {
-        if (name === "searchField") {
-          currentFilter.searchField = value;
-        } else if (name === "dateFilter") {
-          currentFilter.dateFilter = value as PostsTableFilter["dateFilter"];
-        }
-      } else {
-        const arrayFilterName = name as "types" | "platforms" | "statuses";
-        const filterValues = currentFilter[arrayFilterName];
-
-        currentFilter[arrayFilterName] = filterValues.includes(value)
-          ? filterValues.filter((item) => item !== value)
-          : [...filterValues, value];
-      }
-
+      currentFilter[name] = value;
       return {
         filters: currentFilter,
       };

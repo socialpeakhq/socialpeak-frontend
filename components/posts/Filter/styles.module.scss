@@ -1,6 +1,8 @@
 .filterContainer {
   height: 100%;
   width: 100%;
+  display: flex;
+  gap: 6px;
 }
 
 .searchField {
@@ -22,4 +24,11 @@
     font-size: 18px;
     margin-right: 6px;
   }
+}
+
+.searchButton {
+  border-radius: 10px;
+  background-color: var(--accent-purple);
+  font-weight: bold;
+  font-size: 13px !important;
 }
