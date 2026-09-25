@@ -68,7 +68,7 @@ export default function SubmitContainer() {
   const [publishedPost, setPublishedPost] = useState<Post>();
   const [publishError, setPublishError] = useState<string>();
 
-  const { data: posts } = usePostLists(selectedWorkspaceId, {
+  const { data: posts } = usePostLists(selectedWorkspaceId, undefined, {
     refetchInterval: (latestPosts) =>
       findTargets(publishedPost, latestPosts).some(
         (target) => target.status === "processing",
