@@ -12,14 +12,16 @@ import { formatDateTime } from "@/utils/helper.functions";
 import { PLATFORM_ICON } from "@/components/posts/platformIcons";
 import { MediaDialogPayload } from "@/components/posts/MediaDialog";
 import { TargetsDialogPayload } from "@/components/posts/TargetsDialog";
+import { useSearchParams } from "next/navigation";
 
 export default function PostsTable() {
+  const searchParams = useSearchParams();
   const selectedWorkspaceId = useWorkspaceStore(
     (s) => s.selectedWorkspace?.workspace_id,
   );
   const openDialog = useDialogStore((s) => s.openDialog);
 
-  const { data } = usePostLists(selectedWorkspaceId);
+  const { data } = usePostLists(selectedWorkspaceId, searchParams?.toString());
 
   const columns: GridColDef<Post>[] = [
     {
