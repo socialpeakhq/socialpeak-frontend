@@ -23,13 +23,11 @@ export const usePublishPost = () => {
       const { type, caption, title, link, media, scheduled, scheduleTime } =
         usePostStore.getState().createPostData;
 
-      // Facebook schedules only unpublished posts; stories can't be scheduled
       const schedule =
         scheduled && scheduleTime
-          ? { published: false, isScheduled: true, timestamp: scheduleTime }
+          ? { published: false, isScheduled: true, scheduled_at: scheduleTime }
           : {};
 
-      // Images are already data URLs; videos are read only when publishing
       const encodedMedia = await Promise.all(
         media.map(async (item) =>
           item.kind === "image"
