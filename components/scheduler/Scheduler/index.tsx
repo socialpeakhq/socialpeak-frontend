@@ -72,6 +72,7 @@ export default function SchedulerContent() {
       <Schedule<ScheduledPost>
         data={(data as ScheduledPost[] | undefined) ?? EMPTY}
         mapToEvent={mapPostToEvent}
+        onEventClick={(item) => console.log(item)}
       />
     </Box>
   );
