@@ -1,12 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
 import usePostStore from "@/stores/usePostStore";
-import SearchIcon from "@mui/icons-material/Search";
 import { useDebounce } from "@/utils/utils";
 import FilterMultiSelect from "../FilterMultiSelect";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { KeyTwoTone } from "@mui/icons-material";
+import SearchField from "@/components/shared/SearchField";
 
 const POST_TYPE_OPTIONS = [
   { label: "All Types", value: "all" },
@@ -62,17 +61,10 @@ export default function Filter() {
 
   return (
     <Box className={styles.filterContainer}>
-      <TextField
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        size="small"
-        variant="outlined"
-        placeholder="Search by caption or ID"
-        slotProps={{
-          input: {
-            startAdornment: <SearchIcon />,
-          },
-        }}
+      <SearchField
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        placeholder="Search by ID or caption"
         className={styles.searchField}
       />
       <FilterMultiSelect
