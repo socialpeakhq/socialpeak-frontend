@@ -3,14 +3,15 @@
   height: 100%;
 }
 
-// Platform icons rendered in front of each event, driven by the per-event className
 $icon-size: 14px;
 $icon-gap: 2px;
 
 .platforms::before {
   content: "";
   flex-shrink: 0;
-  width: calc(var(--platform-count, 1) * #{$icon-size + $icon-gap} - #{$icon-gap});
+  width: calc(
+    var(--platform-count, 1) * #{$icon-size + $icon-gap} - #{$icon-gap}
+  );
   height: $icon-size;
   margin-right: 4px;
   order: -1;

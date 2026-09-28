@@ -1,4 +1,55 @@
 .schedule {
   width: 100%;
   height: 100%;
+  padding: 12px;
+  padding-top: 6px;
+
+  :global(.css-fthpfd-MuiEventCalendar-headerToolbarLabel) {
+    color: var(--text-color);
+    opacity: 0.7;
+  }
+
+  :global(.MuiEventCalendar-mainPanel) {
+    gap: 0px;
+  }
+
+  :global(.MuiEventCalendar-headerToolbarSidePanelToggle) {
+    display: none !important;
+  }
+
+  :global(.MuiEventCalendar-headerToolbarPreviousButton) {
+    border-radius: 10px;
+    outline: solid 1px rgba(128, 128, 128, 0.5);
+    color: var(--text-color);
+  }
+
+  :global(.MuiEventCalendar-headerToolbarNextButton) {
+    border-radius: 10px;
+    outline: solid 1px rgba(128, 128, 128, 0.5);
+    color: var(--text-color);
+  }
+
+  :global(.MuiEventCalendar-headerToolbarTodayButton) {
+    display: none;
+  }
+
+  :global(.MuiEventCalendar-viewSwitcherButton) {
+    background-color: var(--accent-purple);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 10px;
+  }
+
+  :global(.MuiEventCalendar-preferencesMenuButton) {
+    display: none;
+  }
+
+  :global(.MuiEventCalendar-preferencesMenu) {
+    display: none;
+  }
+
+  :global(.MuiEventCalendar-dayGridEvent) {
+    background-color: var(--sidebar-background-color);
+    border-radius: 10px;
+  }
 }
