@@ -53,18 +53,19 @@ export default function PostSchedule() {
               minDateTime={dayjs().add(MIN_LEAD_MINUTES, "minute")}
               maxDateTime={dayjs().add(MAX_LEAD_DAYS, "day")}
               views={["day", "hours", "minutes"]}
-              format="MM/DD/YYYY HH:mm"
+              format="DD/MM/YYYY HH:mm"
               ampm={false}
               className={styles.dateTimePicker}
-              // the popper renders in a portal, outside the page's font scope
               slotProps={{
-                popper: { className: `${styles.pickerPopper} ${inter.variable}` },
+                popper: {
+                  className: `${styles.pickerPopper} ${inter.variable}`,
+                },
               }}
             />
           </LocalizationProvider>
           <Box className={styles.scheduleNote}>
-            Uses your local time zone · between {MIN_LEAD_MINUTES} minutes
-            and {MAX_LEAD_DAYS} days from now
+            Uses your local time zone · between {MIN_LEAD_MINUTES} minutes and{" "}
+            {MAX_LEAD_DAYS} days from now
           </Box>
         </>
       )}

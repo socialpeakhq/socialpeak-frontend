@@ -2,4 +2,21 @@
   height: 100%;
   width: 100%;
   background-color: var(--sidebar-background-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter {
+  height: 36px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.scheduler {
+  width: 100%;
+  height: calc(100% - 36px);
+  background-color: #fff;
+  border-radius: 12px;
 }
