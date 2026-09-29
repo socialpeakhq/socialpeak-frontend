@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import useDialogStore from "@/stores/useDialogStore";
 import usePostStore from "@/stores/usePostStore";
@@ -10,6 +10,7 @@ import PostNotices from "@/components/create-post/PostNotices";
 import PostSchedule from "@/components/create-post/PostSchedule";
 import CaptionLink from "@/components/create-post/CaptionLink";
 import PostMedia from "@/components/create-post/PostMedia";
+import { useDeleteScheduledPost } from "@/react-query/posts/useDeleteScheduledPost";
 
 export function EditPostHeader() {
   const post = useDialogStore((s) => s.dialogContent as ScheduledPost);
@@ -47,14 +48,22 @@ export function EditPost() {
 }
 
 export function EditPostActions() {
+  const post = useDialogStore((s) => s.dialogContent as ScheduledPost);
   const closeDialog = useDialogStore((s) => s.closeDialog);
+
+  const { mutate: deleteScheduledPost, isPending } = useDeleteScheduledPost();
+
+  const handleRemovePost = () => {
+    deleteScheduledPost(post.id);
+  };
   return (
     <Box className={styles.actionsContainer}>
       <Button
         variant="contained"
+        onClick={handleRemovePost}
         className={`${styles.button} ${styles.danger}`}
       >
-        Remove from schedule
+        {isPending ? <CircularProgress /> : "Remove from schedule"}
       </Button>
       <Box className={styles.actionsRight}>
         <Button

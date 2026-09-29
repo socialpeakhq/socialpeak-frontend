@@ -52,4 +52,10 @@
     background-color: var(--sidebar-background-color);
     border-radius: 10px;
   }
+  :global(
+    .css-lwoa15-MuiEventCalendar-monthViewCell[data-current]
+      > .MuiEventCalendar-monthViewCellNumberButton
+  ) {
+    background-color: var(--accent-purple) !important;
+  }
 }
