@@ -15,7 +15,6 @@ export type PostsTableFilter = {
 
 export type PostMediaItem = {
   id: string;
-  // absent for media that already lives on a remote URL (e.g. a scheduled post)
   file?: File;
   kind: MediaKind;
   url: string;
@@ -32,14 +31,11 @@ export type PostData = {
   link: string;
   media: PostMediaItem[];
   scheduled: boolean;
-  // unix timestamp in seconds, as the backend expects
   scheduleTime: number | null;
 };
 
 type PostTextField = "caption" | "title" | "link";
 
-// The post form components edit either the Create Post draft or the
-// scheduled post being edited, selected by this key
 export type PostDataKey = "createPostData" | "editPostData";
 
 type PostStore = {

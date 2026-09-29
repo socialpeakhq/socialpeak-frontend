@@ -11,6 +11,7 @@ import PostSchedule from "@/components/create-post/PostSchedule";
 import CaptionLink from "@/components/create-post/CaptionLink";
 import PostMedia from "@/components/create-post/PostMedia";
 import { useDeleteScheduledPost } from "@/react-query/posts/useDeleteScheduledPost";
+import { useUpdateScheduledPost } from "@/react-query/posts/useUpdateScheduledPost";
 
 export function EditPostHeader() {
   const post = useDialogStore((s) => s.dialogContent as ScheduledPost);
@@ -49,21 +50,31 @@ export function EditPost() {
 
 export function EditPostActions() {
   const post = useDialogStore((s) => s.dialogContent as ScheduledPost);
+  const editPostData = usePostStore((s) => s.editPostData);
   const closeDialog = useDialogStore((s) => s.closeDialog);
 
-  const { mutate: deleteScheduledPost, isPending } = useDeleteScheduledPost();
+  const { mutate: deleteScheduledPost, isPending: isDeletionLoading } =
+    useDeleteScheduledPost();
+  const { mutate: updateScheduledPost, isPending: isUpdateLoading } =
+    useUpdateScheduledPost();
 
   const handleRemovePost = () => {
     deleteScheduledPost(post.id);
   };
+
+  const handlePostUpdate = () => {
+    updateScheduledPost({ id: post.id, data: editPostData });
+  };
+
   return (
     <Box className={styles.actionsContainer}>
       <Button
         variant="contained"
+        disabled={isDeletionLoading}
         onClick={handleRemovePost}
         className={`${styles.button} ${styles.danger}`}
       >
-        {isPending ? <CircularProgress /> : "Remove from schedule"}
+        {isDeletionLoading ? <CircularProgress /> : "Remove from schedule"}
       </Button>
       <Box className={styles.actionsRight}>
         <Button
@@ -74,10 +85,12 @@ export function EditPostActions() {
           Cancel
         </Button>
         <Button
+          disabled={isUpdateLoading}
           variant="contained"
+          onClick={handlePostUpdate}
           className={`${styles.button} ${styles.primary}`}
         >
-          Save changes
+          {isUpdateLoading ? <CircularProgress /> : "Save changes"}
         </Button>
       </Box>
     </Box>
