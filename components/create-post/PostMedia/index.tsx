@@ -6,7 +6,10 @@ import {
   getImageDimensions,
   getVideoMetadata,
 } from "@/utils/helper.functions";
-import usePostStore, { PostMediaItem } from "@/stores/usePostStore";
+import usePostStore, {
+  PostDataKey,
+  PostMediaItem,
+} from "@/stores/usePostStore";
 import { needsLetterbox, TYPE_CONFIG } from "../constants";
 import { CloseGlyph, UploadGlyph } from "../icons";
 import styles from "./styles.module.scss";
@@ -27,8 +30,12 @@ const measureFile = async (
   return { kind: "image", url, ...dimensions };
 };
 
-export default function PostMedia() {
-  const { type, media } = usePostStore((s) => s.createPostData);
+type IProps = {
+  dataKey?: PostDataKey;
+};
+
+export default function PostMedia({ dataKey = "createPostData" }: IProps) {
+  const { type, media } = usePostStore((s) => s[dataKey]);
   const setCreatePostMedia = usePostStore((s) => s.setCreatePostMedia);
   const removeCreatePostMedia = usePostStore((s) => s.removeCreatePostMedia);
 
@@ -49,11 +56,11 @@ export default function PostMedia() {
       };
 
       // Read fresh state — earlier iterations of this loop may have added items
-      const currentMedia = usePostStore.getState().createPostData.media;
+      const currentMedia = usePostStore.getState()[dataKey].media;
       if (!config.multiple || item.kind !== "image") {
-        setCreatePostMedia([item]);
+        setCreatePostMedia([item], dataKey);
       } else if (currentMedia.length < config.maxItems) {
-        setCreatePostMedia([...currentMedia, item]);
+        setCreatePostMedia([...currentMedia, item], dataKey);
       }
     }
   };
@@ -128,7 +135,7 @@ export default function PostMedia() {
                 <button
                   type="button"
                   className={styles.mediaRemove}
-                  onClick={() => removeCreatePostMedia(item.id)}
+                  onClick={() => removeCreatePostMedia(item.id, dataKey)}
                 >
                   <CloseGlyph />
                 </button>

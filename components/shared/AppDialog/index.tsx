@@ -1,6 +1,12 @@
 "use client";
 
-import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import type { Breakpoint } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -17,11 +23,17 @@ import {
 } from "@/components/posts/TargetsDialog";
 import useDialogStore from "@/stores/useDialogStore";
 import styles from "./styles.module.scss";
+import {
+  EditPost,
+  EditPostActions,
+  EditPostHeader,
+} from "@/components/posts/EditPost";
 
 const DIALOG_MAX_WIDTH: Record<string, Breakpoint> = {
   meta: "sm",
   "post-media": "sm",
   "post-targets": "sm",
+  editPost: "sm",
 };
 
 export default function AppDialog() {
@@ -48,6 +60,7 @@ export default function AppDialog() {
           {dialogCaller === "meta" ? <MetaConnectionInformationHeader /> : null}
           {dialogCaller === "post-media" ? <MediaDialogHeader /> : null}
           {dialogCaller === "post-targets" ? <TargetsDialogHeader /> : null}
+          {dialogCaller === "editPost" && <EditPostHeader />}
         </Box>
         <Box className={styles.rightSide}>
           <Box onClick={() => closeDialog()} className={styles.closeContainer}>
@@ -59,7 +72,13 @@ export default function AppDialog() {
         {dialogCaller === "meta" ? <MetaConnectionInformationContent /> : null}
         {dialogCaller === "post-media" ? <MediaDialogContent /> : null}
         {dialogCaller === "post-targets" ? <TargetsDialogContent /> : null}
+        {dialogCaller === "editPost" && <EditPost />}
       </DialogContent>
+      {dialogCaller === "editPost" && (
+        <DialogActions className={styles.dialogActions}>
+          <EditPostActions />
+        </DialogActions>
+      )}
     </Dialog>
   );
 }

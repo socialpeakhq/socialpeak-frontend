@@ -37,14 +37,12 @@
   }
 
   :global(.MuiPickersOutlinedInput-root) {
-    font-family: inherit;
     font-size: 14px;
     color: var(--text-color);
   }
 
   :global(.MuiPickersSectionList-root) {
     padding: 11px 0;
-    font-family: var(--font-inter), sans-serif;
   }
 
   :global(.Mui-focused .MuiPickersOutlinedInput-notchedOutline) {

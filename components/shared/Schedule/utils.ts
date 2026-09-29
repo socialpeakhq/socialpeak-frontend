@@ -17,6 +17,8 @@ export type ScheduledPost = {
   caption?: string;
   platforms: Platform[];
   scheduled_at: string | number; // ISO string or unix seconds
+  media_urls?: string[];
+  metadata?: { link?: string; title?: string } | null;
 };
 
 export const TYPE_LABEL: Record<ScheduledPost["type"], string> = {

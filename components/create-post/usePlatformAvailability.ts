@@ -4,7 +4,7 @@ import {
   MetaAccountsDataType,
 } from "@/react-query/connections/connections.type";
 import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
-import usePostStore, { PostPlatform } from "@/stores/usePostStore";
+import usePostStore, { PostDataKey, PostPlatform } from "@/stores/usePostStore";
 import { PLATFORM_KEYS } from "./constants";
 
 type PlatformAvailability = {
@@ -12,7 +12,9 @@ type PlatformAvailability = {
   disabledReason: string | null;
 };
 
-export default function usePlatformAvailability(): {
+export default function usePlatformAvailability(
+  dataKey: PostDataKey = "createPostData",
+): {
   loaded: boolean;
   platforms: Record<PostPlatform, PlatformAvailability>;
 } {
@@ -21,8 +23,8 @@ export default function usePlatformAvailability(): {
     queryFn: skipToken,
   });
 
-  const type = usePostStore((s) => s.createPostData.type);
-  const firstMedia = usePostStore((s) => s.createPostData.media[0]);
+  const type = usePostStore((s) => s[dataKey].type);
+  const firstMedia = usePostStore((s) => s[dataKey].media[0]);
 
   const facebookSupportsCurrentMedia = !(
     type === "story" && firstMedia?.kind === "video"

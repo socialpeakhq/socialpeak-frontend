@@ -1,11 +1,15 @@
 import { Box } from "@mui/material";
-import usePostStore from "@/stores/usePostStore";
+import usePostStore, { PostDataKey } from "@/stores/usePostStore";
 import { TYPE_CONFIG } from "../constants";
 import styles from "./styles.module.scss";
 
-export default function CaptionLink() {
+type IProps = {
+  dataKey?: PostDataKey;
+};
+
+export default function CaptionLink({ dataKey = "createPostData" }: IProps) {
   const { type, caption, title, link, media, platforms } = usePostStore(
-    (s) => s.createPostData,
+    (s) => s[dataKey],
   );
   const handleCreatePostChange = usePostStore(
     (s) => s.handleCreatePostDataChange,
@@ -29,7 +33,7 @@ export default function CaptionLink() {
           <textarea
             placeholder="Write a caption..."
             value={caption}
-            onChange={(e) => handleCreatePostChange(e.target.value, "caption")}
+            onChange={(e) => handleCreatePostChange(e.target.value, "caption", dataKey)}
             className={styles.caption}
           />
           {showTitle && (
@@ -37,7 +41,9 @@ export default function CaptionLink() {
               type="text"
               placeholder="Title (used on Facebook video)"
               value={title}
-              onChange={(e) => handleCreatePostChange(e.target.value, "title")}
+              onChange={(e) =>
+                handleCreatePostChange(e.target.value, "title", dataKey)
+              }
               className={styles.textInput}
             />
           )}
@@ -48,7 +54,9 @@ export default function CaptionLink() {
           type="text"
           placeholder="Add a link (Facebook only, no media)"
           value={link}
-          onChange={(e) => handleCreatePostChange(e.target.value, "link")}
+          onChange={(e) =>
+            handleCreatePostChange(e.target.value, "link", dataKey)
+          }
           className={styles.textInput}
         />
       )}

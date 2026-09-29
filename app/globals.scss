@@ -18,6 +18,19 @@
   --max-width-tablet-portrait: 980px;
   --max-width-mobile-landscape: 700px;
   --max-width-mobile: 500px;
+
+  --font-body: var(--font-inter), sans-serif;
+  --font-heading: var(--font-plus-jakarta-sans), sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
 }
 
 ::-webkit-scrollbar {

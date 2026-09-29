@@ -1,14 +1,21 @@
 import { Box } from "@mui/material";
 import { useEffect } from "react";
-import usePostStore from "@/stores/usePostStore";
+import usePostStore, { PostDataKey } from "@/stores/usePostStore";
 import { PLATFORM_KEYS, PLATFORM_LABEL } from "../constants";
 import { PLATFORM_GLYPH } from "../icons";
 import usePlatformAvailability from "../usePlatformAvailability";
 import styles from "./styles.module.scss";
 
-export default function PlatformSelection() {
-  const { loaded, platforms: availability } = usePlatformAvailability();
-  const platforms = usePostStore((s) => s.createPostData.platforms);
+type IProps = {
+  dataKey?: PostDataKey;
+};
+
+export default function PlatformSelection({
+  dataKey = "createPostData",
+}: IProps) {
+  const { loaded, platforms: availability } =
+    usePlatformAvailability(dataKey);
+  const platforms = usePostStore((s) => s[dataKey].platforms);
   const handleCreatePostPlatforms = usePostStore(
     (s) => s.handleCreatePostPlatforms,
   );
@@ -22,9 +29,15 @@ export default function PlatformSelection() {
   // A platform that becomes unavailable is deselected, not just greyed out
   useEffect(() => {
     if (!loaded) return;
-    if (facebookDisabled) removeCreatePostPlatform("facebook");
-    if (instagramDisabled) removeCreatePostPlatform("instagram");
-  }, [loaded, facebookDisabled, instagramDisabled, removeCreatePostPlatform]);
+    if (facebookDisabled) removeCreatePostPlatform("facebook", dataKey);
+    if (instagramDisabled) removeCreatePostPlatform("instagram", dataKey);
+  }, [
+    loaded,
+    facebookDisabled,
+    instagramDisabled,
+    removeCreatePostPlatform,
+    dataKey,
+  ]);
 
   return (
     <Box className={styles.platformRow}>
@@ -35,7 +48,9 @@ export default function PlatformSelection() {
         return (
           <Box
             key={key}
-            onClick={() => !disabledReason && handleCreatePostPlatforms(key)}
+            onClick={() =>
+              !disabledReason && handleCreatePostPlatforms(key, dataKey)
+            }
             className={`${styles.platformToggle} ${on ? styles.on : ""} ${disabledReason ? styles.disabled : ""}`}
           >
             <Box className={styles.platformIcon}>{PLATFORM_GLYPH[key]}</Box>

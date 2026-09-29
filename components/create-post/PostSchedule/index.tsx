@@ -2,8 +2,7 @@ import { Box } from "@mui/material";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import usePostStore from "@/stores/usePostStore";
-import { inter } from "@/app/fonts";
+import usePostStore, { PostDataKey } from "@/stores/usePostStore";
 import styles from "./styles.module.scss";
 
 // Facebook only accepts scheduled times 10 minutes to 30 days from now
@@ -15,9 +14,20 @@ const SCHEDULE_OPTIONS = [
   { label: "Schedule for later", scheduled: true },
 ];
 
-export default function PostSchedule() {
-  const scheduled = usePostStore((s) => s.createPostData.scheduled);
-  const scheduleTime = usePostStore((s) => s.createPostData.scheduleTime);
+type IProps = {
+  dataKey?: PostDataKey;
+  label?: string;
+  // an already scheduled post can only be rescheduled, not published now
+  showModeTabs?: boolean;
+};
+
+export default function PostSchedule({
+  dataKey = "createPostData",
+  label = "When",
+  showModeTabs = true,
+}: IProps) {
+  const scheduled = usePostStore((s) => s[dataKey].scheduled);
+  const scheduleTime = usePostStore((s) => s[dataKey].scheduleTime);
   const handleCreatePostSchedule = usePostStore(
     (s) => s.handleCreatePostSchedule,
   );
@@ -27,19 +37,21 @@ export default function PostSchedule() {
 
   return (
     <Box className={styles.scheduleContainer}>
-      <Box className={styles.fieldLabel}>When</Box>
-      <Box className={styles.scheduleTabs}>
-        {SCHEDULE_OPTIONS.map((option) => (
-          <button
-            key={option.label}
-            type="button"
-            onClick={() => handleCreatePostSchedule(option.scheduled)}
-            className={`${styles.scheduleTab} ${scheduled === option.scheduled ? styles.on : ""}`}
-          >
-            {option.label}
-          </button>
-        ))}
-      </Box>
+      <Box className={styles.fieldLabel}>{label}</Box>
+      {showModeTabs && (
+        <Box className={styles.scheduleTabs}>
+          {SCHEDULE_OPTIONS.map((option) => (
+            <button
+              key={option.label}
+              type="button"
+              onClick={() => handleCreatePostSchedule(option.scheduled, dataKey)}
+              className={`${styles.scheduleTab} ${scheduled === option.scheduled ? styles.on : ""}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </Box>
+      )}
       {scheduled && (
         <>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -48,6 +60,7 @@ export default function PostSchedule() {
               onChange={(value) =>
                 handleCreatePostScheduleTime(
                   value?.isValid() ? value.unix() : null,
+                  dataKey,
                 )
               }
               minDateTime={dayjs().add(MIN_LEAD_MINUTES, "minute")}
@@ -55,10 +68,10 @@ export default function PostSchedule() {
               views={["day", "hours", "minutes"]}
               format="DD/MM/YYYY HH:mm"
               ampm={false}
-              className={styles.dateTimePicker}
+              className={`${styles.dateTimePicker} ${showModeTabs ? "" : styles.flush}`}
               slotProps={{
                 popper: {
-                  className: `${styles.pickerPopper} ${inter.variable}`,
+                  className: styles.pickerPopper,
                 },
               }}
             />

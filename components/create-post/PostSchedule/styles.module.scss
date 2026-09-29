@@ -45,14 +45,12 @@
 
   :global(.MuiPickersOutlinedInput-root) {
     border-radius: 13px;
-    font-family: inherit;
     font-size: 13px;
     color: var(--text-color);
   }
 
   :global(.MuiPickersSectionList-root) {
     padding: 11px 0;
-    font-family: var(--font-inter), sans-serif;
   }
 
   :global(.MuiPickersOutlinedInput-notchedOutline) {
@@ -68,22 +66,17 @@
   }
 }
 
-.pickerPopper {
-  font-family: var(--font-inter), sans-serif;
+// no mode tabs above the picker, so it sits right under the label
+.flush {
+  margin-top: 0 !important;
+}
 
+.pickerPopper {
   :global(.MuiPaper-root) {
     border: 1px solid rgb(238, 238, 238);
     border-radius: 18px;
     box-shadow: 0 8px 24px rgba(108, 72, 197, 0.1);
     color: var(--text-color);
-  }
-
-  :global(.MuiTypography-root),
-  :global(.MuiPickersDay-root),
-  :global(.MuiPickersCalendarHeader-label),
-  :global(.MuiMenuItem-root),
-  :global(.MuiButton-root) {
-    font-family: var(--font-inter), sans-serif;
   }
 
   // days, months, years and clock items

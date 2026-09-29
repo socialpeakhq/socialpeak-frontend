@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Providers from "./providers";
-import { geistMono, geistSans } from "./fonts";
+import { inter, plusJakartaSans } from "./fonts";
 import AlertPopUp from "@/components/shared/Alert";
 import AppDialog from "@/components/shared/AppDialog";
 
@@ -16,10 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      className={`${inter.variable} ${plusJakartaSans.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
         <Providers>
           {children}
           <AlertPopUp />

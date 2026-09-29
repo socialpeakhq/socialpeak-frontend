@@ -1,6 +1,10 @@
 "use client";
 
-import { StyledEngineProvider } from "@mui/material";
+import {
+  createTheme,
+  StyledEngineProvider,
+  ThemeProvider,
+} from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useEffect, useState } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -14,6 +18,13 @@ import {
   persistMetaAccountsQuery,
   restoreMetaAccountsQuery,
 } from "@/lib/metaAccountsQueryPersistence";
+
+// MUI components default to Roboto — point them at the app font
+const theme = createTheme({
+  typography: {
+    fontFamily: "var(--font-body)",
+  },
+});
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => {
@@ -45,7 +56,7 @@ export default function Providers({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <StyledEngineProvider injectFirst>
-        {children}
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </StyledEngineProvider>
     </QueryClientProvider >
   )

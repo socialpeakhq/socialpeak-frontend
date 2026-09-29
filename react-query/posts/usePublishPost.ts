@@ -30,7 +30,7 @@ export const usePublishPost = () => {
 
       const encodedMedia = await Promise.all(
         media.map(async (item) =>
-          item.kind === "image"
+          item.kind === "image" || !item.file
             ? item.url
             : ((await fileToBase64(item.file)) as string),
         ),

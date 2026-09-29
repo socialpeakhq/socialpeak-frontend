@@ -15,7 +15,8 @@ export type PostsTableFilter = {
 
 export type PostMediaItem = {
   id: string;
-  file: File;
+  // absent for media that already lives on a remote URL (e.g. a scheduled post)
+  file?: File;
   kind: MediaKind;
   url: string;
   width: number;
@@ -37,35 +38,51 @@ export type PostData = {
 
 type PostTextField = "caption" | "title" | "link";
 
+// The post form components edit either the Create Post draft or the
+// scheduled post being edited, selected by this key
+export type PostDataKey = "createPostData" | "editPostData";
+
 type PostStore = {
   createPostData: PostData;
+  editPostData: PostData;
   filters: PostsTableFilter;
 
-  handleCreatePostDataChange: (value: string, name: PostTextField) => void;
-  handleCreatePostType: (value: PostType) => void;
-  handleCreatePostPlatforms: (value: PostPlatform) => void;
-  removeCreatePostPlatform: (value: PostPlatform) => void;
-  setCreatePostMedia: (value: PostMediaItem[]) => void;
-  removeCreatePostMedia: (id: string) => void;
-  handleCreatePostSchedule: (scheduled: boolean) => void;
-  handleCreatePostScheduleTime: (value: number | null) => void;
+  handleCreatePostDataChange: (
+    value: string,
+    name: PostTextField,
+    key?: PostDataKey,
+  ) => void;
+  handleCreatePostType: (value: PostType, key?: PostDataKey) => void;
+  handleCreatePostPlatforms: (value: PostPlatform, key?: PostDataKey) => void;
+  removeCreatePostPlatform: (value: PostPlatform, key?: PostDataKey) => void;
+  setCreatePostMedia: (value: PostMediaItem[], key?: PostDataKey) => void;
+  removeCreatePostMedia: (id: string, key?: PostDataKey) => void;
+  handleCreatePostSchedule: (scheduled: boolean, key?: PostDataKey) => void;
+  handleCreatePostScheduleTime: (
+    value: number | null,
+    key?: PostDataKey,
+  ) => void;
+  setEditPostData: (value: PostData) => void;
   handleModifyFilters: <K extends keyof PostsTableFilter>(
     name: K,
     value: PostsTableFilter[K],
   ) => void;
 };
 
+const EMPTY_POST_DATA: PostData = {
+  type: "post",
+  platforms: ["facebook", "instagram"],
+  caption: "",
+  title: "",
+  link: "",
+  media: [],
+  scheduled: false,
+  scheduleTime: null,
+};
+
 const usePostStore = create<PostStore>((set) => ({
-  createPostData: {
-    type: "post",
-    platforms: ["facebook", "instagram"],
-    caption: "",
-    title: "",
-    link: "",
-    media: [],
-    scheduled: false,
-    scheduleTime: null,
-  },
+  createPostData: EMPTY_POST_DATA,
+  editPostData: EMPTY_POST_DATA,
   filters: {
     date: "all",
     platforms: "all",
@@ -74,58 +91,83 @@ const usePostStore = create<PostStore>((set) => ({
     types: "all",
   },
 
-  handleCreatePostDataChange: (value: string, name: PostTextField) => {
+  handleCreatePostDataChange: (
+    value: string,
+    name: PostTextField,
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => ({
-      createPostData: { ...s.createPostData, [name]: value },
+      [key]: { ...s[key], [name]: value },
     }));
   },
-  handleCreatePostType: (value: PostType) => {
+  handleCreatePostType: (
+    value: PostType,
+    key: PostDataKey = "createPostData",
+  ) => {
     // different types need different media — start clean
     set((s) => ({
-      createPostData: { ...s.createPostData, type: value, media: [] },
+      [key]: { ...s[key], type: value, media: [] },
     }));
   },
-  handleCreatePostPlatforms: (value: PostPlatform) => {
+  handleCreatePostPlatforms: (
+    value: PostPlatform,
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => {
-      const currentPlatforms = s.createPostData.platforms;
+      const currentPlatforms = s[key].platforms;
       const selectedPlatforms = currentPlatforms.includes(value)
         ? currentPlatforms.filter((item) => item !== value)
         : [...currentPlatforms, value];
       return {
-        createPostData: { ...s.createPostData, platforms: selectedPlatforms },
+        [key]: { ...s[key], platforms: selectedPlatforms },
       };
     });
   },
-  removeCreatePostPlatform: (value: PostPlatform) => {
+  removeCreatePostPlatform: (
+    value: PostPlatform,
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => ({
-      createPostData: {
-        ...s.createPostData,
-        platforms: s.createPostData.platforms.filter((item) => item !== value),
+      [key]: {
+        ...s[key],
+        platforms: s[key].platforms.filter((item) => item !== value),
       },
     }));
   },
-  setCreatePostMedia: (value: PostMediaItem[]) => {
+  setCreatePostMedia: (
+    value: PostMediaItem[],
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => ({
-      createPostData: { ...s.createPostData, media: value },
+      [key]: { ...s[key], media: value },
     }));
   },
-  removeCreatePostMedia: (id: string) => {
+  removeCreatePostMedia: (id: string, key: PostDataKey = "createPostData") => {
     set((s) => ({
-      createPostData: {
-        ...s.createPostData,
-        media: s.createPostData.media.filter((item) => item.id !== id),
+      [key]: {
+        ...s[key],
+        media: s[key].media.filter((item) => item.id !== id),
       },
     }));
   },
-  handleCreatePostSchedule: (scheduled: boolean) => {
+  handleCreatePostSchedule: (
+    scheduled: boolean,
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => ({
-      createPostData: { ...s.createPostData, scheduled },
+      [key]: { ...s[key], scheduled },
     }));
   },
-  handleCreatePostScheduleTime: (value: number | null) => {
+  handleCreatePostScheduleTime: (
+    value: number | null,
+    key: PostDataKey = "createPostData",
+  ) => {
     set((s) => ({
-      createPostData: { ...s.createPostData, scheduleTime: value },
+      [key]: { ...s[key], scheduleTime: value },
     }));
+  },
+  setEditPostData: (value: PostData) => {
+    set({ editPostData: value });
   },
   handleModifyFilters: <K extends keyof PostsTableFilter>(
     name: K,

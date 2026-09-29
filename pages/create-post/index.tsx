@@ -1,16 +1,13 @@
 "use client";
 import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
-import { inter, plusJakartaSans } from "@/app/fonts";
 import PostForm from "@/components/create-post/PostForm";
 import SubmitContainer from "@/components/create-post/SubmitContainer";
 import PostPreview from "@/components/create-post/PostPreview";
 
 export default function CreatePostPage() {
   return (
-    <Box
-      className={`${styles.createPostPageContainer} ${inter.variable} ${plusJakartaSans.variable}`}
-    >
+    <Box className={styles.createPostPageContainer}>
       <Box className={styles.header}>
         <h1 className={styles.titleLabel}>Create a post</h1>
         <Box className={styles.titleHelper}>

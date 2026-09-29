@@ -3,7 +3,6 @@
   width: 100%;
   background-color: var(--sidebar-background-color);
   color: var(--text-color);
-  font-family: var(--font-inter), sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-y: auto;
 }
@@ -19,7 +18,6 @@
 }
 
 .titleLabel {
-  font-family: var(--font-plus-jakarta-sans), sans-serif;
   font-size: 16.5px;
   font-weight: 700;
   margin: 0;

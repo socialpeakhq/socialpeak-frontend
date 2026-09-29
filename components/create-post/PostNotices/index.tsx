@@ -1,13 +1,17 @@
 import { Box } from "@mui/material";
-import usePostStore from "@/stores/usePostStore";
+import usePostStore, { PostDataKey } from "@/stores/usePostStore";
 import { needsLetterbox } from "../constants";
 import { WarningGlyph } from "../icons";
 import styles from "./styles.module.scss";
 
 type Notice = { text: string; level: "warn" | "info" };
 
-export default function PostNotices() {
-  const { type, media, platforms } = usePostStore((s) => s.createPostData);
+type IProps = {
+  dataKey?: PostDataKey;
+};
+
+export default function PostNotices({ dataKey = "createPostData" }: IProps) {
+  const { type, media, platforms } = usePostStore((s) => s[dataKey]);
   const hasInstagram = platforms.includes("instagram");
 
   const notices: Notice[] = [];
