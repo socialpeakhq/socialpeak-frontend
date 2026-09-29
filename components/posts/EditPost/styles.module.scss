@@ -80,10 +80,11 @@
   cursor: pointer;
   border: 1.5px solid transparent;
   background: #fff;
+  box-shadow: none !important;
 }
 
 .ghost {
-  border-color: rgb(238, 238, 238);
+  border-color: rgb(199, 199, 199);
   color: var(--transparent-text-color);
 
   &:hover {
@@ -93,7 +94,7 @@
 }
 
 .danger {
-  border-color: rgb(238, 238, 238);
+  border-color: rgb(199, 199, 199);
   color: #b4231c;
 
   &:hover {
