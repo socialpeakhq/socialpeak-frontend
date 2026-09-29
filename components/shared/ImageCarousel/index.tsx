@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Box } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 
 type IProps = {
@@ -15,6 +15,16 @@ const ASPECT_RATIO: Record<Orientation, string> = {
   landscape: "1.91 / 1",
 };
 
+const VIDEO_EXTENSIONS = [".mp4", ".mov"];
+
+const isVideo = (src: string) => {
+  const path = src.split(/[?#]/)[0].toLowerCase();
+  return VIDEO_EXTENSIONS.some((extension) => path.endsWith(extension));
+};
+
+const getOrientation = (width: number, height: number): Orientation =>
+  width > height ? "landscape" : "portrait";
+
 export default function ImageCarousel({ images }: IProps) {
   const imageList = useMemo(
     () => (Array.isArray(images) ? images : images ? [images] : []),
@@ -25,24 +35,47 @@ export default function ImageCarousel({ images }: IProps) {
     {},
   );
 
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
+
+  const setOrientation = (index: number, orientation: Orientation) =>
+    setOrientations((prev) => ({ ...prev, [index]: orientation }));
+
   useEffect(() => {
     imageList.forEach((src, index) => {
+      if (isVideo(src)) {
+        const video = document.createElement("video");
+        video.preload = "metadata";
+        video.onloadedmetadata = () =>
+          setOrientation(
+            index,
+            getOrientation(video.videoWidth, video.videoHeight),
+          );
+        video.src = src;
+        return;
+      }
+
       const image = new Image();
-      image.onload = () => {
-        setOrientations((prev) => ({
-          ...prev,
-          [index]:
-            image.naturalWidth > image.naturalHeight ? "landscape" : "portrait",
-        }));
-      };
+      image.onload = () =>
+        setOrientation(
+          index,
+          getOrientation(image.naturalWidth, image.naturalHeight),
+        );
       image.src = src;
     });
   }, [imageList]);
 
+  const currentIndex = Math.min(rawIndex, Math.max(imageList.length - 1, 0));
+
+  // Pause any video that is no longer the visible slide
+  useEffect(() => {
+    Object.entries(videoRefs.current).forEach(([index, video]) => {
+      if (video && Number(index) !== currentIndex) video.pause();
+    });
+  }, [currentIndex]);
+
   if (!imageList.length) return null;
 
   const hasMultipleImages = imageList.length > 1;
-  const currentIndex = Math.min(rawIndex, imageList.length - 1);
   const currentOrientation = orientations[currentIndex] ?? "landscape";
 
   const goToPrevious = () =>
@@ -59,14 +92,27 @@ export default function ImageCarousel({ images }: IProps) {
         className={styles.slidesTrack}
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {imageList.map((image, index) => (
+        {imageList.map((src, index) => (
           <Box className={styles.slide} key={index}>
-            <img
-              src={image}
-              alt={`Post image ${index + 1}`}
-              sizes="(max-width: 600px) 100vw, 500px"
-              className={styles.image}
-            />
+            {isVideo(src) ? (
+              <video
+                ref={(element) => {
+                  videoRefs.current[index] = element;
+                }}
+                src={src}
+                controls
+                playsInline
+                preload="metadata"
+                className={styles.video}
+              />
+            ) : (
+              <img
+                src={src}
+                alt={`Post image ${index + 1}`}
+                sizes="(max-width: 600px) 100vw, 500px"
+                className={styles.image}
+              />
+            )}
           </Box>
         ))}
       </Box>

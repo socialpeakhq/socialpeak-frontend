@@ -30,6 +30,7 @@ export function MediaDialogHeader() {
 
 export function MediaDialogContent() {
   const content = useMediaDialogContent();
+
   const media = content?.media ?? [];
 
   if (media.length === 0) {

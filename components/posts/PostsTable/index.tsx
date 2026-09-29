@@ -70,12 +70,17 @@ export default function PostsTable() {
       flex: 1,
       renderCell(params: GridRenderCellParams<Post>) {
         const media = params.row.media_urls;
+        const type = params.row.type;
         if (media.length === 0) {
           return <span className={styles.cellSub}>No media</span>;
         }
         return (
           <div className={styles.cellWithStack}>
-            <img src={media[0]} alt="" className={styles.mediaThumb} />
+            {type === "reel" ? (
+              <></>
+            ) : (
+              <img src={media[0]} alt="" className={styles.mediaThumb} />
+            )}
             <Button
               variant="outlined"
               className={styles.viewButton}
