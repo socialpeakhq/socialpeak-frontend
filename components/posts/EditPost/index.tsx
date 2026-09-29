@@ -74,7 +74,11 @@ export function EditPostActions() {
         onClick={handleRemovePost}
         className={`${styles.button} ${styles.danger}`}
       >
-        {isDeletionLoading ? <CircularProgress /> : "Remove from schedule"}
+        {isDeletionLoading ? (
+          <CircularProgress sx={{ color: "red" }} />
+        ) : (
+          "Remove from schedule"
+        )}
       </Button>
       <Box className={styles.actionsRight}>
         <Button
@@ -90,7 +94,11 @@ export function EditPostActions() {
           onClick={handlePostUpdate}
           className={`${styles.button} ${styles.primary}`}
         >
-          {isUpdateLoading ? <CircularProgress /> : "Save changes"}
+          {isUpdateLoading ? (
+            <CircularProgress sx={{ color: "white" }} />
+          ) : (
+            "Save changes"
+          )}
         </Button>
       </Box>
     </Box>

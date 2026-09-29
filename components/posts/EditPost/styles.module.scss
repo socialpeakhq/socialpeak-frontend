@@ -81,6 +81,13 @@
   border: 1.5px solid transparent;
   background: #fff;
   box-shadow: none !important;
+  height: 42px;
+  min-width: 80px;
+
+  span {
+    width: 15px !important;
+    height: 15px !important;
+  }
 }
 
 .ghost {
