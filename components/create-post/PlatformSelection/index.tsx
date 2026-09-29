@@ -13,8 +13,7 @@ type IProps = {
 export default function PlatformSelection({
   dataKey = "createPostData",
 }: IProps) {
-  const { loaded, platforms: availability } =
-    usePlatformAvailability(dataKey);
+  const { loaded, platforms: availability } = usePlatformAvailability(dataKey);
   const platforms = usePostStore((s) => s[dataKey].platforms);
   const handleCreatePostPlatforms = usePostStore(
     (s) => s.handleCreatePostPlatforms,
@@ -26,7 +25,6 @@ export default function PlatformSelection({
   const facebookDisabled = Boolean(availability.facebook.disabledReason);
   const instagramDisabled = Boolean(availability.instagram.disabledReason);
 
-  // A platform that becomes unavailable is deselected, not just greyed out
   useEffect(() => {
     if (!loaded) return;
     if (facebookDisabled) removeCreatePostPlatform("facebook", dataKey);

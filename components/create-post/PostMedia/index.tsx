@@ -55,7 +55,6 @@ export default function PostMedia({ dataKey = "createPostData" }: IProps) {
         ...(await measureFile(file)),
       };
 
-      // Read fresh state — earlier iterations of this loop may have added items
       const currentMedia = usePostStore.getState()[dataKey].media;
       if (!config.multiple || item.kind !== "image") {
         setCreatePostMedia([item], dataKey);
@@ -108,12 +107,12 @@ export default function PostMedia({ dataKey = "createPostData" }: IProps) {
           {media.map((item) => {
             const showPad =
               item.kind === "image" && needsLetterbox(item.width, item.height);
-            const thumbSrc = item.kind === "video" ? item.thumbUrl : item.url;
+            const isVideo = item.kind === "video";
 
             return (
               <Box
                 key={item.id}
-                className={`${styles.mediaThumb} ${showPad ? styles.letterboxed : ""}`}
+                className={`${styles.mediaThumb} ${isVideo ? styles.videoThumb : ""} ${showPad ? styles.letterboxed : ""}`}
               >
                 {showPad && (
                   <span className={styles.padBadge}>
@@ -124,14 +123,18 @@ export default function PostMedia({ dataKey = "createPostData" }: IProps) {
                     </span>
                   </span>
                 )}
-                {thumbSrc ? (
-                  <img src={thumbSrc} alt="" />
+                {isVideo ? (
+                  <video
+                    src={item.thumbUrl ? item.url : `${item.url}#t=0.1`}
+                    poster={item.thumbUrl ?? undefined}
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
                 ) : (
-                  <Box className={styles.videoPlaceholder}>▶</Box>
+                  <img src={item.url} alt="" />
                 )}
-                {item.kind === "video" && (
-                  <span className={styles.videoBadge}>Video</span>
-                )}
+                {isVideo && <span className={styles.videoBadge}>Video</span>}
                 <button
                   type="button"
                   className={styles.mediaRemove}

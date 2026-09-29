@@ -62,7 +62,8 @@
   background: #15121f;
   border: 1px solid rgb(238, 238, 238);
 
-  img {
+  img,
+  video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -71,18 +72,19 @@
   }
 }
 
+.videoThumb {
+  grid-column: 1 / -1;
+  aspect-ratio: auto;
+  height: 260px;
+
+  video {
+    object-fit: contain;
+  }
+}
+
 .letterboxed img {
   object-fit: contain;
   background: #15121f;
-}
-
-.videoPlaceholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
 }
 
 .mediaRemove {
@@ -148,7 +150,7 @@
 
 .videoBadge {
   position: absolute;
-  bottom: 5px;
+  top: 5px;
   left: 5px;
   background: rgba(30, 27, 41, 0.65);
   color: #fff;
