@@ -15,7 +15,7 @@ const customRender = (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 
-  return render(ui, { wrapper: Wrapper, ...options });
+  return { ...render(ui, { wrapper: Wrapper, ...options }), queryClient };
 };
 
 export * from "@testing-library/react";

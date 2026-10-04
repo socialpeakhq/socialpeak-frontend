@@ -11,14 +11,21 @@ import {
   jest,
 } from "@jest/globals";
 import { act } from "@testing-library/react";
-import { render, screen, waitFor } from "@/utils/test-utils";
+import { render, waitFor } from "@/utils/test-utils";
 import Container from "@/pages/dashboard/Container";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 
 const insightsHandler = jest.fn(() => HttpResponse.json([]));
 
+// Must match the full origin APIClient actually requests against (axios's
+// baseURL = NEXT_PUBLIC_BACKEND_API, see .env) — a path-only pattern
+// resolves against jsdom's default origin (http://localhost), not this
+// one, and silently never matches.
 const server = setupServer(
-  http.get("/meta-insights/workspace/:workspace_id/:platform", insightsHandler),
+  http.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}meta-insights/workspace/:workspace_id/:platform`,
+    insightsHandler,
+  ),
 );
 
 beforeAll(() => server.listen());
@@ -85,8 +92,6 @@ describe("Single Platform Insights", () => {
     });
 
     it("renders the data the API responds with", async () => {
-      // APIClient.getAll() does `res.data.data`, so the mocked response
-      // body has to be wrapped in a `data` key, not a bare array.
       insightsHandler.mockImplementationOnce(() =>
         HttpResponse.json({
           data: [
@@ -102,9 +107,20 @@ describe("Single Platform Insights", () => {
         }),
       );
 
-      render(<Container />);
+      const { queryClient } = render(<Container />);
 
-      expect(await screen.findByText("42")).toBeInTheDocument();
+      await waitFor(() =>
+        expect(queryClient.getQueryData(["insights", 5, "instagram"])).toEqual([
+          {
+            id: 1,
+            facebook_page_id: 1,
+            platform: "instagram",
+            metric: "likes",
+            value: 42,
+            captured_at: expect.any(String),
+          },
+        ]),
+      );
     });
   });
 });
