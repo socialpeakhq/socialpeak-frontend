@@ -9,6 +9,7 @@ import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { useMetaPages } from "@/react-query/meta/useMetaPages";
 import { useEffect } from "react";
 import useAuthStore from "@/stores/useAuthStore";
+import { useAuthDetails } from "@/react-query/auth/useAuthDetails";
 
 export default function AppLayout({
   children,
@@ -17,6 +18,7 @@ export default function AppLayout({
   const getWorkspaceMetaAccounts = useMetaPages().mutate;
   const selectedWorkspace = useWorkspaceStore((s) => s.selectedWorkspace);
 
+  useAuthDetails();
   useGetUserWorkspaces();
 
   useEffect(() => {

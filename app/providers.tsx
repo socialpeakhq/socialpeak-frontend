@@ -8,11 +8,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useEffect, useState } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {
-  AUTH_QUERY_KEY,
-  persistAuthQuery,
-  restoreAuthQuery,
-} from "@/lib/authQueryPersistence";
+import { AUTH_QUERY_KEY } from "@/react-query/auth/useAuthDetails";
 import {
   META_ACCOUNTS_QUERY_KEY,
   persistMetaAccountsQuery,
@@ -43,13 +39,10 @@ export default function Providers({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    restoreAuthQuery(queryClient);
-    persistAuthQuery(queryClient);
     restoreMetaAccountsQuery(queryClient);
     persistMetaAccountsQuery(queryClient);
 
     return queryClient.getQueryCache().subscribe(() => {
-      persistAuthQuery(queryClient);
       persistMetaAccountsQuery(queryClient);
     });
   }, [queryClient]);

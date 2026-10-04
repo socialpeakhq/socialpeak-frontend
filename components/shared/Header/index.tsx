@@ -6,7 +6,7 @@ import styles from "./styles.module.scss"
 import { useQueryClient } from "@tanstack/react-query";
 import { User } from "@/react-query/auth/auth.types";
 import SearchIcon from '@mui/icons-material/Search';
-import { AUTH_QUERY_KEY } from "@/lib/authQueryPersistence";
+import { AUTH_QUERY_KEY } from "@/react-query/auth/useAuthDetails";
 
 export default function Header(): ReactElement {
   const queryClient = useQueryClient();

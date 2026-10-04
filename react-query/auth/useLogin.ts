@@ -5,6 +5,7 @@ import APIClient from "../apiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuthStore from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
+import { AUTH_QUERY_KEY } from "./useAuthDetails";
 import { User } from "./auth.types";
 
 interface Response {
@@ -36,7 +37,7 @@ export const useLogin = () => {
     onSuccess: (successData, { rememberMe }) => {
       const { data } = successData;
       setAuthentication(data.access_token, data.refresh_token, rememberMe);
-      queryClient.setQueryData(["auth"], data.data);
+      queryClient.setQueryData(AUTH_QUERY_KEY, data.data);
       router.replace("/app/dashboard");
     },
   });
