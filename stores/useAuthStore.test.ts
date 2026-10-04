@@ -41,6 +41,38 @@ describe("useAuthStore", () => {
     expect(document.cookie).not.toContain("access");
   });
 
+  it("persists only the tokens and the remember choice", () => {
+    useAuthStore.getState().handleRegisterUserData("password", "secret");
+    useAuthStore.getState().setAuthentication("access", "refresh", true);
+
+    const { state } = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+    expect(state).toEqual({
+      token: "access",
+      refreshToken: "refresh",
+      rememberMe: true,
+    });
+  });
+
+  it("restores the session and derives isAuth from the token on reload", async () => {
+    useAuthStore.setState({ isAuth: false, token: undefined });
+    sessionStorage.setItem(
+      KEY,
+      JSON.stringify({
+        state: { token: "access", refreshToken: "refresh", rememberMe: false },
+        version: 0,
+      }),
+    );
+
+    await useAuthStore.persist.rehydrate();
+
+    expect(useAuthStore.getState()).toMatchObject({
+      isAuth: true,
+      token: "access",
+      refreshToken: "refresh",
+      rememberMe: false,
+    });
+  });
+
   it("clears the token from localStorage and the cookie on logout", () => {
     useAuthStore.getState().setAuthentication("access", "refresh", true);
     useAuthStore.getState().clearAuthentication();

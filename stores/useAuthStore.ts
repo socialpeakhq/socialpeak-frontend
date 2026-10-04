@@ -77,6 +77,25 @@ const useAuthStore = create<AuthStore>()(
     storage: createJSONStorage(() =>
       createRememberAwareStorage(window.localStorage, window.sessionStorage),
     ),
+    // Persist only what a reload needs: the tokens, plus rememberMe so the
+    // storage knows where to keep them. isAuth is derived from the token on
+    // load, and registerUserData (which holds passwords) stays in memory.
+    partialize: (s) => ({
+      token: s.token,
+      refreshToken: s.refreshToken,
+      rememberMe: s.rememberMe,
+    }),
+    merge: (persisted, current) => {
+      const { token, refreshToken, rememberMe } = (persisted ??
+        {}) as Partial<AuthStore>;
+      return {
+        ...current,
+        token,
+        refreshToken,
+        rememberMe: rememberMe ?? false,
+        isAuth: !!token,
+      };
+    },
     onRehydrateStorage: () => (state) => {
       if (state?.token) {
         setAuthSessionCookie(state.rememberMe);
