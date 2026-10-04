@@ -18,8 +18,10 @@ import {
   persistMetaAccountsQuery,
   restoreMetaAccountsQuery,
 } from "@/lib/metaAccountsQueryPersistence";
+import { Global as RechartsGlobal } from "recharts";
 
-// MUI components default to Roboto — point them at the app font
+RechartsGlobal.devToolsEnabled = false;
+
 const theme = createTheme({
   typography: {
     fontFamily: "var(--font-body)",
@@ -58,6 +60,6 @@ export default function Providers({ children }: { children: ReactNode }) {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </StyledEngineProvider>
-    </QueryClientProvider >
-  )
+    </QueryClientProvider>
+  );
 }
