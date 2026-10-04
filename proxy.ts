@@ -1,22 +1,15 @@
-import { AUTH_TOKEN_COOKIE_NAME } from "@/lib/authCookieName";
+import { AUTH_SESSION_COOKIE_NAME } from "@/lib/authCookieName";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-function readAuthTokenFromRequest(request: NextRequest) {
-  const raw = request.cookies.get(AUTH_TOKEN_COOKIE_NAME)?.value;
-  if (!raw) return undefined;
-  try {
-    return decodeURIComponent(raw);
-  } catch {
-    return raw;
-  }
-}
-
+// Only checks that a session exists so logged-out users don't see /app flash
+// before the client redirects. Token validity is enforced by the API (401 ->
+// refresh -> /login in apiClient), not here.
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = readAuthTokenFromRequest(request);
+  const hasSession = request.cookies.has(AUTH_SESSION_COOKIE_NAME);
 
-  if (pathname.startsWith("/app") && !token) {
+  if (pathname.startsWith("/app") && !hasSession) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

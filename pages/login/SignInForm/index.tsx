@@ -14,6 +14,7 @@ export default function SignInForm() {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
 
   const handleChange = (name: string, value: string) => {
@@ -61,7 +62,13 @@ export default function SignInForm() {
         />
         <Box className={styles.row}>
           <Box className={styles.rememberGroup}>
-            <Checkbox className={styles.checkbox} />
+            <Checkbox
+              className={styles.checkbox}
+              checked={loginData.rememberMe}
+              onChange={(e) =>
+                setLoginData({ ...loginData, rememberMe: e.target.checked })
+              }
+            />
             <Typography className={styles.label}>Remember Me</Typography>
           </Box>
           <Typography className={styles.forgotPassword}>

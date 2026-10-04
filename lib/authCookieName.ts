@@ -1,1 +1,1 @@
-export const AUTH_TOKEN_COOKIE_NAME = "sp_auth_token";
+export const AUTH_SESSION_COOKIE_NAME = "sp_session";

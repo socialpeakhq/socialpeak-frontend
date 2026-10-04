@@ -79,7 +79,13 @@ axiosInstance.interceptors.response.use(
         requestConfig.headers.set("Authorization", `Bearer ${newAccessToken}`);
         return axiosInstance(requestConfig);
       } catch {
-        useAuthStore.getState().clearAuthentication();
+        // No refresh token means this tab never had a session (e.g. a new tab
+        // of a non-remembered login, whose sessionStorage starts empty).
+        // Clearing would drop the shared session cookie and log out the
+        // tabs that do have one, so only send this tab to /login.
+        if (useAuthStore.getState().refreshToken) {
+          useAuthStore.getState().clearAuthentication();
+        }
         openAlert({
           message: "Your session has expired. Please log in again.",
           severity: "error",

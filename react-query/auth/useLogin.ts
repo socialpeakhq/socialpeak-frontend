@@ -25,11 +25,17 @@ export const useLogin = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (payload: { email: string; password: string }) =>
-      apiClient.post(payload),
-    onSuccess: (successData) => {
+    mutationFn: (payload: {
+      email: string;
+      password: string;
+      rememberMe: boolean;
+    }) => {
+      const { email, password } = payload;
+      return apiClient.post({ email, password });
+    },
+    onSuccess: (successData, { rememberMe }) => {
       const { data } = successData;
-      setAuthentication(data.access_token, data.refresh_token);
+      setAuthentication(data.access_token, data.refresh_token, rememberMe);
       queryClient.setQueryData(["auth"], data.data);
       router.replace("/app/dashboard");
     },
