@@ -21,13 +21,22 @@ export default function Container() {
 
   const selectedPlatform = useWorkspaceStore((s) => s.selectedPlatform);
 
-  useMetaInsightsByPlatform(selectedWorkspaceId, selectedPlatform);
+  const { isLoading } = useMetaInsightsByPlatform(
+    selectedWorkspaceId,
+    selectedPlatform,
+  );
 
   if (connected_accounts?.length === 0) {
     return (
       <Box className={styles.dashboardContainer}>
         <EmptyWorkspace />
       </Box>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Box className={styles.dashboardContainer}>Loadig Initial Data...</Box>
     );
   }
 

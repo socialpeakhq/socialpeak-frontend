@@ -6,12 +6,26 @@ const createJestConfig = nextJest({ dir: "./" });
 const config = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  // Reset mock call history (e.g. useRouter().push) between tests
   clearMocks: true,
   moduleNameMapper: {
-    // Overrides next/jest's file stub: SVGs are React components via @svgr/webpack
     "^.+\\.(svg)$": "<rootDir>/__mocks__/svgMock.tsx",
   },
 };
 
-export default createJestConfig(config);
+export default async () => {
+  const baseConfig = await createJestConfig(config)();
+
+  return {
+    ...baseConfig,
+    // next/jest's own ignore patterns match virtually all of node_modules,
+    // which would otherwise win over any pattern we append (Jest ignores a
+    // file if ANY pattern matches). msw pulls in a deep tree of ESM-only
+    // transitive deps (@mswjs/*, @open-draft/*, rettime, ...) that keeps
+    // growing, so rather than naming each one, transform all of node_modules
+    // and keep only the one exclusion that actually matters: compiled CSS
+    // modules, which aren't valid JS and must stay untouched.
+    transformIgnorePatterns: baseConfig.transformIgnorePatterns.filter(
+      (pattern) => !pattern.startsWith("/node_modules/"),
+    ),
+  };
+};
