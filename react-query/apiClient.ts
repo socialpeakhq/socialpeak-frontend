@@ -17,7 +17,9 @@ axiosInstance.interceptors.request.use(
   (request: InternalAxiosRequestConfig) => {
     const token = useAuthStore.getState().token;
 
-    request.headers.set("Authorization", `Bearer ${token}`);
+    if (token) {
+      request.headers.set("Authorization", `Bearer ${token}`);
+    }
     request.headers.set("Accept", "application/json");
 
     return request;
