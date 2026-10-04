@@ -4,12 +4,23 @@ import { useRouter } from "next/navigation";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Logo from "../../../assets/images/peak.svg";
 import { useLogin } from "@/react-query/auth/useLogin";
+import useAuthStore from "@/stores/useAuthStore";
 import styles from "./styles.module.scss";
-import { SubmitEvent, useState } from "react";
+import { SubmitEvent, useEffect, useState } from "react";
 
 export default function SignInForm() {
   const router = useRouter();
   const loginMuation = useLogin();
+
+  // A remembered session survives closing the tab, so skip the form and let
+  // /app load the user from the stored token. getState() rather than a
+  // selector: the store has already loaded from storage by now, while a
+  // selector reports the empty server state during hydration.
+  useEffect(() => {
+    if (useAuthStore.getState().token) {
+      router.replace("/app/dashboard");
+    }
+  }, [router]);
 
   const [loginData, setLoginData] = useState({
     email: "",
