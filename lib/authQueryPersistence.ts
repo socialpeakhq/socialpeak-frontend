@@ -31,7 +31,9 @@ export function persistAuthQuery(queryClient: QueryClient) {
     return;
   }
 
-  const authQuery = queryClient.getQueryCache().find({ queryKey: AUTH_QUERY_KEY });
+  const authQuery = queryClient
+    .getQueryCache()
+    .find({ queryKey: AUTH_QUERY_KEY });
 
   if (!authQuery?.state.data) {
     window.sessionStorage.removeItem(AUTH_QUERY_CACHE_KEY);
