@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import Card from "./index";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { MetaPlatformInsight } from "@/react-query/connections/connections.type";
+import { afterEach, describe, expect, it } from "@jest/globals";
 
 function makeInsight(overrides: Partial<MetaPlatformInsight> = {}) {
   return {
@@ -27,7 +28,14 @@ describe("Card", () => {
   });
 
   it("renders the metric value and a human-readable label", () => {
-    render(<Card data={makeInsight({ metric: "profile_views", value: 42 })} />);
+    render(
+      <Card
+        data={makeInsight({
+          metric: "profile_views",
+          value: 42,
+        })}
+      />,
+    );
 
     expect(screen.getByText("42")).toBeInTheDocument();
     expect(screen.getByText(/Profile Views/)).toBeInTheDocument();

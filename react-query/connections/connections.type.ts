@@ -18,8 +18,8 @@ export type MetaPlatformInsight = {
   platform: string;
   metric: string;
   value: number;
-  captured_at: Date;
-  created_at: Date;
+  captured_at?: Date;
+  created_at?: Date;
 };
 
 export type MetaAccountsData = Record<

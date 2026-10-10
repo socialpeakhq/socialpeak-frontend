@@ -65,7 +65,7 @@ type PostStore = {
   ) => void;
 };
 
-const EMPTY_POST_DATA: PostData = {
+export const EMPTY_POST_DATA: PostData = {
   type: "post",
   platforms: ["facebook", "instagram"],
   caption: "",
