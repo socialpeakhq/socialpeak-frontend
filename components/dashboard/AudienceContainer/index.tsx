@@ -1,13 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import AudienceGrowth from "@/components/analytics/AudienceGrowth";
-import { MAIN_PLATFORMS } from "../constants";
 import TimelineSelector from "@/components/shared/TimelineSelector";
 import { useEffect, useState } from "react";
 import { useMetaAudience } from "@/react-query/meta/useMetaAudience";
 import { useQuery, skipToken } from "@tanstack/react-query";
 import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
+import { MAIN_PLATFORMS } from "@/pages/dashboard/constants";
 
 export default function AudienceContainer() {
   const fetchAudience = useMetaAudience().mutate;

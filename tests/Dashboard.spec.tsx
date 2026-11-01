@@ -1,5 +1,5 @@
 import { setupServer } from "msw/node";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, type HttpResponseResolver } from "msw";
 import {
   afterAll,
   afterEach,
@@ -12,10 +12,12 @@ import {
 } from "@jest/globals";
 import { act } from "@testing-library/react";
 import { render, waitFor } from "@/utils/test-utils";
-import Container from "@/pages/dashboard/Container";
+import Container from "@/pages/dashboard";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 
-const insightsHandler = jest.fn(() => HttpResponse.json([]));
+const insightsHandler = jest.fn<HttpResponseResolver>(() =>
+  HttpResponse.json([]),
+);
 
 // Must match the full origin APIClient actually requests against (axios's
 // baseURL = NEXT_PUBLIC_BACKEND_API, see .env) — a path-only pattern

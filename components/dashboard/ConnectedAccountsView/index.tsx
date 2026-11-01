@@ -7,7 +7,7 @@ import {
   MetaAccountsDataType,
 } from "@/react-query/connections/connections.type";
 import { META_ACCOUNTS_QUERY_KEY } from "@/lib/metaAccountsQueryPersistence";
-import { MAIN_PLATFORMS } from "../constants";
+import { MAIN_PLATFORMS } from "@/pages/dashboard/constants";
 
 export default function ConnectedAccountsView() {
   const { data: metaAccounts } = useQuery<MetaAccountsData>({

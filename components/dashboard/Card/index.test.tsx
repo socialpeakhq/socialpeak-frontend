@@ -1,9 +1,12 @@
+import { afterEach, describe, expect, it } from "@jest/globals";
 import { act, render, screen } from "@testing-library/react";
 import Card from "./index";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { MetaPlatformInsight } from "@/react-query/connections/connections.type";
 
-function makeInsight(overrides: Partial<MetaPlatformInsight> = {}) {
+function makeInsight(
+  overrides: Partial<MetaPlatformInsight> = {},
+): MetaPlatformInsight {
   return {
     id: 1,
     facebook_page_id: 1,
@@ -11,6 +14,7 @@ function makeInsight(overrides: Partial<MetaPlatformInsight> = {}) {
     metric: "profile_views",
     value: 42,
     captured_at: new Date(),
+    created_at: new Date(),
     ...overrides,
   };
 }

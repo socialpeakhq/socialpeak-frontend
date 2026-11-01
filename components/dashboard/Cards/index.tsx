@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
-import { MAIN_PLATFORMS } from "../constants";
+import { MAIN_PLATFORMS } from "@/pages/dashboard/constants";
 import { useQueryClient } from "@tanstack/react-query";
 import { MetaPlatformInsight } from "@/react-query/connections/connections.type";
 import { format } from "date-fns";
