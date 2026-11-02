@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
 import CustomSwitch, { SwitchOption } from "@/components/shared/CustomSwitch";
 import { useState } from "react";
+import AnalyticsTools from "@/components/analytics/tools";
 
 const ANALYTICS_PAGES: SwitchOption<string>[] = [
   { label: "Posts Analytics", value: "posts" },
@@ -32,6 +33,7 @@ export default function AnalyticsPage() {
           handleChange={handleSelected}
         />
       </Box>
+      <AnalyticsTools />
     </Box>
   );
 }

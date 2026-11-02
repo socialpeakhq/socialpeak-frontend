@@ -9,7 +9,7 @@ export type SwitchOption<T extends SwitchValue = SwitchValue> = {
   disabled?: boolean;
 };
 
-type IProps<T extends SwitchValue> = {
+export type SwitchProps<T extends SwitchValue> = {
   options: SwitchOption<T>[];
   selectedValue: T;
   handleChange: (value: T) => void;
@@ -21,7 +21,7 @@ export default function CustomSwitch<T extends SwitchValue>({
   selectedValue,
   handleChange,
   label,
-}: IProps<T>) {
+}: SwitchProps<T>) {
   return (
     <Box className={styles.switchWrapper}>
       {label && <Typography className={styles.label}>{label}</Typography>}
