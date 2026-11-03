@@ -48,6 +48,10 @@ export default function AnalyticsTools() {
           value: "post",
         },
         {
+          label: "Photo",
+          value: "photo",
+        },
+        {
           label: "Video/Reel",
           value: "reel",
         },

@@ -2,7 +2,7 @@ import { mountStoreDevtool } from "simple-zustand-devtools";
 import { create } from "zustand";
 
 export type PlatformValues = "all" | "facebook" | "instagram";
-export type PostType = "all" | "post" | "reel" | "story";
+export type PostType = "all" | "post" | "photo" | "reel" | "story";
 export type PeriodType = 7 | 30 | 90;
 
 export type FilterState = {
