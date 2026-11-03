@@ -1,7 +1,5 @@
 "use client";
 
-import { usePostAnalytics } from "@/react-query/posts/usePostsAnalytics";
-import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
 import CustomSwitch, { SwitchOption } from "@/components/shared/CustomSwitch";
@@ -14,9 +12,6 @@ const ANALYTICS_PAGES: SwitchOption<string>[] = [
 ];
 
 export default function AnalyticsPage() {
-  const workspace = useWorkspaceStore((s) => s.selectedWorkspace?.workspace_id);
-  usePostAnalytics(workspace);
-
   const [selectedAnalyicsValue, setSelectedAnalyticsValue] =
     useState<string>("posts");
 

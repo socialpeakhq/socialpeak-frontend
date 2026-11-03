@@ -30,3 +30,20 @@ export type PostResponse = {
   message: string;
   data: Post;
 };
+
+export type PostAnalytics = {
+  id: number;
+  post_target_id: number;
+  metric: string;
+  value: number;
+  captured_at: string;
+  created_at: string;
+};
+
+export type TargetWithAnalytics = PostTarget & {
+  postAnalytics: PostAnalytics[];
+};
+
+export type PostsContainingAnalytics = Omit<Post, "targets"> & {
+  targets: TargetWithAnalytics[];
+};
