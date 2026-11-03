@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import CustomSwitch, { SwitchOption } from "@/components/shared/CustomSwitch";
 import { useState } from "react";
 import AnalyticsTools from "@/components/analytics/tools";
+import PostsCards from "@/components/analytics/PostsCards";
 
 const ANALYTICS_PAGES: SwitchOption<string>[] = [
   { label: "Posts Analytics", value: "posts" },
@@ -29,6 +30,7 @@ export default function AnalyticsPage() {
         />
       </Box>
       <AnalyticsTools />
+      <PostsCards />
     </Box>
   );
 }

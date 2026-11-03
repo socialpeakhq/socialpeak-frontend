@@ -24,8 +24,6 @@ export type KpiKey = keyof KpiTotals;
 
 const KPI_KEYS: KpiKey[] = ["views", "reach", "likes", "posts"];
 
-// Totals for targets published in [from, to). The end is exclusive so a
-// target on the boundary between two periods is only counted once.
 const summarize = (
   posts: PostsContainingAnalytics[],
   { type, platform }: Pick<FilterState, "type" | "platform">,
@@ -47,7 +45,6 @@ const summarize = (
   totals.posts = targets.length;
 
   for (const target of targets) {
-    // Rows are ordered by captured_at asc, so the last row per metric wins
     const latest = new Map<string, number>();
     for (const row of target.postAnalytics) latest.set(row.metric, row.value);
 
@@ -60,7 +57,6 @@ const summarize = (
   return totals;
 };
 
-// null means there is nothing in the previous period to compare against
 const percentChange = (current: number, previous: number): number | null =>
   previous === 0 ? null : ((current - previous) / previous) * 100;
 

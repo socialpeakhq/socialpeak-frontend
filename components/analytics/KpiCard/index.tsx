@@ -7,7 +7,6 @@ import styles from "./styles.module.scss";
 export type KpiCardProps = {
   label: string;
   value: number | string;
-  // null = no previous data to compare against, shown as "—"
   change?: number | null;
   description?: string;
   info?: string;
@@ -42,7 +41,10 @@ export default function KpiCard({
         </Box>
 
         {change === null && (
-          <Tooltip title="No data in the previous period to compare against." arrow>
+          <Tooltip
+            title="No data in the previous period to compare against."
+            arrow
+          >
             <Box className={`${styles.change} ${styles.neutral}`}>—</Box>
           </Tooltip>
         )}
