@@ -19,11 +19,6 @@
   color: var(--text-color);
 }
 
-.tableHint {
-  font-size: 11.5px;
-  color: var(--transparent-text-color);
-}
-
 .postCell {
   display: flex;
   align-items: center;
@@ -70,6 +65,7 @@
   font-size: 12.5px;
   font-weight: 600;
   color: var(--transparent-text-color);
+  text-transform: capitalize;
 }
 
 .platformDot {
@@ -79,10 +75,6 @@
   flex-shrink: 0;
 }
 
-.typeIcon {
-  font-size: 14px;
-}
-
 .cellNum {
   font-variant-numeric: tabular-nums;
   font-weight: 600;
@@ -90,33 +82,4 @@
 
 .cellNa {
   color: var(--transparent-text-color);
-  cursor: help;
-}
-
-.cellPending {
-  display: inline-flex;
-  color: var(--transparent-text-color);
-  cursor: help;
-}
-
-.pendingIcon {
-  font-size: 15px;
-}
-
-.detailsButton {
-  border: 1.5px solid #ebe8f5 !important;
-  border-radius: 9px;
-  color: var(--transparent-text-color) !important;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: none;
-  padding: 4px 12px;
-  min-width: 0;
-  background-color: #fff !important;
-  box-shadow: none !important;
-
-  &:hover {
-    border-color: var(--accent-purple) !important;
-    color: var(--accent-purple) !important;
-  }
 }
