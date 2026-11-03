@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Box, Button } from "@mui/material";
 import styles from "./styles.module.scss";
 import DataGrid from "@/components/shared/DataGrid";

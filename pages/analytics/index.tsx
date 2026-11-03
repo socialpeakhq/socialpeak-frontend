@@ -7,6 +7,7 @@ import { useState } from "react";
 import AnalyticsTools from "@/components/analytics/tools";
 import PostsCards from "@/components/analytics/PostsCards";
 import ViewsByPost from "@/components/analytics/ViewsByPost";
+import PostsList from "@/components/analytics/PostsList";
 
 const ANALYTICS_PAGES: SwitchOption<string>[] = [
   { label: "Posts Analytics", value: "posts" },
@@ -33,6 +34,7 @@ export default function AnalyticsPage() {
       <AnalyticsTools />
       <PostsCards />
       <ViewsByPost />
+      <PostsList />
     </Box>
   );
 }
