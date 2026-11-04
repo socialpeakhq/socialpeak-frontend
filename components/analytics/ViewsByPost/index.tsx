@@ -19,6 +19,8 @@ import {
 } from "recharts/types/component/DefaultTooltipContent";
 import { useMemo } from "react";
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 const PLATFORM_META = {
   facebook: { name: "Facebook", color: "#6c4ff0" },
   instagram: { name: "Instagram", color: "#ff6f91" },
@@ -45,6 +47,7 @@ function ViewsTooltip({
       <Typography className={styles.tooltipLabel}>{label}</Typography>
       {payload.map((item) => (
         <Box key={item.dataKey as string} className={styles.tooltipRow}>
+          <Typography className={styles.caption}>{}</Typography>
           <Box
             component="span"
             className={styles.dot}
@@ -68,7 +71,19 @@ export default function ViewsByPost() {
   const data: PostsContainingAnalytics[] = usePostAnalytics(workspaceId).data;
 
   const composeChartData = useMemo(() => {
+    const from = Date.now() - filter.period * DAY_MS;
+
     const result = [...(data ?? [])]
+      .map((post) => ({
+        ...post,
+        targets: post.targets.filter(
+          (target) =>
+            (filter.platform === "all" ||
+              filter.platform === target.platform) &&
+            new Date(target.published_at).getTime() >= from,
+        ),
+      }))
+      .filter((post) => post.targets.length > 0)
       .sort(
         (a, b) =>
           new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
@@ -83,11 +98,7 @@ export default function ViewsByPost() {
           instagram: 0,
           facebook: 0,
         };
-        const targets = post.targets.filter(
-          (target) =>
-            filter.platform === "all" || filter.platform === target.platform,
-        );
-        targets.forEach((target) => {
+        post.targets.forEach((target) => {
           row = {
             ...row,
             [target.platform]:
@@ -99,7 +110,7 @@ export default function ViewsByPost() {
       });
 
     return result;
-  }, [data, filter.platform]);
+  }, [data, filter.platform, filter.period]);
 
   return (
     <Box className={styles.viewsByPost}>
