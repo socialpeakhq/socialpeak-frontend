@@ -1,10 +1,11 @@
 import { PostsContainingAnalytics } from "@/react-query/posts/posts.type";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { PLATFORM_NAME } from "@/components/posts/platformIcons";
 import { KPI_METRICS } from "@/components/analytics/PostsCards/useTotalCalculator";
 import { formatDateTime } from "@/utils/helper.functions";
 import styles from "./styles.module.scss";
+import useAnalyticsStore from "@/stores/useAnalyticsStore";
 
 export type PostRow = {
   id: string;
@@ -22,6 +23,21 @@ export type PostRow = {
 const PLATFORM_COLOR: Record<string, string> = {
   facebook: "#6c4ff0",
   instagram: "#ff6f91",
+};
+
+const DetailsButton = () => {
+  const handleSinglePostDialog = useAnalyticsStore(
+    (s) => s.handleSinglePostAnalyticsDialog,
+  );
+  return (
+    <Button
+      variant="contained"
+      onClick={() => handleSinglePostDialog(true)}
+      className={styles.detailsButton}
+    >
+      Details
+    </Button>
+  );
 };
 
 const formatCompact = (value: number) =>
@@ -154,5 +170,12 @@ export const columns: GridColDef<PostRow>[] = [
     flex: 1,
     type: "number",
     renderCell: renderMetric,
+  },
+  {
+    field: "detailsAction",
+    headerName: "",
+    flex: 1,
+    cellClassName: styles.detailsActionContainer,
+    renderCell: () => <DetailsButton />,
   },
 ];

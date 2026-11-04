@@ -87,3 +87,20 @@
   font-size: 13px;
   color: var(--transparent-text-color);
 }
+
+.detailsActionContainer {
+  justify-content: flex-end !important;
+}
+
+.detailsButton {
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: var(--text-color);
+  box-shadow: none;
+  font-weight: normal;
+  text-transform: capitalize;
+  border: solid 1px var(--transparent-background-border);
+  font-family: var(--font-heading);
+}
