@@ -1,6 +1,6 @@
 import { PostsContainingAnalytics } from "@/react-query/posts/posts.type";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { PLATFORM_NAME } from "@/components/posts/platformIcons";
 import { KPI_METRICS } from "@/components/analytics/PostsCards/useTotalCalculator";
 import { formatDateTime } from "@/utils/helper.functions";
@@ -55,9 +55,11 @@ export const toPostRows = (posts: PostsContainingAnalytics[]): PostRow[] =>
 
 const renderMetric = (params: GridRenderCellParams<PostRow>) =>
   params.value === undefined ? (
-    <span className={styles.cellNa}>—</span>
+    <Typography className={styles.cellNa}>—</Typography>
   ) : (
-    <span className={styles.cellNum}>{formatCompact(params.value)}</span>
+    <Typography className={styles.cellNum}>
+      {formatCompact(params.value)}
+    </Typography>
   );
 
 export const columns: GridColDef<PostRow>[] = [
@@ -71,16 +73,19 @@ export const columns: GridColDef<PostRow>[] = [
       const { mediaUrls, type, caption, postId } = params.row;
       return (
         <Box className={styles.postCell}>
-          {mediaUrls.length > 0 && type !== "reel" ? (
-            <img src={mediaUrls[0]} alt="" className={styles.thumb} />
-          ) : (
-            <Box className={`${styles.thumb} ${styles.thumbPlaceholder}`} />
-          )}
+          <Avatar
+            variant="rounded"
+            src={type !== "reel" ? mediaUrls[0] : undefined}
+            className={styles.thumb}
+          >
+            {/* empty child hides MUI's person icon, so the gradient shows */}
+            {""}
+          </Avatar>
           <Box className={styles.postText}>
-            <span className={styles.postCaption} title={caption}>
+            <Typography noWrap className={styles.postCaption} title={caption}>
               {caption || "No caption"}
-            </span>
-            <span className={styles.postSub}>#{postId}</span>
+            </Typography>
+            <Typography className={styles.postSub}>#{postId}</Typography>
           </Box>
         </Box>
       );
@@ -93,13 +98,15 @@ export const columns: GridColDef<PostRow>[] = [
     renderCell(params: GridRenderCellParams<PostRow>) {
       const { platform } = params.row;
       return (
-        <span className={styles.chip}>
-          <i
+        <Box className={styles.chip}>
+          <Box
             className={styles.platformDot}
-            style={{ backgroundColor: PLATFORM_COLOR[platform] }}
+            sx={{ backgroundColor: PLATFORM_COLOR[platform] }}
           />
-          {PLATFORM_NAME[platform]}
-        </span>
+          <Typography className={styles.chipText}>
+            {PLATFORM_NAME[platform]}
+          </Typography>
+        </Box>
       );
     },
   },
@@ -108,7 +115,11 @@ export const columns: GridColDef<PostRow>[] = [
     headerName: "Type",
     flex: 1,
     renderCell(params: GridRenderCellParams<PostRow>) {
-      return <span className={styles.chip}>{params.row.type}</span>;
+      return (
+        <Typography className={`${styles.chip} ${styles.chipText}`}>
+          {params.row.type}
+        </Typography>
+      );
     },
   },
   {
@@ -116,7 +127,11 @@ export const columns: GridColDef<PostRow>[] = [
     headerName: "Published",
     flex: 1,
     renderCell(params: GridRenderCellParams<PostRow>) {
-      return <span>{formatDateTime(params.row.publishedAt)}</span>;
+      return (
+        <Typography className={styles.cellText}>
+          {formatDateTime(params.row.publishedAt)}
+        </Typography>
+      );
     },
   },
   {
