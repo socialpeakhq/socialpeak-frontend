@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import styles from "./styles.module.scss";
 import CustomSwitch, { SwitchOption } from "@/components/shared/CustomSwitch";
 import { useState } from "react";
-import AnalyticsTools from "@/components/analytics/tools";
+import AnalyticsTools from "@/components/analytics/Tools";
 import PostsCards from "@/components/analytics/PostsCards";
 import ViewsByPost from "@/components/analytics/ViewsByPost";
 import PostsList from "@/components/analytics/PostsList";

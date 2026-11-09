@@ -28,12 +28,17 @@ import {
   EditPostActions,
   EditPostHeader,
 } from "@/components/posts/EditPost";
+import {
+  PostAnalyticsDialogContent,
+  PostAnalyticsDialogHeader,
+} from "@/components/analytics/PostAnalyticsDialog";
 
 const DIALOG_MAX_WIDTH: Record<string, Breakpoint> = {
   meta: "sm",
   "post-media": "sm",
   "post-targets": "sm",
   editPost: "sm",
+  "post-analytics": "sm",
 };
 
 export default function AppDialog() {
@@ -61,6 +66,7 @@ export default function AppDialog() {
           {dialogCaller === "post-media" ? <MediaDialogHeader /> : null}
           {dialogCaller === "post-targets" ? <TargetsDialogHeader /> : null}
           {dialogCaller === "editPost" && <EditPostHeader />}
+          {dialogCaller === "post-analytics" && <PostAnalyticsDialogHeader />}
         </Box>
         <Box className={styles.rightSide}>
           <Box onClick={() => closeDialog()} className={styles.closeContainer}>
@@ -73,6 +79,7 @@ export default function AppDialog() {
         {dialogCaller === "post-media" ? <MediaDialogContent /> : null}
         {dialogCaller === "post-targets" ? <TargetsDialogContent /> : null}
         {dialogCaller === "editPost" && <EditPost />}
+        {dialogCaller === "post-analytics" && <PostAnalyticsDialogContent />}
       </DialogContent>
       {dialogCaller === "editPost" && (
         <DialogActions className={styles.dialogActions}>

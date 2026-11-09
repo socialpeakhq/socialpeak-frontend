@@ -13,14 +13,11 @@ export type FilterState = {
 
 type AnalyticsStore = {
   filter: FilterState;
-  isSinglePostAnalyticsDialogOpen: boolean;
 
   handleFilterChange: <T extends keyof FilterState>(
     name: T,
     value: FilterState[T],
   ) => void;
-
-  handleSinglePostAnalyticsDialog: (value: boolean) => void;
 };
 
 const DEFAULT_FILTER: FilterState = {
@@ -31,7 +28,6 @@ const DEFAULT_FILTER: FilterState = {
 
 const useAnalyticsStore = create<AnalyticsStore>((set) => ({
   filter: DEFAULT_FILTER,
-  isSinglePostAnalyticsDialogOpen: false,
 
   handleFilterChange: <T extends keyof FilterState>(
     name: T,
@@ -42,14 +38,6 @@ const useAnalyticsStore = create<AnalyticsStore>((set) => ({
       currentFilter[name] = value;
       return {
         filter: currentFilter,
-      };
-    });
-  },
-
-  handleSinglePostAnalyticsDialog: (value: boolean) => {
-    set(() => {
-      return {
-        isSinglePostAnalyticsDialogOpen: value,
       };
     });
   },

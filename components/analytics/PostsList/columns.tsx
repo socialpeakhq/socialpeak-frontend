@@ -5,7 +5,7 @@ import { PLATFORM_NAME } from "@/components/posts/platformIcons";
 import { KPI_METRICS } from "@/components/analytics/PostsCards/useTotalCalculator";
 import { formatDateTime } from "@/utils/helper.functions";
 import styles from "./styles.module.scss";
-import useAnalyticsStore from "@/stores/useAnalyticsStore";
+import useDialogStore from "@/stores/useDialogStore";
 
 export type PostRow = {
   id: string;
@@ -25,14 +25,17 @@ const PLATFORM_COLOR: Record<string, string> = {
   instagram: "#ff6f91",
 };
 
-const DetailsButton = () => {
-  const handleSinglePostDialog = useAnalyticsStore(
-    (s) => s.handleSinglePostAnalyticsDialog,
-  );
+const DetailsButton = ({ row }: { row: PostRow }) => {
+  const openDialog = useDialogStore((s) => s.openDialog);
   return (
     <Button
       variant="contained"
-      onClick={() => handleSinglePostDialog(true)}
+      onClick={() =>
+        openDialog<PostRow>({
+          dialogCaller: "post-analytics",
+          dialogContent: row,
+        })
+      }
       className={styles.detailsButton}
     >
       Details
@@ -176,6 +179,8 @@ export const columns: GridColDef<PostRow>[] = [
     headerName: "",
     flex: 1,
     cellClassName: styles.detailsActionContainer,
-    renderCell: () => <DetailsButton />,
+    renderCell: (params: GridRenderCellParams<PostRow>) => (
+      <DetailsButton row={params.row} />
+    ),
   },
 ];

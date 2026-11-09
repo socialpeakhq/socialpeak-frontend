@@ -47,3 +47,33 @@ export type TargetWithAnalytics = PostTarget & {
 export type PostsContainingAnalytics = Omit<Post, "targets"> & {
   targets: TargetWithAnalytics[];
 };
+
+export type TargetAnalyticsStatus =
+  "value" | "collecting" | "unavailable" | "not_published";
+
+export type MetricAnalytics = {
+  metric: string;
+  value: number;
+  series: { date: string; value: number }[];
+  baseline: { typical: number; sample: number; compared_at_day: number } | null;
+};
+
+export type TargetAnalytics = {
+  target_id: number;
+  platform: string;
+  status: TargetAnalyticsStatus;
+  age_days: number | null;
+  metrics: MetricAnalytics[];
+};
+
+export type SinglePostAnalytics = {
+  post: {
+    id: number;
+    type: string;
+    caption: string;
+    media_urls: string[];
+    published_at: string | null;
+  };
+  period_days: number;
+  targets: TargetAnalytics[];
+};
