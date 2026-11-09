@@ -5,6 +5,7 @@ import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import useAnalyticsStore from "@/stores/useAnalyticsStore";
 import { usePostAnalytics } from "@/react-query/posts/usePostsAnalytics";
 import DataGrid from "@/components/shared/DataGrid";
+import PostAnalyticsDialog from "../PostAnalyticsDialog";
 import { columns, toPostRows } from "./columns";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -42,6 +43,7 @@ export default function PostsList() {
         pagination
         paginationSize={8}
       />
+      <PostAnalyticsDialog />
     </Box>
   );
 }

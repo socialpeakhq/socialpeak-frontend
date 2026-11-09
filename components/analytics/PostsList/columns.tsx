@@ -5,7 +5,7 @@ import { PLATFORM_NAME } from "@/components/posts/platformIcons";
 import { KPI_METRICS } from "@/components/analytics/PostsCards/useTotalCalculator";
 import { formatDateTime } from "@/utils/helper.functions";
 import styles from "./styles.module.scss";
-import useDialogStore from "@/stores/useDialogStore";
+import useAnalyticsStore from "@/stores/useAnalyticsStore";
 
 export type PostRow = {
   id: string;
@@ -26,16 +26,11 @@ const PLATFORM_COLOR: Record<string, string> = {
 };
 
 const DetailsButton = ({ row }: { row: PostRow }) => {
-  const openDialog = useDialogStore((s) => s.openDialog);
+  const handleSelectedPost = useAnalyticsStore((s) => s.handleSelectedPost);
   return (
     <Button
       variant="contained"
-      onClick={() =>
-        openDialog<PostRow>({
-          dialogCaller: "post-analytics",
-          dialogContent: row,
-        })
-      }
+      onClick={() => handleSelectedPost(row)}
       className={styles.detailsButton}
     >
       Details

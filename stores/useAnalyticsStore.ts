@@ -1,5 +1,6 @@
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { create } from "zustand";
+import type { PostRow } from "@/components/analytics/PostsList/columns";
 
 export type PlatformValues = "all" | "facebook" | "instagram";
 export type PostType = "all" | "post" | "photo" | "reel" | "story";
@@ -13,11 +14,14 @@ export type FilterState = {
 
 type AnalyticsStore = {
   filter: FilterState;
+  selectedPost: PostRow | null;
 
   handleFilterChange: <T extends keyof FilterState>(
     name: T,
     value: FilterState[T],
   ) => void;
+
+  handleSelectedPost: (post: PostRow | null) => void;
 };
 
 const DEFAULT_FILTER: FilterState = {
@@ -28,6 +32,7 @@ const DEFAULT_FILTER: FilterState = {
 
 const useAnalyticsStore = create<AnalyticsStore>((set) => ({
   filter: DEFAULT_FILTER,
+  selectedPost: null,
 
   handleFilterChange: <T extends keyof FilterState>(
     name: T,
@@ -40,6 +45,10 @@ const useAnalyticsStore = create<AnalyticsStore>((set) => ({
         filter: currentFilter,
       };
     });
+  },
+
+  handleSelectedPost: (post: PostRow | null) => {
+    set({ selectedPost: post });
   },
 }));
 

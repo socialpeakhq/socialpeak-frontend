@@ -8,18 +8,16 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import useDialogStore from "@/stores/useDialogStore";
 import useWorkspaceStore from "@/stores/useWorkspaceStore";
 import useAnalyticsStore from "@/stores/useAnalyticsStore";
 import { useSinglePostAnalytics } from "@/react-query/posts/useSinglePostAnalytics";
 import { MetricAnalytics } from "@/react-query/posts/posts.type";
 import { PLATFORM_NAME } from "@/components/posts/platformIcons";
 import { formatDateTime } from "@/utils/helper.functions";
+import CustomDialog from "@/components/shared/CustomDialog";
 import KpiCard from "../KpiCard";
 import { PostRow } from "../PostsList/columns";
 import styles from "./styles.module.scss";
-
-export type PostAnalyticsDialogPayload = PostRow;
 
 const METRIC_LABEL: Record<string, string> = {
   post_media_view: "Views",
@@ -39,11 +37,6 @@ const STATUS_MESSAGE: Record<string, string> = {
   unavailable: "Meta hasn't returned any metrics for this post.",
   not_published: "This post wasn't published on this platform.",
 };
-
-function usePostAnalyticsDialogContent() {
-  return useDialogStore((s) => s.dialogContent) as
-    PostAnalyticsDialogPayload | undefined;
-}
 
 function MetricCard({ metric }: { metric: MetricAnalytics }) {
   const { typical = 0 } = metric.baseline ?? {};
@@ -65,41 +58,15 @@ function MetricCard({ metric }: { metric: MetricAnalytics }) {
   );
 }
 
-export function PostAnalyticsDialogHeader() {
-  const row = usePostAnalyticsDialogContent();
-  if (!row) return null;
-
-  return (
-    <Box className={styles.header}>
-      <Avatar
-        variant="rounded"
-        src={row.type !== "reel" ? row.mediaUrls[0] : undefined}
-        className={styles.thumb}
-      >
-        {""}
-      </Avatar>
-      <Box className={styles.headerText}>
-        <Typography noWrap className={styles.title}>
-          {row.caption || "No caption"}
-        </Typography>
-        <Typography className={styles.subtitle}>
-          #{row.postId} · {row.type} · {formatDateTime(row.publishedAt)}
-        </Typography>
-      </Box>
-    </Box>
-  );
-}
-
-export function PostAnalyticsDialogContent() {
-  const row = usePostAnalyticsDialogContent();
+function PostAnalyticsContent({ post }: { post: PostRow }) {
   const workspaceId = useWorkspaceStore(
     (s) => s.selectedWorkspace?.workspace_id,
   );
   const period = useAnalyticsStore((s) => s.filter.period);
-  const [platform, setPlatform] = useState(row?.platform);
+  const [platform, setPlatform] = useState(post.platform);
 
   const { data, isLoading } = useSinglePostAnalytics(
-    row?.postId,
+    post.postId,
     workspaceId,
     period,
   );
@@ -154,9 +121,41 @@ export function PostAnalyticsDialogContent() {
 
       <Typography className={styles.footNote}>
         Compared with the median of your other{" "}
-        {PLATFORM_NAME[target.platform] ?? target.platform} {row?.type}s from
+        {PLATFORM_NAME[target.platform] ?? target.platform} {post.type}s from
         the last {period} days.
       </Typography>
     </Box>
+  );
+}
+
+export default function PostAnalyticsDialog() {
+  const post = useAnalyticsStore((s) => s.selectedPost);
+  const handleSelectedPost = useAnalyticsStore((s) => s.handleSelectedPost);
+
+  return (
+    <CustomDialog
+      open={!!post}
+      onClose={() => handleSelectedPost(null)}
+      title={post?.caption || "No caption"}
+      subtitle={
+        post && (
+          <span className={styles.subtitle}>
+            #{post.postId} · {post.type} · {formatDateTime(post.publishedAt)}
+          </span>
+        )
+      }
+      icon={
+        <Avatar
+          variant="rounded"
+          src={post?.type !== "reel" ? post?.mediaUrls[0] : undefined}
+          className={styles.thumb}
+        >
+          {""}
+        </Avatar>
+      }
+    >
+      {/* keyed so the platform tab resets when another post is opened */}
+      {post && <PostAnalyticsContent key={post.id} post={post} />}
+    </CustomDialog>
   );
 }
