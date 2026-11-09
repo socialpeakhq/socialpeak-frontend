@@ -18,6 +18,7 @@ import {
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 import { useMemo } from "react";
+import { KPI_METRICS } from "@/components/analytics/PostsCards/useTotalCalculator";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -102,8 +103,11 @@ export default function ViewsByPost() {
           row = {
             ...row,
             [target.platform]:
-              target.postAnalytics.find((item) => item.metric === "views")
-                ?.value ?? 0,
+              // Rows are oldest first; Facebook names views "post_media_view".
+              target.postAnalytics.findLast(
+                (item) =>
+                  KPI_METRICS[target.platform]?.[item.metric] === "views",
+              )?.value ?? 0,
           };
         });
         return row;
